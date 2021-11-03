@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ZofimPortalApp.ViewModels;
 
 namespace ZofimPortalApp.Views
 {
@@ -14,6 +15,8 @@ namespace ZofimPortalApp.Views
     {
         public EditActivities()
         {
+            EditActivitiesVM vm = new EditActivitiesVM();
+            this.BindingContext = vm;
             InitializeComponent();
         }
     }
