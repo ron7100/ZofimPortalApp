@@ -6,6 +6,14 @@ namespace ZofimPortalApp
 {
     public partial class App : Application
     {
+        public static bool IsDevEnv
+        {
+            get
+            {
+                return true; //change this before release!
+            }
+        }
+
         public App()
         {
             InitializeComponent();
