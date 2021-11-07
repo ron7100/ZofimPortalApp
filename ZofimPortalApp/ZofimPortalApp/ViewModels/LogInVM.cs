@@ -21,5 +21,39 @@ namespace ZofimPortalApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+        
+        private string uName;
+        public string UName
+        {
+            get { return uName; }
+            set
+            {
+                uName = value;
+                OnPropertyChanged("UName");
+            }
+        }
+
+        private string pass;
+        public string Pass
+        {
+            get { return pass; }
+            set
+            {
+                pass = value;
+                OnPropertyChanged("Pass");
+            }
+        }
+
+        public ICommand ShowPasswordCommand => new Command(ShowPassword);
+        public void ShowPassword()
+        {
+            
+        }
+
+        public ICommand LogInCommand => new Command(LogIn);
+        public void LogIn()
+        {
+
+        }
     }
 }

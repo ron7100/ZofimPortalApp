@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ZofimPortalApp.Views;
 
 namespace ZofimPortalApp
 {
@@ -18,7 +19,8 @@ namespace ZofimPortalApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            NavigationPage p = new NavigationPage(new HomePage());
+            MainPage = p;
         }
 
         protected override void OnStart()

@@ -1,12 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ZofimPortalApp.Views.LogIn">
+             x:Class="ZofimPortalApp.Views.LogIn"
+             FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="Log In" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <Entry x:Name="username" Placeholder="שם משתמש..." Text="{Binding UName}" Grid.Row="0" Grid.Column="1"/>
+                <Label Text="שם משתמש:" Grid.Row="0" Grid.Column="2"/>
+                <Button Text="הצג סיסמה" Grid.Row="1" Grid.Column="0"/>
+                <Entry x:Name="password" Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="True" Grid.Row="1" Grid.Column="1"/>
+                <Label Text="סיסמה:" Grid.Row="1" Grid.Column="2"/>
+                <Button Text="התחברות" Command="{Binding LogInCommand}" Grid.Row="2" Grid.Column="1"/>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

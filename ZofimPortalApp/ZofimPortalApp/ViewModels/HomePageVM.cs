@@ -21,5 +21,12 @@ namespace ZofimPortalApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+        public ICommand ToLogInCommand() => new Command(ToLogIn);
+
+        public async void ToLogIn()
+        {
+            Page p = new Views.LogIn();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
     }
 }
