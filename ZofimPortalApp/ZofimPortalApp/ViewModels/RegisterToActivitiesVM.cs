@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace ZofimPortalApp.ViewModels
 {
-    class RegisterToActivities
+    class RegisterToActivitiesVM
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

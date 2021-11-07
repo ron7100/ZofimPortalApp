@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ZofimPortalApp.ViewModels;
 
 namespace ZofimPortalApp.Views
 {
@@ -14,6 +15,8 @@ namespace ZofimPortalApp.Views
     {
         public ManageShevet()
         {
+            ManageShevetVM vm = new ManageShevetVM();
+            this.BindingContext = vm;
             InitializeComponent();
         }
     }
