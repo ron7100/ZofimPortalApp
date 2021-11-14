@@ -14,6 +14,14 @@ namespace ZofimPortalApp.ViewModels
 {
     class LogInVM
     {
+        public Command ShowPasswordCommand { get; }
+
+        public LogInVM()
+        {
+            hidePassword = true;
+            ShowPasswordCommand = new Command(ShowPassword);
+        }
+
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
@@ -21,7 +29,18 @@ namespace ZofimPortalApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-        
+
+        private bool hidePassword;
+        public bool HidePassword
+        {
+            get { return hidePassword; }
+            set
+            {
+                hidePassword = value;
+                OnPropertyChanged("HidePassword");
+            }
+        }
+
         private string uName;
         public string UName
         {
@@ -44,10 +63,9 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        public ICommand ShowPasswordCommand => new Command(ShowPassword);
         public void ShowPassword()
         {
-            
+            HidePassword = !HidePassword;
         }
 
         public ICommand LogInCommand => new Command(LogIn);

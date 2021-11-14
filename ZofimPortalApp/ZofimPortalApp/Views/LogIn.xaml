@@ -17,8 +17,8 @@
                 </Grid.RowDefinitions>
                 <Entry x:Name="username" Placeholder="שם משתמש..." Text="{Binding UName}" Grid.Row="0" Grid.Column="1"/>
                 <Label Text="שם משתמש:" Grid.Row="0" Grid.Column="2"/>
-                <Button Text="הצג סיסמה" Grid.Row="1" Grid.Column="0"/>
-                <Entry x:Name="password" Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="True" Grid.Row="1" Grid.Column="1"/>
+                <Button Text="הצג סיסמה" Command="{Binding ShowPasswordCommand}" Grid.Row="1" Grid.Column="0"/>
+                <Entry x:Name="password" Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="{Binding HidePassword}" Grid.Row="1" Grid.Column="1"/>
                 <Label Text="סיסמה:" Grid.Row="1" Grid.Column="2"/>
                 <Button Text="התחברות" Command="{Binding LogInCommand}" Grid.Row="2" Grid.Column="1"/>
             </Grid>

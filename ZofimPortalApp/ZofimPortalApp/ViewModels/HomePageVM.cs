@@ -14,6 +14,7 @@ namespace ZofimPortalApp.ViewModels
 {
     class HomePageVM
     {
+        public Command ToLogInCommand { get; } 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
@@ -21,8 +22,12 @@ namespace ZofimPortalApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-        public ICommand ToLogInCommand() => new Command(ToLogIn);
+        //public ICommand ToLogInCommand() => new Command(ToLogIn);
 
+        public HomePageVM()
+        {
+            ToLogInCommand = new Command(ToLogIn);
+        }
         public async void ToLogIn()
         {
             Page p = new Views.LogIn();
