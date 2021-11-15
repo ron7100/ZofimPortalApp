@@ -5,7 +5,7 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Log In" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Label Text="Log In" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -15,10 +15,10 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
-                <Entry x:Name="username" Placeholder="שם משתמש..." Text="{Binding UName}" Grid.Row="0" Grid.Column="1"/>
+                <Entry Placeholder="שם משתמש..." Text="{Binding UName}" Grid.Row="0" Grid.Column="1"/>
                 <Label Text="שם משתמש:" Grid.Row="0" Grid.Column="2"/>
                 <Button Text="הצג סיסמה" Command="{Binding ShowPasswordCommand}" Grid.Row="1" Grid.Column="0"/>
-                <Entry x:Name="password" Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="{Binding HidePassword}" Grid.Row="1" Grid.Column="1"/>
+                <Entry Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="{Binding HidePassword}" Grid.Row="1" Grid.Column="1" x:Name="pass"/>
                 <Label Text="סיסמה:" Grid.Row="1" Grid.Column="2"/>
                 <Button Text="התחברות" Command="{Binding LogInCommand}" Grid.Row="2" Grid.Column="1"/>
             </Grid>

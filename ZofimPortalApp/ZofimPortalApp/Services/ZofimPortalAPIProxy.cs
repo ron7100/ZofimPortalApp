@@ -81,7 +81,7 @@ namespace ZofimPortalApp.Services
 
         public string GetBasePhotoUri() { return this.basePhotosUri; }
 
-        public async Task<object> LoginAsync(string uName, string pass) //התחברות למשתמש
+        public async Task<object> LogInAsync(string uName, string pass) //התחברות למשתמש
         {
             try
             {

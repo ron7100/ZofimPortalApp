@@ -16,8 +16,14 @@ namespace ZofimPortalApp.Views
         public LogIn()
         {
             LogInVM vm = new LogInVM();
+            vm.OnHidePassword += pass_TextChanged;
             this.BindingContext = vm;
             InitializeComponent();
+        }
+
+        private void pass_TextChanged()
+        {
+            pass.IsPassword = !pass.IsPassword;
         }
     }
 }

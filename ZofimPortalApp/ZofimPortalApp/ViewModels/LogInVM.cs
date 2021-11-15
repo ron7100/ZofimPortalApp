@@ -7,19 +7,25 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using ZofimPortalApp.Services;
 using ZofimPortalApp.Models;
-using Xamarin.Essentials;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Xamarin.Essentials;
+using ZofimPortalApp.Views;
 
 namespace ZofimPortalApp.ViewModels
 {
     class LogInVM
     {
         public Command ShowPasswordCommand { get; }
+        public Command LogInCommand { get; }
 
+        public event Action OnHidePassword;
         public LogInVM()
         {
-            hidePassword = true;
-            ShowPasswordCommand = new Command(ShowPassword);
+            HidePassword = true;
+            this.ShowPasswordCommand = new Command(ShowPassword);
+            this.LogInCommand = new Command(LogIn);
         }
 
         #region INotifyPropertyChanged
@@ -33,7 +39,7 @@ namespace ZofimPortalApp.ViewModels
         private bool hidePassword;
         public bool HidePassword
         {
-            get { return hidePassword; }
+            get => hidePassword;
             set
             {
                 hidePassword = value;
@@ -44,7 +50,7 @@ namespace ZofimPortalApp.ViewModels
         private string uName;
         public string UName
         {
-            get { return uName; }
+            get => uName;
             set
             {
                 uName = value;
@@ -55,7 +61,7 @@ namespace ZofimPortalApp.ViewModels
         private string pass;
         public string Pass
         {
-            get { return pass; }
+            get => pass;
             set
             {
                 pass = value;
@@ -63,15 +69,32 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        public void ShowPassword()
+        private void ShowPassword()
         {
-            HidePassword = !HidePassword;
+            if (OnHidePassword != null)
+                OnHidePassword();
         }
 
-        public ICommand LogInCommand => new Command(LogIn);
-        public void LogIn()
+        
+        private void LogIn()
+        {
+            ZofimPortalAPIProxy proxy = ZofimPortalAPIProxy.CreateProxy();
+            Task<Object> user = proxy.LogInAsync(this.uName, this.pass);
+            if (user == null)
+                LogInFailed();
+            else
+                LogInSuccess((Object)user);
+        }
+
+        private void LogInFailed()
         {
 
+        }
+
+        private void LogInSuccess(Object u)
+        {
+            HomePage.connectedUser = u;
+            App.Current.MainPage.Navigation.PopAsync();
         }
     }
 }
