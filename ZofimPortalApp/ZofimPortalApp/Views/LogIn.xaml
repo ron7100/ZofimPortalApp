@@ -16,10 +16,10 @@
                     <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
                 <Entry Placeholder="שם משתמש..." Text="{Binding UName}" Grid.Row="0" Grid.Column="1"/>
-                <Label Text="שם משתמש:" Grid.Row="0" Grid.Column="2"/>
-                <Button Text="הצג סיסמה" Command="{Binding ShowPasswordCommand}" Grid.Row="1" Grid.Column="0"/>
+                <Label Text="שם משתמש:" Grid.Row="0" Grid.Column="0"/>
+                <ImageButton Source="EyeIcon.png" Pressed="ImageButtonEvent_Pressed" Released="ImageButtonEvent_Pressed" Grid.Row="1" Grid.Column="2"/>
                 <Entry Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="{Binding HidePassword}" Grid.Row="1" Grid.Column="1" x:Name="pass"/>
-                <Label Text="סיסמה:" Grid.Row="1" Grid.Column="2"/>
+                <Label Text="סיסמה:" Grid.Row="1" Grid.Column="0"/>
                 <Button Text="התחברות" Command="{Binding LogInCommand}" Grid.Row="2" Grid.Column="1"/>
             </Grid>
         </StackLayout>
