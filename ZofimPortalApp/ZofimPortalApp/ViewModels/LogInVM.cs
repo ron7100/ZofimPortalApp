@@ -21,11 +21,16 @@ namespace ZofimPortalApp.ViewModels
         public Command LogInCommand { get; }
 
         public event Action OnHidePassword;
+
+        private ZofimPortalAPIProxy proxy;
         public LogInVM()
         {
             HidePassword = true;
             this.ShowPasswordCommand = new Command(ShowPassword);
             this.LogInCommand = new Command(LogIn);
+            this.IsUserError = false;
+            this.IsPassError = false;
+            proxy = ZofimPortalAPIProxy.CreateProxy();
         }
 
         #region INotifyPropertyChanged
@@ -36,6 +41,7 @@ namespace ZofimPortalApp.ViewModels
         }
         #endregion
 
+        #region Properties
         private bool hidePassword;
         public bool HidePassword
         {
@@ -69,26 +75,55 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
+        private bool isUserError;
+        public bool IsUserError
+        {
+            get => isUserError;
+            set
+            {
+                isUserError = value;
+                OnPropertyChanged("IsUserError");
+            }
+        }
+
+        private bool isPassError;
+        public bool IsPassError
+        {
+            get => isPassError;
+            set
+            {
+                isPassError = value;
+                OnPropertyChanged("IsPassError");
+            }
+        }
+        #endregion
+
         private void ShowPassword()
         {
             if (OnHidePassword != null)
                 OnHidePassword();
         }
 
-        
         private void LogIn()
         {
-            ZofimPortalAPIProxy proxy = ZofimPortalAPIProxy.CreateProxy();
-            Task<Object> user = proxy.LogInAsync(this.uName, this.pass);
-            if (user == null)
+            Task<object> user = proxy.LogInAsync(this.uName, this.pass);
+            if (user.Result == null)
                 LogInFailed();
             else
-                LogInSuccess((Object)user);
+                LogInSuccess((object)user);
         }
 
         private void LogInFailed()
         {
-
+            Task<bool> isUsernameExist = proxy.IsUserExistAsync(this.UName);
+            if(isUsernameExist.Result)
+            {
+                this.IsPassError = true;
+            }
+            else
+            {
+                this.IsUserError = true;
+            }
         }
 
         private void LogInSuccess(Object u)
