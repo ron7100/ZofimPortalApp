@@ -104,13 +104,13 @@ namespace ZofimPortalApp.ViewModels
                 OnHidePassword();
         }
 
-        private void LogIn()
+        private async void LogIn()
         {
-            Task<object> user = proxy.LogInAsync(this.uName, this.pass);
-            if (user.Result == null)
+            object user = await proxy.LogInAsync(this.uName, this.pass);
+            if (user == null)
                 LogInFailed();
             else
-                LogInSuccess((object)user);
+                LogInSuccess(user);
         }
 
         private void LogInFailed()

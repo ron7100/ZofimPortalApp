@@ -21,11 +21,11 @@
                 </Grid.RowDefinitions>
                 <Entry Placeholder="שם משתמש..." Text="{Binding UName}" Grid.Row="0" Grid.Column="1"/>
                 <Label Text="שם משתמש:" Grid.Row="0" Grid.Column="0"/>
-                <Label Text="שם משתמש לא קיים" IsVisible="{Binding isUserError}" Grid.Row="1" Grid.Column="1"/>
+                <Label Text="שם משתמש לא קיים" IsVisible="{Binding IsUserError}" Grid.Row="1" Grid.Column="1"/>
                 <ImageButton Source="EyeIcon.png" Pressed="ImageButtonEvent_Pressed" Released="ImageButtonEvent_Pressed" Grid.Row="2" Grid.Column="2"/>
                 <Entry Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="{Binding HidePassword}" Grid.Row="2" Grid.Column="1" x:Name="pass"/>
                 <Label Text="סיסמה:" Grid.Row="2" Grid.Column="0"/>
-                <Label Text="סיסמה לא תואמת למשתמש" IsVisible="{Binding isPassError}" Grid.Row="3" Grid.Column="1"/>
+                <Label Text="סיסמה לא תואמת למשתמש" IsVisible="{Binding IsPassError}" Grid.Row="3" Grid.Column="1"/>
                 <Button Text="התחברות" Command="{Binding LogInCommand}" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" WidthRequest="100" />
             </Grid>
         </StackLayout>
