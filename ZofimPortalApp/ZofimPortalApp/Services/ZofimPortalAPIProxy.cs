@@ -137,6 +137,39 @@ namespace ZofimPortalApp.Services
             }
         }
 
+        public async Task<object> SignUpAsync(User user) //התחברות למשתמש
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<User>(user, options);
+                StringContent content = new StringContent(jsonObject);
+                
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/SignUp", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonContent = await response.Content.ReadAsStringAsync();
+                    User u = JsonSerializer.Deserialize<User>(jsonContent, options);
+                    await LogInAsync(u.Username, u.Password);
+                    return u;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         //Upload file to server (only images!)
         public async Task<bool> UploadImage(Models.FileInfo fileInfo, string targetFileName)
         {
