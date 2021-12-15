@@ -19,6 +19,7 @@ namespace ZofimPortalApp.ViewModels
     {
         public Command ShowPasswordCommand { get; }
         public Command LogInCommand { get; }
+        public Command ToSignUpCommand { get; }
 
         public event Action OnHidePassword;
 
@@ -30,6 +31,7 @@ namespace ZofimPortalApp.ViewModels
             this.LogInCommand = new Command(LogIn);
             this.IsUserError = false;
             this.IsPassError = false;
+            this.ToSignUpCommand= new Command(ToSignUp);
             proxy = ZofimPortalAPIProxy.CreateProxy();
         }
 
@@ -97,6 +99,12 @@ namespace ZofimPortalApp.ViewModels
             }
         }
         #endregion
+
+        public async void ToSignUp()
+        {
+            Page p = new Views.SignUp();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
 
         private void ShowPassword()
         {

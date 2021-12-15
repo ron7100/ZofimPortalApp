@@ -14,7 +14,8 @@ namespace ZofimPortalApp.ViewModels
 {
     class HomePageVM
     {
-        public Command ToLogInCommand { get; } 
+        public Command ToLogInCommand { get; }
+        public Command ToSignUpCommand { get; }
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -23,15 +24,20 @@ namespace ZofimPortalApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-        //public ICommand ToLogInCommand() => new Command(ToLogIn);
 
         public HomePageVM()
         {
             ToLogInCommand = new Command(ToLogIn);
+            ToSignUpCommand = new Command(ToSignUp);
         }
         public async void ToLogIn()
         {
             Page p = new Views.LogIn();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+        public async void ToSignUp()
+        {
+            Page p = new Views.SignUp();
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }

@@ -7,6 +7,7 @@
         <StackLayout>
             <Label Text="ברוכים הבאים לאתר הצופים!" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
             <Button Command="{Binding ToLogInCommand}" Text="להתחברות"/>
+            <Button Command="{Binding toSignUpCommand}" Text="להרשמה"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
