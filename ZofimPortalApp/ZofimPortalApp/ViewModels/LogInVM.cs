@@ -26,7 +26,6 @@ namespace ZofimPortalApp.ViewModels
         private ZofimPortalAPIProxy proxy;
         public LogInVM()
         {
-            HidePassword = true;
             this.ShowPasswordCommand = new Command(ShowPassword);
             this.LogInCommand = new Command(LogIn);
             this.IsUserError = false;
@@ -44,17 +43,6 @@ namespace ZofimPortalApp.ViewModels
         #endregion
 
         #region Properties
-        private bool hidePassword;
-        public bool HidePassword
-        {
-            get => hidePassword;
-            set
-            {
-                hidePassword = value;
-                OnPropertyChanged("HidePassword");
-            }
-        }
-
         private string uName;
         public string UName
         {
