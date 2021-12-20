@@ -9,6 +9,7 @@ using ZofimPortalApp.Services;
 using ZofimPortalApp.Models;
 using Xamarin.Essentials;
 using System.Linq;
+using ZofimPortalApp.Views;
 
 namespace ZofimPortalApp.ViewModels
 {
@@ -113,15 +114,7 @@ namespace ZofimPortalApp.ViewModels
 
         private void SignUpFailed()
         {
-            Task<bool> isUsernameExist = proxy.IsUserExistAsync(this.UName);
-            if (isUsernameExist.Result)
-            {
-                this.IsUserErrorExist = true;
-            }
-            else
-            {
-                if(this.pass.Length<8)
-            }
+            
         }
 
         private void SignUpSuccess(Object u)
