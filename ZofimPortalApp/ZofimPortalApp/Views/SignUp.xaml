@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ZofimPortalApp.Views.SignUp">
+             x:Class="ZofimPortalApp.Views.SignUp"
+             FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="הרשמה" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
@@ -28,10 +29,10 @@
                 <ImageButton Source="EyeIcon.png" Pressed="ImageButtonEvent_Pressed" Released="ImageButtonEvent_Pressed" Grid.Row="2" Grid.Column="2"/>
                 <Entry Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="{Binding HidePassword}" Grid.Row="2" Grid.Column="1" x:Name="pass"/>
                 <Label Text="סיסמה:" Grid.Row="2" Grid.Column="0"/>
-                <Label Text="סיסמה לא תואמת למשתמש" IsVisible="{Binding IsPassError}" Grid.Row="3" Grid.Column="1"/>
-                <Button Text="התחברות" Command="{Binding LogInCommand}" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" WidthRequest="100"/>
-                <Label Text="עוד לא רשום?" Grid.Row="5" Grid.Column="1" HorizontalOptions="Center"/>
-                <Button Text="להרשמה" Command="{Binding ToSignUpCommand}" Grid.Row="6" Grid.Column="1" HorizontalOptions="Center"  WidthRequest="100"/>
+                <Label Text="סיסמה חייבת להיות לפחות שישה תווים, ולכלול אותיות בעברית/אנגלית ומספרים" IsVisible="{Binding IsPassError}" Grid.Row="3" Grid.Column="1"/>
+                <Button Text="הרשמה" Command="{Binding SignUpCommand}" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" WidthRequest="100"/>
+                <Label Text="כבר רשום?" Grid.Row="5" Grid.Column="1" HorizontalOptions="Center"/>
+                <Button Text="להתחברות" Command="{Binding ToLogInCommand}" Grid.Row="6" Grid.Column="1" HorizontalOptions="Center"  WidthRequest="100"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

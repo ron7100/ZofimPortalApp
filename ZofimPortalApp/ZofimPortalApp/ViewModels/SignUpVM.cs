@@ -103,7 +103,7 @@ namespace ZofimPortalApp.ViewModels
         }
 
         private async void SignUp()
-        {
+        {//create user object here and send the data as a user to the proxy
             User user = new User();
             Object userToReturn = await proxy.SignUpAsync(user);
             if (userToReturn == null)
@@ -113,7 +113,7 @@ namespace ZofimPortalApp.ViewModels
         }
 
         private void SignUpFailed()
-        {
+        {//username already exists
             
         }
 
