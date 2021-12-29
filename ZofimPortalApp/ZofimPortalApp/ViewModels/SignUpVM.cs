@@ -28,6 +28,8 @@ namespace ZofimPortalApp.ViewModels
             this.SignUpCommand = new Command(SignUp);
             this.IsUserError = false;
             this.IsPassError = false;
+            this.IsCheckPassError = false;
+            this.ToLogInCommand = new Command(ToLogIn);
             proxy = ZofimPortalAPIProxy.CreateProxy();
         }
 
@@ -62,6 +64,17 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
+        private string checkPass;
+        public string CheckPass
+        {
+            get => checkPass;
+            set
+            {
+                checkPass = value;
+                OnPropertyChanged("CheckPass");
+            }
+        }
+
         private int id;
         public int ID
         {
@@ -92,6 +105,17 @@ namespace ZofimPortalApp.ViewModels
             {
                 isPassError = value;
                 OnPropertyChanged("IsPassError");
+            }
+        }
+
+        private bool isCheckPassError;
+        public bool IsCheckPassError
+        {
+            get => isCheckPassError;
+            set
+            {
+                isCheckPassError = value;
+                OnPropertyChanged("IsCheckPassError");
             }
         }
         #endregion
