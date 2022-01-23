@@ -81,7 +81,7 @@ namespace ZofimPortalApp.Services
 
         public string GetBasePhotoUri() { return this.basePhotosUri; }
 
-        public async Task<object> LogInAsync(string uName, string pass) //התחברות למשתמש
+        public async Task<User> LogInAsync(string uName, string pass) //התחברות למשתמש
         {
             try
             {
@@ -94,7 +94,7 @@ namespace ZofimPortalApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    object u = JsonSerializer.Deserialize<object>(content, options);
+                    User u = JsonSerializer.Deserialize<User>(content, options);
                     return u;
                 }
                 else

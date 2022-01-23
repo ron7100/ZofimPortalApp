@@ -11,7 +11,7 @@ using Xamarin.Essentials;
 using System.Linq;
 namespace ZofimPortalApp.ViewModels
 {
-    class ContactUsVM
+    class ContactUsVM : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace ZofimPortalApp.ViewModels
 {
-    class EditActivitiesVM
+    class EditActivitiesVM : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

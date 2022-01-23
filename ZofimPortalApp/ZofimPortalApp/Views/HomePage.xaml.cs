@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZofimPortalApp.ViewModels;
+using ZofimPortalApp.Models;
 
 namespace ZofimPortalApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
-        public static Object connectedUser;
+        public static User connectedUser;
         public HomePage()
         {
-            HomePageVM vm = new HomePageVM();
+            HomePageVM vm = new HomePageVM(connectedUser);
             this.BindingContext = vm;
-            connectedUser = null;
             InitializeComponent();
         }
     }

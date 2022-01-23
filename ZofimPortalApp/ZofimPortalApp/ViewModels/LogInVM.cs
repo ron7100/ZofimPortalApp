@@ -15,22 +15,18 @@ using ZofimPortalApp.Views;
 
 namespace ZofimPortalApp.ViewModels
 {
-    class LogInVM
+    class LogInVM : INotifyPropertyChanged
     {
-        public Command ShowPasswordCommand { get; }
         public Command LogInCommand { get; }
         public Command ToSignUpCommand { get; }
-
-        public event Action OnHidePassword;
 
         private ZofimPortalAPIProxy proxy;
         public LogInVM()
         {
-            this.ShowPasswordCommand = new Command(ShowPassword);
-            this.LogInCommand = new Command(LogIn);
-            this.IsUserError = false;
-            this.IsPassError = false;
-            this.ToSignUpCommand= new Command(ToSignUp);
+            LogInCommand = new Command(LogIn);
+            IsUserError = false;
+            IsPassError = false;
+            ToSignUpCommand= new Command(ToSignUp);
             proxy = ZofimPortalAPIProxy.CreateProxy();
         }
 
@@ -41,7 +37,7 @@ namespace ZofimPortalApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
+            
         #region Properties
         private string uName;
         public string UName
@@ -86,6 +82,7 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("IsPassError");
             }
         }
+
         #endregion
 
         public async void ToSignUp()
@@ -94,35 +91,31 @@ namespace ZofimPortalApp.ViewModels
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
 
-        private void ShowPassword()
-        {
-            if (OnHidePassword != null)
-                OnHidePassword();
-        }
-
         private async void LogIn()
         {
-            object user = await proxy.LogInAsync(this.uName, this.pass);
+            User user = await proxy.LogInAsync(uName, pass);
             if (user == null)
                 LogInFailed();
             else
                 LogInSuccess(user);
         }
 
-        private void LogInFailed()
+        private async void LogInFailed()
         {
-            Task<bool> isUsernameExist = proxy.IsUserExistAsync(this.UName);
-            if(isUsernameExist.Result)
+            IsUserError = false;
+            IsPassError = false;
+            bool isUsernameExist = await proxy.IsUserExistAsync(UName);
+            if(isUsernameExist)
             {
-                this.IsPassError = true;
+                IsPassError = true;
             }
             else
             {
-                this.IsUserError = true;
+                IsUserError = true;
             }
         }
 
-        private void LogInSuccess(Object u)
+        private void LogInSuccess(User u)
         {
             HomePage.connectedUser = u;
             App.Current.MainPage.Navigation.PopAsync();

@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace ZofimPortalApp.ViewModels
 {
-    class ManageShevetVM
+    class ManageShevetVM : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

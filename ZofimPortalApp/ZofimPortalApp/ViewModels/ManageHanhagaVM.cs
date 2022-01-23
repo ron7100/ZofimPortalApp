@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace ZofimPortalApp.ViewModels
 {
-    class ManageHanhagaVM
+    class ManageHanhagaVM : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

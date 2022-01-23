@@ -23,7 +23,7 @@
                 </Grid.RowDefinitions>
                 <Entry Placeholder="שם משתמש..." Text="{Binding UName}" Grid.Row="0" Grid.Column="1"/>
                 <Label Text="שם משתמש:" Grid.Row="0" Grid.Column="0"/>
-                <Label Text="שם משתמש לא קיים" IsVisible="{Binding IsUserError}" Grid.Row="1" Grid.Column="1"/>
+                <Label Text="שם משתמש לא קיים במערכת" IsVisible="{Binding IsUserError}" Grid.Row="1" Grid.Column="1"/>
                 <ImageButton Source="EyeIcon.png" Pressed="ImageButtonEvent_Pressed" Released="ImageButtonEvent_Pressed" Grid.Row="2" Grid.Column="2"/>
                 <Entry Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="True" Grid.Row="2" Grid.Column="1" x:Name="pass"/>
                 <Label Text="סיסמה:" Grid.Row="2" Grid.Column="0"/>

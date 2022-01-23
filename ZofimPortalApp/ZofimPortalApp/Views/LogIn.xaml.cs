@@ -16,7 +16,6 @@ namespace ZofimPortalApp.Views
         public LogIn()
         {
             LogInVM vm = new LogInVM();
-            vm.OnHidePassword += ImageButton_Pressed;
             this.BindingContext = vm;
             InitializeComponent();
         }

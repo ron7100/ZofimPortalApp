@@ -13,7 +13,7 @@ using ZofimPortalApp.Views;
 
 namespace ZofimPortalApp.ViewModels
 {
-    class SignUpVM
+    class SignUpVM : INotifyPropertyChanged
     {
         public Command ShowPasswordCommand { get; }
         public Command SignUpCommand { get; }
@@ -141,7 +141,7 @@ namespace ZofimPortalApp.ViewModels
             
         }
 
-        private void SignUpSuccess(Object u)
+        private void SignUpSuccess(User u)
         {
             HomePage.connectedUser = u;
             App.Current.MainPage.Navigation.PopAsync();

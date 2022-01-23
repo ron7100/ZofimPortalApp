@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace ZofimPortalApp.ViewModels
 {
-    class HomePageVM
+    class HomePageVM : INotifyPropertyChanged
     {
         public Command ToLogInCommand { get; }
         public Command ToSignUpCommand { get; }
@@ -25,10 +25,55 @@ namespace ZofimPortalApp.ViewModels
         }
         #endregion
 
-        public HomePageVM()
+        #region properties
+        private string welcomeMessage;
+        public string WelcomeMessage
+        {
+            get => welcomeMessage;
+            set
+            {
+                welcomeMessage = value;
+                OnPropertyChanged("WelcomeMessage");
+            }
+        }
+
+        private bool isConnected;
+        public bool IsConnected
+        {
+            get => isConnected;
+            set
+            {
+                isConnected = value;
+                OnPropertyChanged("IsConnected");
+            }
+        }
+
+        private bool notConnected;
+        public bool NotConnected
+        {
+            get => notConnected;
+            set
+            {
+                notConnected = value;
+                OnPropertyChanged("NotConnected");
+            }
+        }
+        #endregion
+
+        public HomePageVM(User u)
         {
             ToLogInCommand = new Command(ToLogIn);
             ToSignUpCommand = new Command(ToSignUp);
+            if(u!=null)
+            {
+                WelcomeMessage = "מחובר כעת: " + u.Username;
+                SignedIn();
+            }
+        }
+        public void SignedIn()
+        {
+            IsConnected = true;
+            NotConnected = false;
         }
         public async void ToLogIn()
         {
