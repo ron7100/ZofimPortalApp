@@ -13,13 +13,13 @@
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.2*"/>
-                    <ColumnDefinition Width="0.6*"/>
-                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
             </Grid>
-            <Button Command="{Binding SignOut}" IsVisible="{Binding IsConnected}" Text="התנתק" Grid.Row="0" Grid.Column="2"/>
-            <Label Text="{Binding WelcomeMessage}" Grid.Row="0" Grid.Column="0"/>
+            <Button Command="{Binding SignOutCommand}" IsVisible="{Binding IsConnected}" Text="התנתק" Grid.Row="0" Grid.Column="0" WidthRequest="100"/>
+            <Label Text="{Binding WelcomeMessage}" Grid.Row="0" Grid.Column="2"/>
             <Label Text="ברוכים הבאים לאתר הצופים!" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="1"/>
             <Button Command="{Binding ToLogInCommand}" IsVisible="{Binding NotConnected}" Text="להתחברות" Grid.Row="2" Grid.Column="1" WidthRequest="50"/>
             <Button Command="{Binding ToSignUpCommand}" IsVisible="{Binding NotConnected}" Text="להרשמה" Grid.Row="3" Grid.Column="1" WidthRequest="50"/>

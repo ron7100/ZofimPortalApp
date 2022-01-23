@@ -115,10 +115,11 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private void LogInSuccess(User u)
+        private async void LogInSuccess(User u)
         {
             HomePage.connectedUser = u;
-            App.Current.MainPage.Navigation.PopAsync();
+            Page p = new Views.HomePage();
+            await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }
 }

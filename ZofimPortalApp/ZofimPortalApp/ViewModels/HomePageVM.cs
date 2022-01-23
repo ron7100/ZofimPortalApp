@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using ZofimPortalApp.Services;
 using ZofimPortalApp.Models;
+using ZofimPortalApp.Views;
 using Xamarin.Essentials;
 using System.Linq;
 
@@ -16,6 +17,7 @@ namespace ZofimPortalApp.ViewModels
     {
         public Command ToLogInCommand { get; }
         public Command ToSignUpCommand { get; }
+        public Command SignOutCommand { get; }
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -64,10 +66,16 @@ namespace ZofimPortalApp.ViewModels
         {
             ToLogInCommand = new Command(ToLogIn);
             ToSignUpCommand = new Command(ToSignUp);
+            SignOutCommand = new Command(SignOut);
             if(u!=null)
             {
                 WelcomeMessage = "מחובר כעת: " + u.Username;
                 SignedIn();
+            }
+            else
+            {
+                NotConnected = true;
+                IsConnected = false;
             }
         }
         public void SignedIn()
@@ -75,6 +83,15 @@ namespace ZofimPortalApp.ViewModels
             IsConnected = true;
             NotConnected = false;
         }
+
+        public void SignOut()
+        {
+            IsConnected = false;
+            NotConnected = true;
+            HomePage.connectedUser = null;
+            WelcomeMessage = "";
+        }
+
         public async void ToLogIn()
         {
             Page p = new Views.LogIn();
