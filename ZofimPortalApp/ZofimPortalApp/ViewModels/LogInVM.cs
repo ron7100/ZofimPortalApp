@@ -19,14 +19,16 @@ namespace ZofimPortalApp.ViewModels
     {
         public Command LogInCommand { get; }
         public Command ToSignUpCommand { get; }
+        public Command BackToHomePageCommand { get; }
 
         private ZofimPortalAPIProxy proxy;
         public LogInVM()
         {
             LogInCommand = new Command(LogIn);
+            ToSignUpCommand = new Command(ToSignUp);
+            BackToHomePageCommand = new Command(BackToHomePage);
             IsUserError = false;
             IsPassError = false;
-            ToSignUpCommand= new Command(ToSignUp);
             proxy = ZofimPortalAPIProxy.CreateProxy();
         }
 
@@ -120,6 +122,11 @@ namespace ZofimPortalApp.ViewModels
             HomePage.connectedUser = u;
             Page p = new Views.HomePage();
             await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+
+        private async void BackToHomePage()
+        {
+            await App.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

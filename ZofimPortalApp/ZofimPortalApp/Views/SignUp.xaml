@@ -5,6 +5,7 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
+            <Button Text="חזור" Command="{Binding BackToHomePageCommand}" HorizontalOptions="Start" WidthRequest="100"/>
             <Label Text="הרשמה" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
             <Grid>
                 <Grid.ColumnDefinitions>

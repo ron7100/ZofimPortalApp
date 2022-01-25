@@ -18,18 +18,20 @@ namespace ZofimPortalApp.ViewModels
         public Command ShowPasswordCommand { get; }
         public Command SignUpCommand { get; }
         public Command ToLogInCommand { get; }
+        public Command BackToHomePageCommand { get; }
 
         public event Action OnHidePassword;
 
         private ZofimPortalAPIProxy proxy;
         public SignUpVM()
         {
-            this.ShowPasswordCommand = new Command(ShowPassword);
-            this.SignUpCommand = new Command(SignUp);
-            this.IsUserError = false;
-            this.IsPassError = false;
-            this.IsCheckPassError = false;
-            this.ToLogInCommand = new Command(ToLogIn);
+            ShowPasswordCommand = new Command(ShowPassword);
+            SignUpCommand = new Command(SignUp);
+            ToLogInCommand = new Command(ToLogIn);
+            BackToHomePageCommand = new Command(BackToHomePage);
+            IsUserError = false;
+            IsPassError = false;
+            IsCheckPassError = false;
             proxy = ZofimPortalAPIProxy.CreateProxy();
         }
 
@@ -153,6 +155,9 @@ namespace ZofimPortalApp.ViewModels
                 OnHidePassword();
         }
 
-
+        private async void BackToHomePage()
+        {
+            await App.Current.MainPage.Navigation.PopAsync();
+        }
     }
 }
