@@ -15,20 +15,23 @@ namespace ZofimPortalApp.ViewModels
 {
     class SignUpVM : INotifyPropertyChanged
     {
-        public Command ShowPasswordCommand { get; }
+        public Command TogglePasswordCommand { get; }
+        public Command ToggleCheckPasswordCommand { get; }
         public Command SignUpCommand { get; }
         public Command ToLogInCommand { get; }
         public Command BackToHomePageCommand { get; }
 
-        public event Action OnHidePassword;
 
         private ZofimPortalAPIProxy proxy;
         public SignUpVM()
         {
-            ShowPasswordCommand = new Command(ShowPassword);
+            TogglePasswordCommand = new Command(TogglePassword);
+            ToggleCheckPasswordCommand = new Command(ToggleCheckPassword);
             SignUpCommand = new Command(SignUp);
             ToLogInCommand = new Command(ToLogIn);
             BackToHomePageCommand = new Command(BackToHomePage);
+            IsPassword = true;
+            IsCheckPassword = true;
             IsUserError = false;
             IsPassError = false;
             IsCheckPassError = false;
@@ -77,14 +80,36 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private int id;
-        public int ID
+        private int userType;
+        public int UserType
         {
-            get => id;
+            get => userType;
             set
             {
-                id = value;
-                OnPropertyChanged("ID");
+                userType = value;
+                OnPropertyChanged("UserType");
+            }
+        }
+
+        private bool isPassword;
+        public bool IsPassword
+        {
+            get => isPassword;
+            set
+            {
+                isPassword = value;
+                OnPropertyChanged("IsPassword");
+            }
+        }
+
+        private bool isCheckPassword;
+        public bool IsCheckPassword
+        {
+            get => isCheckPassword;
+            set
+            {
+                isCheckPassword = value;
+                OnPropertyChanged("IsCheckPassword");
             }
         }
 
@@ -149,10 +174,14 @@ namespace ZofimPortalApp.ViewModels
             App.Current.MainPage.Navigation.PopAsync();
         }
 
-        private void ShowPassword()
+        private void TogglePassword()
         {
-            if (OnHidePassword != null)
-                OnHidePassword();
+            IsPassword=!IsPassword;
+        }
+
+        private void ToggleCheckPassword()
+        {
+            IsCheckPassword = !IsCheckPassword;
         }
 
         private async void BackToHomePage()

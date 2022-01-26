@@ -16,30 +16,8 @@ namespace ZofimPortalApp.Views
         public SignUp()
         {
             SignUpVM vm = new SignUpVM();
-            vm.OnHidePassword += ImageButton_Pressed;
-            vm.OnHidePassword += ImageButton_Pressed2;
             this.BindingContext = vm;
             InitializeComponent();
-        }
-
-        private void ImageButton_Pressed()
-        {
-            pass.IsPassword = !pass.IsPassword;
-        }
-
-        private void ImageButton_Pressed2()
-        {
-            checkPass.IsPassword = !checkPass.IsPassword;
-        }
-
-        private void ImageButtonEvent_Pressed(object sender, EventArgs e)
-        {
-            ImageButton_Pressed();
-        }
-
-        private void ImageButtonEvent_Pressed2(object sender, EventArgs e)
-        {
-            ImageButton_Pressed2();
         }
     }
 }
