@@ -54,6 +54,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 uName = value;
+                CheckUName();
                 OnPropertyChanged("UName");
             }
         }
@@ -65,6 +66,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 pass = value;
+                CheckPassword();
                 OnPropertyChanged("Pass");
             }
         }
@@ -76,6 +78,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 checkPass = value;
+                CheckCheckPassword();
                 OnPropertyChanged("CheckPass");
             }
         }
@@ -124,6 +127,28 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
+        private string userError;
+        public string UserError
+        {
+            get => userError;
+            set
+            {
+                userError = value;
+                OnPropertyChanged("UserError");
+            }
+        }
+
+        private string passError;
+        public string PassError
+        {
+            get => passError;
+            set
+            {
+                passError = value;
+                OnPropertyChanged("PassError");
+            }
+        }
+
         private bool isPassError;
         public bool IsPassError
         {
@@ -165,8 +190,94 @@ namespace ZofimPortalApp.ViewModels
 
         private void SignUpFailed()
         {//username already exists
-            
+
         }
+
+        #region check fields
+        private void CheckUName()
+        {
+            IsUserError = false;
+            bool userLengthError = UName.Length < 3;
+            bool userCharsError = false;
+
+            bool isThereLetterOrNumber = false;
+            bool noSpecialSigns = true;
+            foreach (char c in UName)
+            {
+                if (char.IsDigit(c))
+                    isThereLetterOrNumber = true;
+                else if (char.IsLetter(c))
+                    isThereLetterOrNumber = true;
+                else if (c >= 'א' && c <= 'ת')
+                    isThereLetterOrNumber = true;
+                else
+                    noSpecialSigns = false;
+            }
+            if (!(noSpecialSigns && isThereLetterOrNumber))
+            {
+                userCharsError = true;
+            }
+            if (userCharsError && !userLengthError)
+            {
+                UserError = "שם המשתמש חייב לכלול אותיות בעברית/אנגלית ומספרים בלבד";
+                IsUserError = true;
+            } else if (userLengthError)
+            {
+                UserError = "שם המשתמש חייב להיות לפחות שלושה תווים, ולכלול אותיות בעברית/אנגלית ומספרים בלבד";
+                IsUserError = true;
+            } else
+                IsUserError = false;
+        }
+        
+        private void CheckPassword()
+        {
+            IsPassError = false;
+            bool passLengthError = Pass.Length < 6;
+            bool passCharsError = false;
+
+            bool isThereLetter = false;
+            bool isThereNumber = false;
+            bool noSpecialSigns = true;
+            foreach (char c in Pass)
+            {
+                if (char.IsDigit(c))
+                    isThereNumber = true;
+                else if (char.IsLetter(c))
+                    isThereLetter = true;
+                else if (c >= 'א' && c <= 'ת')
+                    isThereLetter = true;
+                else
+                    noSpecialSigns = false;
+            }
+            if (!(noSpecialSigns && isThereLetter && isThereNumber))
+            {
+                passCharsError = true;
+            }
+            if (passCharsError && !passLengthError)
+            {
+                PassError = "הסיסמה חייבת לכלול גם אותיות בעברית/אנגלית וגם מספרים, בלי תווים אחרים";
+                IsPassError = true;
+            }
+            else if (passLengthError)
+            {
+                PassError = "הסיסמה חייבת להיות לפחות שישה תווים, ולכלול גם אותיות בעברית/אנגלית וגם מספרים, בלי תווים אחרים";
+                IsPassError = true;
+            }
+            else
+                IsPassError = false;
+            if(CheckPass!=null)
+                CheckCheckPassword();
+        }
+
+        private void CheckCheckPassword()
+        {
+            IsCheckPassError = false;
+            if (pass != checkPass)
+                IsCheckPassError = true;
+            else
+                IsCheckPassError = false;
+        }
+        #endregion
 
         private void SignUpSuccess(User u)
         {

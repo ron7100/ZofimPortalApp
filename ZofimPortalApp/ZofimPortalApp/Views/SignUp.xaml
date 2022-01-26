@@ -25,13 +25,13 @@
                     <RowDefinition Height="20"/><!--9-->
                     <RowDefinition Height="50"/><!--10-->
                 </Grid.RowDefinitions>
-                <Entry Placeholder="שם משתמש..." Text="{Binding UName}" Grid.Row="0" Grid.Column="1"/>
+                <Entry Placeholder="שם משתמש..." Text="{Binding UName}"  Grid.Row="0" Grid.Column="1"/>
                 <Label Text="שם משתמש:" Grid.Row="0" Grid.Column="0"/>
-                <Label Text="שם משתמש חייב להיות לפחות שלושה תווים" IsVisible="{Binding IsUserError}" Grid.Row="1" Grid.Column="1"/>
+                <Label Text="{Binding UserError}" IsVisible="{Binding IsUserError}" Grid.Row="1" Grid.Column="1"/>
                 <ImageButton Source="EyeIcon.png" Command="{Binding TogglePasswordCommand}" Grid.Row="2" Grid.Column="2"/>
                 <Entry Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="{Binding IsPassword}" Grid.Row="2" Grid.Column="1" x:Name="pass"/>
                 <Label Text="סיסמה:" Grid.Row="2" Grid.Column="0"/>
-                <Label Text="סיסמה חייבת להיות לפחות שישה תווים, ולכלול אותיות בעברית/אנגלית ומספרים" IsVisible="{Binding IsPassError}" Grid.Row="3" Grid.Column="1"/>
+                <Label Text="{Binding PassError}" IsVisible="{Binding IsPassError}" Grid.Row="3" Grid.Column="1"/>
                 <ImageButton Source="EyeIcon.png" Command="{Binding ToggleCheckPasswordCommand}" Grid.Row="4" Grid.Column="2"/>
                 <Entry Placeholder="אשר סיסמה..." Text="{Binding CheckPass}" IsPassword="{Binding IsCheckPassword}" Grid.Row="4" Grid.Column="1" x:Name="checkPass"/>
                 <Label Text="אשר סיסמה:" Grid.Row="4" Grid.Column="0"/>
