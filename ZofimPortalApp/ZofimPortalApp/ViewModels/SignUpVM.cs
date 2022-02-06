@@ -10,6 +10,7 @@ using ZofimPortalApp.Models;
 using Xamarin.Essentials;
 using System.Linq;
 using ZofimPortalApp.Views;
+using System.Text.RegularExpressions;
 
 namespace ZofimPortalApp.ViewModels
 {
@@ -32,7 +33,7 @@ namespace ZofimPortalApp.ViewModels
             BackToHomePageCommand = new Command(BackToHomePage);
             IsPassword = true;
             IsCheckPassword = true;
-            IsUserError = false;
+            IsEmailError = false;
             IsPassError = false;
             IsCheckPassError = false;
             proxy = ZofimPortalAPIProxy.CreateProxy();
@@ -47,15 +48,39 @@ namespace ZofimPortalApp.ViewModels
         #endregion
 
         #region Properties
-        private string uName;
-        public string UName
+        private string email;
+        public string Email
         {
-            get => uName;
+            get => email;
             set
             {
-                uName = value;
+                email = value;
                 CheckUName();
-                OnPropertyChanged("UName");
+                OnPropertyChanged("Email");
+            }
+        }
+
+        private string fName;
+        public string FName
+        {
+            get => fName;
+            set
+            {
+                fName = value;
+                CheckFName();
+                OnPropertyChanged("FName");
+            }
+        }
+
+        private string lName;
+        public string LName
+        {
+            get => lName;
+            set
+            {
+                lName = value;
+                CheckLName();
+                OnPropertyChanged("LName");
             }
         }
 
@@ -116,25 +141,25 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private bool isUserError;
-        public bool IsUserError
+        private bool isEmailError;
+        public bool IsEmailError
         {
-            get => isUserError;
+            get => isEmailError;
             set
             {
-                isUserError = value;
-                OnPropertyChanged("IsUserError");
+                isEmailError = value;
+                OnPropertyChanged("IsEmailError");
             }
         }
 
-        private string userError;
-        public string UserError
+        private string emailError;
+        public string EmailError
         {
-            get => userError;
+            get => emailError;
             set
             {
-                userError = value;
-                OnPropertyChanged("UserError");
+                emailError = value;
+                OnPropertyChanged("EmailError");
             }
         }
 
@@ -181,6 +206,9 @@ namespace ZofimPortalApp.ViewModels
         private async void SignUp()
         {//create user object here and send the data as a user to the proxy
             User user = new User();
+            user.Email = email;
+            user.Password = pass;
+            user.
             Object userToReturn = await proxy.SignUpAsync(user);
             if (userToReturn == null)
                 SignUpFailed();
@@ -194,39 +222,17 @@ namespace ZofimPortalApp.ViewModels
         }
 
         #region check fields
-        private void CheckUName()
+        private void CheckEmail()
         {
-            IsUserError = false;
-            bool userLengthError = UName.Length < 3;
-            bool userCharsError = false;
-
-            bool isThereLetterOrNumber = false;
-            bool noSpecialSigns = true;
-            foreach (char c in UName)
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(email);
+            if (match.Success)
+                IsEmailError = false;
+            else
             {
-                if (char.IsDigit(c))
-                    isThereLetterOrNumber = true;
-                else if (char.IsLetter(c))
-                    isThereLetterOrNumber = true;
-                else if (c >= 'א' && c <= 'ת')
-                    isThereLetterOrNumber = true;
-                else
-                    noSpecialSigns = false;
+                IsEmailError = true;
+                EmailError = "כתובת מייל לא חוקית";
             }
-            if (!(noSpecialSigns && isThereLetterOrNumber))
-            {
-                userCharsError = true;
-            }
-            if (userCharsError && !userLengthError)
-            {
-                UserError = "שם המשתמש חייב לכלול אותיות בעברית/אנגלית ומספרים בלבד";
-                IsUserError = true;
-            } else if (userLengthError)
-            {
-                UserError = "שם המשתמש חייב להיות לפחות שלושה תווים, ולכלול אותיות בעברית/אנגלית ומספרים בלבד";
-                IsUserError = true;
-            } else
-                IsUserError = false;
         }
         
         private void CheckPassword()
