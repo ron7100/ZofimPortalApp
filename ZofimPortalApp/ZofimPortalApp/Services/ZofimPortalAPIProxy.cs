@@ -147,7 +147,7 @@ namespace ZofimPortalApp.Services
                     PropertyNameCaseInsensitive = true
                 };
                 string jsonObject = JsonSerializer.Serialize<User>(user, options);
-                StringContent content = new StringContent(jsonObject);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
                 
                 HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/SignUp", content);
 

@@ -8,7 +8,7 @@ namespace ZofimPortalApp.Models
     {
         public Cadet()
         {
-            ActivitiesHistories = new HashSet<ActivitiesHistory>();
+            ActivitiesHistories = new List<ActivitiesHistory>();
         }
 
         public string FName { get; set; }
@@ -20,6 +20,6 @@ namespace ZofimPortalApp.Models
 
         public virtual Role Role { get; set; }
         public virtual Shevet Shevet { get; set; }
-        public virtual ICollection<ActivitiesHistory> ActivitiesHistories { get; set; }
+        public virtual List<ActivitiesHistory> ActivitiesHistories { get; set; }
     }
 }

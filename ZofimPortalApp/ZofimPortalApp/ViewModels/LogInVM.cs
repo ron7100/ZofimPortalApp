@@ -27,7 +27,7 @@ namespace ZofimPortalApp.ViewModels
             LogInCommand = new Command(LogIn);
             ToSignUpCommand = new Command(ToSignUp);
             BackToHomePageCommand = new Command(BackToHomePage);
-            IsUserError = false;
+            IsEmailError = false;
             IsPassError = false;
             proxy = ZofimPortalAPIProxy.CreateProxy();
         }
@@ -41,14 +41,14 @@ namespace ZofimPortalApp.ViewModels
         #endregion
             
         #region Properties
-        private string uName;
-        public string UName
+        private string email;
+        public string Email
         {
-            get => uName;
+            get => email;
             set
             {
-                uName = value;
-                OnPropertyChanged("UName");
+                email = value;
+                OnPropertyChanged("Email");
             }
         }
 
@@ -63,14 +63,14 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private bool isUserError;
-        public bool IsUserError
+        private bool isEmailError;
+        public bool IsEmailError
         {
-            get => isUserError;
+            get => isEmailError;
             set
             {
-                isUserError = value;
-                OnPropertyChanged("IsUserError");
+                isEmailError = value;
+                OnPropertyChanged("IsEmailError");
             }
         }
 
@@ -95,7 +95,7 @@ namespace ZofimPortalApp.ViewModels
 
         private async void LogIn()
         {
-            User user = await proxy.LogInAsync(uName, pass);
+            User user = await proxy.LogInAsync(email, pass);
             if (user == null)
                 LogInFailed();
             else
@@ -104,16 +104,16 @@ namespace ZofimPortalApp.ViewModels
 
         private async void LogInFailed()
         {
-            IsUserError = false;
+            IsEmailError = false;
             IsPassError = false;
-            bool isUsernameExist = await proxy.IsUserExistAsync(UName);
+            bool isUsernameExist = await proxy.IsUserExistAsync(Email);
             if(isUsernameExist)
             {
                 IsPassError = true;
             }
             else
             {
-                IsUserError = true;
+                IsEmailError = true;
             }
         }
 

@@ -34,6 +34,9 @@ namespace ZofimPortalApp.ViewModels
             IsPassword = true;
             IsCheckPassword = true;
             IsEmailError = false;
+            IsFNameError = false;
+            IsLNameError = false;
+            IsPersonalIDError = false;
             IsPassError = false;
             IsCheckPassError = false;
             proxy = ZofimPortalAPIProxy.CreateProxy();
@@ -87,7 +90,7 @@ namespace ZofimPortalApp.ViewModels
         private string personalID;
         public string PersonalID
         {
-            get => PersonalID;
+            get => personalID;
             set
             {
                 personalID = value;
@@ -280,6 +283,7 @@ namespace ZofimPortalApp.ViewModels
             }    
             //create user object here and send the data as a user to the proxy
             User user = new User();
+            //add the correct ID
             user.Email = email;
             user.FirstName = fName;
             user.LastName = lName;

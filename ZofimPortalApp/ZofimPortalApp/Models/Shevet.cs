@@ -8,9 +8,9 @@ namespace ZofimPortalApp.Models
     {
         public Shevet()
         {
-            Cadets = new HashSet<Cadet>();
-            Parents = new HashSet<Parent>();
-            Workers = new HashSet<Worker>();
+            Cadets = new List<Cadet>();
+            Parents = new List<Parent>();
+            Workers = new List<Worker>();
         }
 
         public string Name { get; set; }
@@ -19,8 +19,8 @@ namespace ZofimPortalApp.Models
         public int Id { get; set; }
 
         public virtual Hanhaga Hanhaga { get; set; }
-        public virtual ICollection<Cadet> Cadets { get; set; }
-        public virtual ICollection<Parent> Parents { get; set; }
-        public virtual ICollection<Worker> Workers { get; set; }
+        public virtual List<Cadet> Cadets { get; set; }
+        public virtual List<Parent> Parents { get; set; }
+        public virtual List<Worker> Workers { get; set; }
     }
 }

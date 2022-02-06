@@ -7,12 +7,12 @@ namespace ZofimPortalApp.Models
     {
         public Role()
         {
-            Cadets = new HashSet<Cadet>();
+            Cadets = new List<Cadet>();
         }
 
         public string RoleName { get; set; }
         public int Id { get; set; }
 
-        public virtual ICollection<Cadet> Cadets { get; set; }
+        public virtual List<Cadet> Cadets { get; set; }
     }
 }

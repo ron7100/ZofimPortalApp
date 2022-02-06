@@ -7,8 +7,8 @@ namespace ZofimPortalApp.Models
     {
         public User()
         {
-            Parents = new HashSet<Parent>();
-            Workers = new HashSet<Worker>();
+            Parents = new List<Parent>();
+            Workers = new List<Worker>();
         }
 
         public string Email { get; set; }
@@ -18,7 +18,7 @@ namespace ZofimPortalApp.Models
         public string Password { get; set; }
         public int Id { get; set; }
 
-        public virtual ICollection<Parent> Parents { get; set; }
-        public virtual ICollection<Worker> Workers { get; set; }
+        public virtual List<Parent> Parents { get; set; }
+        public virtual List<Worker> Workers { get; set; }
     }
 }

@@ -7,8 +7,8 @@ namespace ZofimPortalApp.Models
     {
         public Hanhaga()
         {
-            Shevets = new HashSet<Shevet>();
-            Workers = new HashSet<Worker>();
+            Shevets = new List<Shevet>();
+            Workers = new List<Worker>();
         }
 
         public string Name { get; set; }
@@ -16,7 +16,7 @@ namespace ZofimPortalApp.Models
         public string GeneralArea { get; set; }
         public int Id { get; set; }
 
-        public virtual ICollection<Shevet> Shevets { get; set; }
-        public virtual ICollection<Worker> Workers { get; set; }
+        public virtual List<Shevet> Shevets { get; set; }
+        public virtual List<Worker> Workers { get; set; }
     }
 }
