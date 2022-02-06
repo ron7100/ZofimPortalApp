@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ZofimPortalApp.Models
 {
-    public partial class CadetParent
+    public class CadetParent
     {
         public int ParentId { get; set; }
         public int CadetId { get; set; }

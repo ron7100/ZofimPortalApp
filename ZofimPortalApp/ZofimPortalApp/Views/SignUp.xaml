@@ -14,16 +14,23 @@
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/><!--1-->
-                    <RowDefinition Height="20"/><!--2-->
-                    <RowDefinition Height="50"/><!--3-->
-                    <RowDefinition Height="20"/><!--4-->
-                    <RowDefinition Height="50"/><!--5-->
-                    <RowDefinition Height="20"/><!--6-->
-                    <RowDefinition Height="50"/><!--7-->
+                    <RowDefinition Height="50"/><!--0-->
+                    <RowDefinition Height="20"/><!--1-->
+                    <RowDefinition Height="50"/><!--2-->
+                    <RowDefinition Height="20"/><!--3-->
+                    <RowDefinition Height="50"/><!--4-->
+                    <RowDefinition Height="20"/><!--5-->
+                    <RowDefinition Height="50"/><!--6-->
+                    <RowDefinition Height="20"/><!--7-->
                     <RowDefinition Height="50"/><!--8-->
                     <RowDefinition Height="20"/><!--9-->
                     <RowDefinition Height="50"/><!--10-->
+                    <RowDefinition Height="20"/><!--11-->
+                    <RowDefinition Height="50"/><!--12-->
+                    <RowDefinition Height="50"/><!--13-->
+                    <RowDefinition Height="20"/><!--14-->
+                    <RowDefinition Height="20"/><!--15-->
+                    <RowDefinition Height="50"/><!--16-->
                 </Grid.RowDefinitions>
                 <Entry Placeholder="מייל..." Text="{Binding Email}"  Grid.Row="0" Grid.Column="1"/>
                 <Label Text="מייל:" Grid.Row="0" Grid.Column="0"/>
@@ -37,24 +44,25 @@
                 <Entry Placeholder="תעודת זהות..." Text="{Binding PersonalID}" Grid.Row="6" Grid.Column="1"/>
                 <Label Text="תעודת זהות:" Grid.Row="6" Grid.Column="0"/>
                 <Label Text="{Binding PersonalIDError}" IsVisible="{Binding IsPersonalIDError}" Grid.Row="7" Grid.Column="1"/>
-                <ImageButton Source="EyeIcon.png" Command="{Binding TogglePasswordCommand}" Grid.Row="2" Grid.Column="2"/>
-                <Entry Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="{Binding IsPassword}" Grid.Row="2" Grid.Column="1" x:Name="pass"/>
-                <Label Text="סיסמה:" Grid.Row="2" Grid.Column="0"/>
-                <Label Text="{Binding PassError}" IsVisible="{Binding IsPassError}" Grid.Row="3" Grid.Column="1"/>
-                <ImageButton Source="EyeIcon.png" Command="{Binding ToggleCheckPasswordCommand}" Grid.Row="4" Grid.Column="2"/>
-                <Entry Placeholder="אשר סיסמה..." Text="{Binding CheckPass}" IsPassword="{Binding IsCheckPassword}" Grid.Row="4" Grid.Column="1" x:Name="checkPass"/>
-                <Label Text="אשר סיסמה:" Grid.Row="4" Grid.Column="0"/>
-                <Label Text="הסיסמה לא תואמת לסיסמה הקודמת" IsVisible="{Binding IsCheckPassError}" Grid.Row="5" Grid.Column="1"/>
-                <Label Text="סוג משתמש:" Grid.Row="6" Grid.Column="0"/>
-                <Picker SelectedIndex="{Binding UserType}" Grid.Row="6" Grid.Column="1" >
+                <ImageButton Source="EyeIcon.png" Command="{Binding TogglePasswordCommand}" Grid.Row="8" Grid.Column="2"/>
+                <Entry Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="{Binding IsPassword}" Grid.Row="8" Grid.Column="1" x:Name="pass"/>
+                <Label Text="סיסמה:" Grid.Row="8" Grid.Column="0"/>
+                <Label Text="{Binding PassError}" IsVisible="{Binding IsPassError}" Grid.Row="9" Grid.Column="1"/>
+                <ImageButton Source="EyeIcon.png" Command="{Binding ToggleCheckPasswordCommand}" Grid.Row="10" Grid.Column="2"/>
+                <Entry Placeholder="אשר סיסמה..." Text="{Binding CheckPass}" IsPassword="{Binding IsCheckPassword}" Grid.Row="10" Grid.Column="1" x:Name="checkPass"/>
+                <Label Text="אשר סיסמה:" Grid.Row="10" Grid.Column="0"/>
+                <Label Text="הסיסמה לא תואמת לסיסמה הקודמת" IsVisible="{Binding IsCheckPassError}" Grid.Row="11" Grid.Column="1"/>
+                <Label Text="סוג משתמש:" Grid.Row="12" Grid.Column="0"/>
+                <Picker SelectedIndex="{Binding UserType}" Grid.Row="12" Grid.Column="1" >
                     <Picker.Items>
                         <x:String>עובד</x:String>
                         <x:String>הורה</x:String>
                     </Picker.Items>
                 </Picker>
-                <Button Text="הרשמה" Command="{Binding SignUpCommand}" Grid.Row="7" Grid.Column="1" HorizontalOptions="Center" WidthRequest="100"/>
-                <Label Text="כבר רשום?" Grid.Row="8" Grid.Column="1" HorizontalOptions="Center"/>
-                <Button Text="להתחברות" Command="{Binding ToLogInCommand}" Grid.Row="9" Grid.Column="1" HorizontalOptions="Center"  WidthRequest="100"/>
+                <Button Text="הרשמה" Command="{Binding SignUpCommand}" Grid.Row="13" Grid.Column="1" HorizontalOptions="Center" WidthRequest="100"/>
+                <Label Text="ישנן בעיות בטופס" IsVisible="{Binding IsThereError}" Grid.Row="14" Grid.Column="1" HorizontalOptions="Center"/>
+                <Label Text="כבר רשום?" Grid.Row="15" Grid.Column="1" HorizontalOptions="Center"/>
+                <Button Text="להתחברות" Command="{Binding ToLogInCommand}" Grid.Row="16" Grid.Column="1" HorizontalOptions="Center"  WidthRequest="100"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

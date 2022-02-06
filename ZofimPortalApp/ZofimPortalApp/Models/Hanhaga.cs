@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ZofimPortalApp.Models
 {
-    public partial class Hanhaga
+    public class Hanhaga
     {
         public Hanhaga()
         {

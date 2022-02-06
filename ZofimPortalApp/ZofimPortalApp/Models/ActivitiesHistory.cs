@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-#nullable disable
-
-namespace ZofimPortalServerBL.Models
+namespace ZofimPortalApp.Models
 {
-    public partial class ActivitiesHistory
+    public class ActivitiesHistory
     {
         public int CadetId { get; set; }
         public string Activity { get; set; }

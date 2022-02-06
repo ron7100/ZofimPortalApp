@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ZofimPortalApp.Models
 {
-    public partial class Parent
+    public class Parent
     {
         public int ShevetId { get; set; }
         public int UserId { get; set; }

@@ -155,7 +155,7 @@ namespace ZofimPortalApp.Services
                 {
                     string jsonContent = await response.Content.ReadAsStringAsync();
                     User u = JsonSerializer.Deserialize<User>(jsonContent, options);
-                    await LogInAsync(u.Username, u.Password);
+                    await LogInAsync(u.Email, u.Password);
                     return u;
                 }
                 else

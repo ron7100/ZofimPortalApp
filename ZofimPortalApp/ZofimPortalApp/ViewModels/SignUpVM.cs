@@ -55,7 +55,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 email = value;
-                CheckUName();
+                CheckEmail();
                 OnPropertyChanged("Email");
             }
         }
@@ -164,6 +164,17 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
+        private string emailError;
+        public string EmailError
+        {
+            get => emailError;
+            set
+            {
+                emailError = value;
+                OnPropertyChanged("EmailError");
+            }
+        }
+
         private bool isFNameError;
         public bool IsFNameError
         {
@@ -240,6 +251,17 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("IsCheckPassError");
             }
         }
+
+        private bool isThereError;
+        public bool IsThereError
+        {
+            get => isThereError;
+            set
+            {
+                isThereError = value;
+                OnPropertyChanged("IsThereError");
+            }
+        }
         #endregion
 
         public async void ToLogIn()
@@ -249,13 +271,20 @@ namespace ZofimPortalApp.ViewModels
         }
 
         private async void SignUp()
-        {//create user object here and send the data as a user to the proxy
+        {
+            IsThereError = false;
+            if(isEmailError||isFNameError||isLNameError||isPassError||IsPersonalIDError)
+            {
+                IsThereError = true;
+                return;
+            }    
+            //create user object here and send the data as a user to the proxy
             User user = new User();
             user.Email = email;
-            user.Password = pass;
             user.FirstName = fName;
             user.LastName = lName;
             user.PersonalId = personalID;
+            user.Password = pass;
             Object userToReturn = await proxy.SignUpAsync(user);
             if (userToReturn == null)
                 SignUpFailed();
@@ -264,36 +293,54 @@ namespace ZofimPortalApp.ViewModels
         }
 
         private void SignUpFailed()
-        {//username already exists
-
+        {
+            //email already exists
+            IsEmailError = true;
+            EmailError = "המייל כבר קיים במערכת";
         }
 
         #region check fields
         private void CheckEmail()
         {
+
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             Match match = regex.Match(email);
-            if (match.Success)
-                IsEmailError = false;
-            else
-            {
-                IsEmailError = true;
+            IsEmailError = !match.Success;
+            if (IsEmailError)
                 EmailError = "כתובת מייל לא חוקית";
-            }
         }
         
         private void CheckFName()
         {
-            isFNameError = false;
+            IsFNameError = false;
             if (FName == null)
-                isFNameError = true;
+                IsFNameError = true;
         }
 
-        private void CheckFName()
+        private void CheckLName()
         {
-            isFNameError = false;
-            if (FName == null)
-                isFNameError = true;
+            IsLNameError = false;
+            if (LName == null)
+                IsLNameError = true;
+        }
+
+        private void CheckID()
+        {
+            IsPersonalIDError = false;
+            if(PersonalID.Length!=9)
+            {
+                IsPersonalIDError = true;
+                PersonalIDError = "תעודת זהות חייבת לכלול 9 ספרות";
+                return;
+            }
+            foreach (char c in PersonalID)
+            {
+                if (c < '0' || c > '9')
+                {
+                    IsPersonalIDError = true;
+                    PersonalIDError = "תעודת זהות חייבת לכלול ספרות בלבד";
+                }
+            }
         }
 
         private void CheckPassword()

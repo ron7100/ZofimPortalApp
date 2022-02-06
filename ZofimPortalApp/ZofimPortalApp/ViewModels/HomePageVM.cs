@@ -69,7 +69,7 @@ namespace ZofimPortalApp.ViewModels
             SignOutCommand = new Command(SignOut);
             if(u!=null)
             {
-                WelcomeMessage = "מחובר כעת: " + u.Username;
+                WelcomeMessage = "מחובר כעת: " + u.Email;
                 SignedIn();
             }
             else
