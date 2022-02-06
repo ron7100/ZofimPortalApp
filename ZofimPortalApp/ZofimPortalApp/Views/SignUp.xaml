@@ -25,9 +25,18 @@
                     <RowDefinition Height="20"/><!--9-->
                     <RowDefinition Height="50"/><!--10-->
                 </Grid.RowDefinitions>
-                <Entry Placeholder="שם משתמש..." Text="{Binding UName}"  Grid.Row="0" Grid.Column="1"/>
-                <Label Text="שם משתמש:" Grid.Row="0" Grid.Column="0"/>
-                <Label Text="{Binding UserError}" IsVisible="{Binding IsUserError}" Grid.Row="1" Grid.Column="1"/>
+                <Entry Placeholder="מייל..." Text="{Binding Email}"  Grid.Row="0" Grid.Column="1"/>
+                <Label Text="מייל:" Grid.Row="0" Grid.Column="0"/>
+                <Label Text="כתובת מייל לא חוקית" IsVisible="{Binding IsEmailError}" Grid.Row="1" Grid.Column="1"/>
+                <Entry Placeholder="שם פרטי..." Text="{Binding FName}" Grid.Row="2" Grid.Column="1"/>
+                <Label Text="שם פרטי:" Grid.Row="2" Grid.Column="0"/>
+                <Label Text="שדה חובה" IsVisible="{Binding IsFNameError}" Grid.Row="3" Grid.Column="1"/>
+                <Entry Placeholder="שם משפחה..." Text="{Binding LName}" Grid.Row="4" Grid.Column="1"/>
+                <Label Text="שם משפחה:" Grid.Row="4" Grid.Column="0"/>
+                <Label Text="שדה חובה" IsVisible="{Binding IsLNameError}" Grid.Row="5" Grid.Column="1"/>
+                <Entry Placeholder="תעודת זהות..." Text="{Binding PersonalID}" Grid.Row="6" Grid.Column="1"/>
+                <Label Text="תעודת זהות:" Grid.Row="6" Grid.Column="0"/>
+                <Label Text="{Binding PersonalIDError}" IsVisible="{Binding IsPersonalIDError}" Grid.Row="7" Grid.Column="1"/>
                 <ImageButton Source="EyeIcon.png" Command="{Binding TogglePasswordCommand}" Grid.Row="2" Grid.Column="2"/>
                 <Entry Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="{Binding IsPassword}" Grid.Row="2" Grid.Column="1" x:Name="pass"/>
                 <Label Text="סיסמה:" Grid.Row="2" Grid.Column="0"/>

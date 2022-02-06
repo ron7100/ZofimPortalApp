@@ -84,6 +84,18 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
+        private string personalID;
+        public string PersonalID
+        {
+            get => PersonalID;
+            set
+            {
+                personalID = value;
+                CheckID();
+                OnPropertyChanged("PersonalID");
+            }
+        }
+
         private string pass;
         public string Pass
         {
@@ -152,25 +164,47 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private string emailError;
-        public string EmailError
+        private bool isFNameError;
+        public bool IsFNameError
         {
-            get => emailError;
+            get => isFNameError;
             set
             {
-                emailError = value;
-                OnPropertyChanged("EmailError");
+                isFNameError = value;
+                OnPropertyChanged("IsFNameError");
             }
         }
 
-        private string passError;
-        public string PassError
+        private bool isLNameError;
+        public bool IsLNameError
         {
-            get => passError;
+            get => isLNameError;
             set
             {
-                passError = value;
-                OnPropertyChanged("PassError");
+                isLNameError = value;
+                OnPropertyChanged("IsLNameError");
+            }
+        }
+
+        private bool isPersonalIDError;
+        public bool IsPersonalIDError
+        {
+            get => isPersonalIDError;
+            set
+            {
+                isPersonalIDError = value;
+                OnPropertyChanged("IsPersonalIDError");
+            }
+        }
+
+        private string personalIDError;
+        public string PersonalIDError
+        {
+            get => personalIDError;
+            set
+            {
+                personalIDError = value;
+                OnPropertyChanged("PersonalIDError");
             }
         }
 
@@ -182,6 +216,17 @@ namespace ZofimPortalApp.ViewModels
             {
                 isPassError = value;
                 OnPropertyChanged("IsPassError");
+            }
+        }
+
+        private string passError;
+        public string PassError
+        {
+            get => passError;
+            set
+            {
+                passError = value;
+                OnPropertyChanged("PassError");
             }
         }
 
@@ -208,7 +253,9 @@ namespace ZofimPortalApp.ViewModels
             User user = new User();
             user.Email = email;
             user.Password = pass;
-            user.
+            user.FirstName = fName;
+            user.LastName = lName;
+            user.PersonalId = personalID;
             Object userToReturn = await proxy.SignUpAsync(user);
             if (userToReturn == null)
                 SignUpFailed();
@@ -235,6 +282,20 @@ namespace ZofimPortalApp.ViewModels
             }
         }
         
+        private void CheckFName()
+        {
+            isFNameError = false;
+            if (FName == null)
+                isFNameError = true;
+        }
+
+        private void CheckFName()
+        {
+            isFNameError = false;
+            if (FName == null)
+                isFNameError = true;
+        }
+
         private void CheckPassword()
         {
             IsPassError = false;
