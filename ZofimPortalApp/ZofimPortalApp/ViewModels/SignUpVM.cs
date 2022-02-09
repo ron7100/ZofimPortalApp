@@ -472,22 +472,14 @@ namespace ZofimPortalApp.ViewModels
         private async void SignUpSuccess(User u)
         {
             HomePage.connectedUser = u;
-            await App.Current.MainPage.Navigation.PopAsync();
+            Page p = new Views.HomePage();
+            await App.Current.MainPage.Navigation.PushAsync(p);
         }
 
-        private void TogglePassword()
-        {
-            IsPassword=!IsPassword;
-        }
+        private void TogglePassword() => IsPassword = !IsPassword;
 
-        private void ToggleCheckPassword()
-        {
-            IsCheckPassword = !IsCheckPassword;
-        }
+        private void ToggleCheckPassword() => IsCheckPassError = !IsCheckPassword;
 
-        private async void BackToHomePage()
-        {
-            await App.Current.MainPage.Navigation.PopAsync();
-        }
+        private async void BackToHomePage()=> await App.Current.MainPage.Navigation.PopAsync();
     }
 }

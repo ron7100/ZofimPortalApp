@@ -22,13 +22,13 @@
                     <RowDefinition Height="20" />
                     <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
-                <Entry Placeholder="שם משתמש..." Text="{Binding UName}" Grid.Row="0" Grid.Column="1"/>
-                <Label Text="שם משתמש:" Grid.Row="0" Grid.Column="0"/>
-                <Label Text="שם משתמש לא קיים במערכת" IsVisible="{Binding IsUserError}" Grid.Row="1" Grid.Column="1"/>
+                <Entry Placeholder="מייל..." Text="{Binding Email}" Grid.Row="0" Grid.Column="1"/>
+                <Label Text="מייל:" Grid.Row="0" Grid.Column="0"/>
+                <Label Text="{Binding EmailError}" IsVisible="{Binding IsEmailError}" Grid.Row="1" Grid.Column="1"/>
                 <ImageButton Source="EyeIcon.png" Pressed="ImageButtonEvent_Pressed" Released="ImageButtonEvent_Pressed" Grid.Row="2" Grid.Column="2"/>
                 <Entry Placeholder="סיסמה..." Text="{Binding Pass}" IsPassword="True" Grid.Row="2" Grid.Column="1" x:Name="pass"/>
                 <Label Text="סיסמה:" Grid.Row="2" Grid.Column="0"/>
-                <Label Text="סיסמה לא תואמת למשתמש" IsVisible="{Binding IsPassError}" Grid.Row="3" Grid.Column="1"/>
+                <Label Text="סיסמה לא תואמת למייל" IsVisible="{Binding IsPassError}" Grid.Row="3" Grid.Column="1"/>
                 <Button Text="התחברות" Command="{Binding LogInCommand}" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center" WidthRequest="100"/>
                 <Label Text="עוד לא רשום?" Grid.Row="5" Grid.Column="1" HorizontalOptions="Center"/>
                 <Button Text="להרשמה" Command="{Binding ToSignUpCommand}" Grid.Row="6" Grid.Column="1" HorizontalOptions="Center"  WidthRequest="100"/>

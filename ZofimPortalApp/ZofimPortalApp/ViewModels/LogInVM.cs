@@ -27,8 +27,8 @@ namespace ZofimPortalApp.ViewModels
             LogInCommand = new Command(LogIn);
             ToSignUpCommand = new Command(ToSignUp);
             BackToHomePageCommand = new Command(BackToHomePage);
-            IsEmailError = false;
-            IsPassError = false;
+            //IsEmailError = false;
+            //IsPassError = false;
             proxy = ZofimPortalAPIProxy.CreateProxy();
         }
 
@@ -48,6 +48,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 email = value;
+                CheckEmail();
                 OnPropertyChanged("Email");
             }
         }
@@ -74,6 +75,17 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
+        private string emailError;
+        public string EmailError
+        {
+            get => emailError;
+            set
+            {
+                emailError = value;
+                OnPropertyChanged("EmailError");
+            }
+        }
+
         private bool isPassError;
         public bool IsPassError
         {
@@ -86,6 +98,16 @@ namespace ZofimPortalApp.ViewModels
         }
 
         #endregion
+
+        private void CheckEmail()
+        {
+
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(email);
+            IsEmailError = !match.Success;
+            if (IsEmailError)
+                EmailError = "כתובת מייל לא חוקית";
+        }
 
         public async void ToSignUp()
         {
@@ -106,14 +128,15 @@ namespace ZofimPortalApp.ViewModels
         {
             IsEmailError = false;
             IsPassError = false;
-            bool isUsernameExist = await proxy.IsUserExistAsync(Email);
-            if(isUsernameExist)
+            bool isUserExist = await proxy.IsUserExistAsync(Email);
+            if(isUserExist)
             {
                 IsPassError = true;
             }
             else
             {
                 IsEmailError = true;
+                EmailError = "המייל לא קיים במערכת";
             }
         }
 
