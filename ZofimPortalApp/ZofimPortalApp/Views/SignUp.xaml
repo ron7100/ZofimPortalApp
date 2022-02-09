@@ -37,10 +37,10 @@
                 <Label Text="כתובת מייל לא חוקית" IsVisible="{Binding IsEmailError}" Grid.Row="1" Grid.Column="1"/>
                 <Entry Placeholder="שם פרטי..." Text="{Binding FName}" Grid.Row="2" Grid.Column="1"/>
                 <Label Text="שם פרטי:" Grid.Row="2" Grid.Column="0"/>
-                <Label Text="שדה חובה" IsVisible="{Binding IsFNameError}" Grid.Row="3" Grid.Column="1"/>
+                <Label Text="{Binding FNameError}" IsVisible="{Binding IsFNameError}" Grid.Row="3" Grid.Column="1"/>
                 <Entry Placeholder="שם משפחה..." Text="{Binding LName}" Grid.Row="4" Grid.Column="1"/>
                 <Label Text="שם משפחה:" Grid.Row="4" Grid.Column="0"/>
-                <Label Text="שדה חובה" IsVisible="{Binding IsLNameError}" Grid.Row="5" Grid.Column="1"/>
+                <Label Text="{Binding LNameError}" IsVisible="{Binding IsLNameError}" Grid.Row="5" Grid.Column="1"/>
                 <Entry Placeholder="תעודת זהות..." Text="{Binding PersonalID}" Grid.Row="6" Grid.Column="1"/>
                 <Label Text="תעודת זהות:" Grid.Row="6" Grid.Column="0"/>
                 <Label Text="{Binding PersonalIDError}" IsVisible="{Binding IsPersonalIDError}" Grid.Row="7" Grid.Column="1"/>
@@ -60,7 +60,7 @@
                     </Picker.Items>
                 </Picker>
                 <Button Text="הרשמה" Command="{Binding SignUpCommand}" Grid.Row="13" Grid.Column="1" HorizontalOptions="Center" WidthRequest="100"/>
-                <Label Text="ישנן בעיות בטופס" IsVisible="{Binding IsThereError}" Grid.Row="14" Grid.Column="1" HorizontalOptions="Center"/>
+                <Label Text="{Binding GeneralError}" IsVisible="{Binding IsThereError}" Grid.Row="14" Grid.Column="1" HorizontalOptions="Center"/>
                 <Label Text="כבר רשום?" Grid.Row="15" Grid.Column="1" HorizontalOptions="Center"/>
                 <Button Text="להתחברות" Command="{Binding ToLogInCommand}" Grid.Row="16" Grid.Column="1" HorizontalOptions="Center"  WidthRequest="100"/>
             </Grid>

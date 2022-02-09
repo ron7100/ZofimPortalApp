@@ -189,6 +189,17 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
+        private string fNameError;
+        public string FNameError
+        {
+            get => fNameError;
+            set
+            {
+                fNameError = value;
+                OnPropertyChanged("FNameError");
+            }
+        }
+
         private bool isLNameError;
         public bool IsLNameError
         {
@@ -197,6 +208,17 @@ namespace ZofimPortalApp.ViewModels
             {
                 isLNameError = value;
                 OnPropertyChanged("IsLNameError");
+            }
+        }
+
+        private string lNameError;
+        public string LNameError
+        {
+            get => lNameError;
+            set
+            {
+                lNameError = value;
+                OnPropertyChanged("LNameError");
             }
         }
 
@@ -265,6 +287,17 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("IsThereError");
             }
         }
+
+        private string generalError;
+        public string GeneralError
+        {
+            get => generalError;
+            set
+            {
+                generalError = value;
+                OnPropertyChanged("GeneralError");
+            }
+        }
         #endregion
 
         public async void ToLogIn()
@@ -273,22 +306,37 @@ namespace ZofimPortalApp.ViewModels
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
 
-        private async void SignUp()
+        public void AreThereErrors()
         {
             IsThereError = false;
-            if(isEmailError||isFNameError||isLNameError||isPassError||IsPersonalIDError)
+            if (Email == null || FName == null || LName == null || PersonalID == null || Pass == null || CheckPass == null)
             {
                 IsThereError = true;
+                GeneralError = "יש שדה ריק";
+            }
+            else if (IsEmailError || IsFNameError || IsLNameError || IsPersonalIDError || IsPassError || IsCheckPassError)
+            {
+                IsThereError = true;
+                GeneralError = "ישנן בעיות בטופס";
+            }
+        }
+
+        private async void SignUp()
+        {
+            AreThereErrors();
+            if (proxy.IsUserExistAsync(email).Result)
+            {
+                SignUpFailed();
                 return;
-            }    
+            }
             //create user object here and send the data as a user to the proxy
             User user = new User();
-            //add the correct ID
             user.Email = email;
             user.FirstName = fName;
             user.LastName = lName;
             user.PersonalId = personalID;
             user.Password = pass;
+            user.Id = proxy.GetLastUserIDAsync().Result + 1;
             Object userToReturn = await proxy.SignUpAsync(user);
             if (userToReturn == null)
                 SignUpFailed();
@@ -317,15 +365,39 @@ namespace ZofimPortalApp.ViewModels
         private void CheckFName()
         {
             IsFNameError = false;
-            if (FName == null)
+            if (FName == "")
+            {
                 IsFNameError = true;
+                FNameError = "שדה חובה";
+                return;
+            }
+            foreach (char c in FName)
+            {
+                if (!char.IsLetter(c))
+                {
+                    IsFNameError = true;
+                    FNameError = "השם חייב לכלול אותיות בלבד";
+                }
+            }
         }
 
         private void CheckLName()
         {
             IsLNameError = false;
-            if (LName == null)
+            if (LName == "")
+            {
                 IsLNameError = true;
+                LNameError = "שדה חובה";
+                return;
+            }
+            foreach (char c in LName)
+            {
+                if (!char.IsLetter(c))
+                {
+                    IsLNameError = true;
+                    LNameError = "השם משפחה חייב לכלול אותיות בלבד";
+                }
+            }
         }
 
         private void CheckID()
@@ -339,7 +411,7 @@ namespace ZofimPortalApp.ViewModels
             }
             foreach (char c in PersonalID)
             {
-                if (c < '0' || c > '9')
+                if (!char.IsDigit(c))
                 {
                     IsPersonalIDError = true;
                     PersonalIDError = "תעודת זהות חייבת לכלול ספרות בלבד";
@@ -397,10 +469,10 @@ namespace ZofimPortalApp.ViewModels
         }
         #endregion
 
-        private void SignUpSuccess(User u)
+        private async void SignUpSuccess(User u)
         {
             HomePage.connectedUser = u;
-            App.Current.MainPage.Navigation.PopAsync();
+            await App.Current.MainPage.Navigation.PopAsync();
         }
 
         private void TogglePassword()

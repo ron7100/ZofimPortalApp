@@ -81,11 +81,11 @@ namespace ZofimPortalApp.Services
 
         public string GetBasePhotoUri() { return this.basePhotosUri; }
 
-        public async Task<User> LogInAsync(string uName, string pass) //התחברות למשתמש
+        public async Task<User> LogInAsync(string email, string pass) //התחברות למשתמש
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/Login?uName={uName}&pass={pass}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/Login?email={email}&pass={pass}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
@@ -109,11 +109,11 @@ namespace ZofimPortalApp.Services
             }
         }
 
-        public async Task<bool> IsUserExistAsync(string uName)
+        public async Task<bool> IsUserExistAsync(string email)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/IsUserExist?uName={uName}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/IsUserExist?email={email}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
@@ -148,7 +148,7 @@ namespace ZofimPortalApp.Services
                 };
                 string jsonObject = JsonSerializer.Serialize<User>(user, options);
                 StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-                
+
                 HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/SignUp", content);
 
                 if (response.IsSuccessStatusCode)
@@ -167,6 +167,34 @@ namespace ZofimPortalApp.Services
             {
                 Console.WriteLine(e.Message);
                 return null;
+            }
+        }
+
+        public async Task<int> GetLastUserIDAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetLastUserID");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    int id = JsonSerializer.Deserialize<int>(content, options);
+                    return id;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
             }
         }
 
