@@ -324,7 +324,8 @@ namespace ZofimPortalApp.ViewModels
         private async void SignUp()
         {
             AreThereErrors();
-            if (proxy.IsUserExistAsync(email).Result)
+
+            if (await proxy.IsUserExistAsync(email))
             {
                 SignUpFailed();
                 return;
@@ -336,7 +337,8 @@ namespace ZofimPortalApp.ViewModels
             user.LastName = lName;
             user.PersonalId = personalID;
             user.Password = pass;
-            user.Id = proxy.GetLastUserIDAsync().Result + 1;
+            user.Id = 3;
+            //user.Id = proxy.GetLastUserIDAsync().Result + 1;
             Object userToReturn = await proxy.SignUpAsync(user);
             if (userToReturn == null)
                 SignUpFailed();
