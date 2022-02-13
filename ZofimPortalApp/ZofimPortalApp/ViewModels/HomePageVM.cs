@@ -96,7 +96,8 @@ namespace ZofimPortalApp.ViewModels
         {
             IsConnected = true;
             NotConnected = false;
-            IsAdmin = HomePage.ConnectedUser.Workers.Find(w => w.Role == "admin") != null;
+            Worker worker = HomePage.ConnectedUser.Workers.Find(w => w.Role == "admin");
+            IsAdmin = worker != null;
         }
 
         public async void SignOut()
