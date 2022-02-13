@@ -7,22 +7,26 @@
         <StackLayout>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
+            <Button Command="{Binding SignOutCommand}" IsVisible="{Binding IsConnected}" Text="התנתק" Grid.Row="0" Grid.Column="4" HorizontalOptions="CenterAndExpand" WidthRequest="150" HeightRequest="50" />
+            <Label Text="{Binding WelcomeMessage}" Grid.Row="0" Grid.Column="0"/>
+            <Label Text="ברוכים הבאים לאתר הצופים!" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"/>
+            <Button Command="{Binding ToLogInCommand}" IsVisible="{Binding NotConnected}" Text="להתחברות" Grid.Row="2" Grid.Column="3" HorizontalOptions="EndAndExpand" WidthRequest="150" HeightRequest="150"/>
+            <Button Command="{Binding ToSignUpCommand}" IsVisible="{Binding NotConnected}" Text="להרשמה" Grid.Row="2" Grid.Column="1" HorizontalOptions="StartAndExpand" WidthRequest="150" HeightRequest="150"/>
+            <Button Command="{Binding ToManageUsersCommand}" IsVisible="{Binding IsAdmin}" Text="לרשימת ועריכת משתמשים" Grid.Row="2" Grid.Column="2" WidthRequest="50"/>
             </Grid>
-            <Button Command="{Binding SignOutCommand}" IsVisible="{Binding IsConnected}" Text="התנתק" Grid.Row="0" Grid.Column="0" WidthRequest="100"/>
-            <Label Text="{Binding WelcomeMessage}" Grid.Row="0" Grid.Column="2"/>
-            <Label Text="ברוכים הבאים לאתר הצופים!" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="1"/>
-            <Button Command="{Binding ToLogInCommand}" IsVisible="{Binding NotConnected}" Text="להתחברות" Grid.Row="2" Grid.Column="1" WidthRequest="50"/>
-            <Button Command="{Binding ToSignUpCommand}" IsVisible="{Binding NotConnected}" Text="להרשמה" Grid.Row="3" Grid.Column="1" WidthRequest="50"/>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

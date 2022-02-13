@@ -473,7 +473,7 @@ namespace ZofimPortalApp.ViewModels
 
         private async void SignUpSuccess(User u)
         {
-            HomePage.connectedUser = u;
+            HomePage.ConnectedUser = u;
             Page p = new Views.HomePage();
             await App.Current.MainPage.Navigation.PushAsync(p);
         }

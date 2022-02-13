@@ -14,10 +14,10 @@ namespace ZofimPortalApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
-        public static User connectedUser;
+        public static User ConnectedUser;
         public HomePage()
         {
-            HomePageVM vm = new HomePageVM(connectedUser);
+            HomePageVM vm = new HomePageVM(ConnectedUser);
             this.BindingContext = vm;
             InitializeComponent();
         }

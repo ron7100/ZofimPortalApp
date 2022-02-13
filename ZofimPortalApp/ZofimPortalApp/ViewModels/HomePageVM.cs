@@ -17,6 +17,7 @@ namespace ZofimPortalApp.ViewModels
     {
         public Command ToLogInCommand { get; }
         public Command ToSignUpCommand { get; }
+        public Command ToManageUsersCommand { get; }
         public Command SignOutCommand { get; }
 
         #region INotifyPropertyChanged
@@ -60,6 +61,17 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("NotConnected");
             }
         }
+
+        private bool isAdmin;
+        public bool IsAdmin
+        {
+            get => isAdmin;
+            set
+            {
+                isAdmin = value;
+                OnPropertyChanged("IsAdmin");
+            }
+        }
         #endregion
 
         public HomePageVM(User u)
@@ -67,28 +79,31 @@ namespace ZofimPortalApp.ViewModels
             ToLogInCommand = new Command(ToLogIn);
             ToSignUpCommand = new Command(ToSignUp);
             SignOutCommand = new Command(SignOut);
+            ToManageUsersCommand = new Command(ToManageUsers);
             if (u != null)
             {
-                WelcomeMessage = "מחובר כעת: " + u.FirstName;
+                WelcomeMessage = "מחובר כעת: " + u.FirstName + " " + u.LastName;
+                SignedIn();
             }
             else
             {
                 NotConnected = true;
                 IsConnected = false;
+                IsAdmin = false;
             }
         }
         public void SignedIn()
         {
             IsConnected = true;
             NotConnected = false;
+            IsAdmin = HomePage.ConnectedUser.Workers.Find(w => w.Role == "admin") != null;
         }
 
-        public void SignOut()
+        public async void SignOut()
         {
-            IsConnected = false;
-            NotConnected = true;
-            HomePage.connectedUser = null;
-            WelcomeMessage = "";
+            HomePage.ConnectedUser = null;
+            Page p = new Views.HomePage();
+            await App.Current.MainPage.Navigation.PushAsync(p);
         }
 
         public async void ToLogIn()
@@ -99,6 +114,11 @@ namespace ZofimPortalApp.ViewModels
         public async void ToSignUp()
         {
             Page p = new Views.SignUp();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+        public async void ToManageUsers()
+        {
+            Page p = new Views.ManageUsers();
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }
