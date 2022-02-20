@@ -5,7 +5,7 @@ namespace ZofimPortalApp.Models
 {
     public class Parent
     {
-        public int ShevetId { get; set; }
+        public int? ShevetId { get; set; }
         public int UserId { get; set; }
         public int Id { get; set; }
 

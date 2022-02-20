@@ -23,7 +23,7 @@ namespace ZofimPortalApp.Services
         private const string DEV_WINDOWS_URL = "http://localhost:39842/ZofimPortalAPI"; //API url when using windoes on development
         private const string DEV_ANDROID_EMULATOR_PHOTOS_URL = "http://10.0.2.2:39842/Images/"; //API url when using emulator on android
         private const string DEV_ANDROID_PHYSICAL_PHOTOS_URL = "http://192.168.1.14:39842/Images/"; //API url when using physucal device on android
-        private const string DEV_WINDOWS_PHOTOS_URL = "https://localhost:39842/Images/"; //API url when using windoes on development
+        private const string DEV_WINDOWS_PHOTOS_URL = "http://localhost:39842/Images/"; //API url when using windoes on development
 
         private HttpClient client;
         private string baseUri;
@@ -175,6 +175,62 @@ namespace ZofimPortalApp.Services
             try
             {
                 HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetLastUserID");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    int id = JsonSerializer.Deserialize<int>(content, options);
+                    return id;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
+        }
+
+        public async Task<int> GetLastWorkerIDAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetLastWorkerID");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    int id = JsonSerializer.Deserialize<int>(content, options);
+                    return id;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
+        }
+
+        public async Task<int> GetLastParentIDAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetLastParentID");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions

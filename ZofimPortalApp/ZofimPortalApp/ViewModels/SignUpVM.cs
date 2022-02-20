@@ -338,10 +338,16 @@ namespace ZofimPortalApp.ViewModels
             user.PersonalId = personalID;
             user.Password = pass;
             if (UserType == 0)
+            {
                 user.Workers.Add(new Worker());
+                user.Workers.First().Id = await proxy.GetLastWorkerIDAsync() + 1;
+            }
             else
+            {
                 user.Parents.Add(new Parent());
-            user.Id = proxy.GetLastUserIDAsync().Result + 1;
+                user.Parents.First().Id = await proxy.GetLastParentIDAsync() + 1;
+            }
+            user.Id = await proxy.GetLastUserIDAsync() + 1;
             Object userToReturn = await proxy.SignUpAsync(user);
             if (userToReturn == null)
                 SignUpFailed();
@@ -488,3 +494,5 @@ namespace ZofimPortalApp.ViewModels
         private async void BackToHomePage()=> await App.Current.MainPage.Navigation.PopAsync();
     }
 }
+
+    
