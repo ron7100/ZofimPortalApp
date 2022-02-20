@@ -337,8 +337,11 @@ namespace ZofimPortalApp.ViewModels
             user.LastName = lName;
             user.PersonalId = personalID;
             user.Password = pass;
-            user.Id = 3;
-            //user.Id = proxy.GetLastUserIDAsync().Result + 1;
+            if (UserType == 0)
+                user.Workers.Add(new Worker());
+            else
+                user.Parents.Add(new Parent());
+            user.Id = proxy.GetLastUserIDAsync().Result + 1;
             Object userToReturn = await proxy.SignUpAsync(user);
             if (userToReturn == null)
                 SignUpFailed();
