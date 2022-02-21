@@ -19,5 +19,10 @@ namespace ZofimPortalApp.Views
             this.BindingContext = vm;
             InitializeComponent();
         }
+
+        private void UsersList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+
+        }
     }
 }

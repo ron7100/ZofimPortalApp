@@ -11,6 +11,7 @@ using System.Text.Encodings.Web;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using System.IO;
+using System.Collections.ObjectModel;
 
 namespace ZofimPortalApp.Services
 {
@@ -90,7 +91,7 @@ namespace ZofimPortalApp.Services
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
                     {
-                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        ReferenceHandler = ReferenceHandler.Preserve,  
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
@@ -118,7 +119,7 @@ namespace ZofimPortalApp.Services
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
                     {
-                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        ReferenceHandler = ReferenceHandler.Preserve,  
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
@@ -143,7 +144,7 @@ namespace ZofimPortalApp.Services
             {
                 JsonSerializerOptions options = new JsonSerializerOptions
                 {
-                    ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                    ReferenceHandler = ReferenceHandler.Preserve,  
                     PropertyNameCaseInsensitive = true
                 };
                 string jsonObject = JsonSerializer.Serialize<User>(user, options);
@@ -179,7 +180,7 @@ namespace ZofimPortalApp.Services
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
                     {
-                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        ReferenceHandler = ReferenceHandler.Preserve,
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
@@ -207,7 +208,7 @@ namespace ZofimPortalApp.Services
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
                     {
-                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        ReferenceHandler = ReferenceHandler.Preserve,
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
@@ -235,7 +236,7 @@ namespace ZofimPortalApp.Services
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
                     {
-                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        ReferenceHandler = ReferenceHandler.Preserve,
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
@@ -251,6 +252,34 @@ namespace ZofimPortalApp.Services
             {
                 Console.WriteLine(e.Message);
                 return 0;
+            }
+        }
+
+        public async Task<ObservableCollection<User>> GetAllUsersAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllUsers");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    ObservableCollection<User> users = JsonSerializer.Deserialize<ObservableCollection<User>>(content, options);
+                    return users;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
             }
         }
 

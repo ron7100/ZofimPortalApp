@@ -1,12 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ZofimPortalApp.Views.ManageUsers">
+             x:Class="ZofimPortalApp.Views.ManageUsers"
+             FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Button Text="חזור" Command="{Binding BackToHomePageCommand}" HorizontalOptions="Start" WidthRequest="100"/>
+            <Label Text="{Binding HeaderMessage}" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <ListView ItemsSource="{Binding Source={StaticResource UsersList}}" IsEnabled="{Binding IsUserSelected}" SelectionMode="Single" ItemSelected="UsersList_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HeightRequest="100">
+                            <Label Text="{Binding Email}" Grid.Column="0"/>
+                            <Label Text="{Binding FirstName}" Grid.Column="1"/>
+                            <Label Text="{Binding LastName}" Grid.Column="2"/>
+                            <Label Text="{Binding PersonalId}" Grid.Column="3"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
