@@ -7,13 +7,26 @@
         <StackLayout>
             <Button Text="חזור" Command="{Binding BackToHomePageCommand}" HorizontalOptions="Start" WidthRequest="100"/>
             <Label Text="{Binding HeaderMessage}" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-            <ListView ItemsSource="{Binding UsersList}" IsEnabled="{Binding IsUserSelected}" SelectionMode="Single" ItemSelected="UsersList_ItemSelected">
+            <ListView ItemsSource="{Binding UsersList}" Header="{Binding}" IsEnabled="{Binding IsUserSelected}" SelectionMode="Single" ItemSelected="UsersList_ItemSelected">
+                <ListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10" FlowDirection="RightToLeft">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="כתובת מייל" FontSize="Large" FontAttributes="Bold" Grid.Column="0"/>
+                            <Label Text="שם פרטי" FontSize="Large" FontAttributes="Bold" Grid.Column="1"/>
+                            <Label Text="שם משפחה" FontSize="Large" FontAttributes="Bold" Grid.Column="2"/>
+                            <Label Text="תעודת זהות" FontSize="Large" FontAttributes="Bold" Grid.Column="3"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.HeaderTemplate>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid>
+                            <Grid Padding="10">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="100"/>
+                                    <RowDefinition Height="50"/>
                                 </Grid.RowDefinitions>
                                 <Label Text="{Binding Email}" Grid.Column="0" Grid.Row="0"/>
                                 <Label Text="{Binding FirstName}" Grid.Column="1" Grid.Row="0"/>
