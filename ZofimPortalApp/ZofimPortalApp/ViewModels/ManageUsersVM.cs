@@ -23,6 +23,8 @@ namespace ZofimPortalApp.ViewModels
         }
         #endregion
 
+        public ICommand BackToHomePageCommand => new Command(BackToHomePage);
+
         private ZofimPortalAPIProxy proxy;
         public ManageUsersVM()
         {
@@ -33,7 +35,7 @@ namespace ZofimPortalApp.ViewModels
 
         public async void SetLists()
         {
-            UsersList = new ObservableCollection<User>(await proxy.GetAllUsersAsync());
+            UsersList = await proxy.GetAllUsersAsync();
             //WorkersList = new ObservableCollection<Worker>(await proxy.GetAllWorkersAsync());
             //ParentsList = new ObservableCollection<Parent>(await proxy.GetAllParentsAsync());
             //CadetsList = new ObservableCollection<Cadet>(await proxy.GetAllCadetsAsync());

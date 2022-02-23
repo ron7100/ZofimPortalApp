@@ -67,7 +67,6 @@ namespace ZofimPortalApp.Services
             return proxy;
         }
 
-
         private ZofimPortalAPIProxy(string baseUri, string basePhotosUri)
         {
             //Set client handler to support cookies!!
@@ -80,7 +79,10 @@ namespace ZofimPortalApp.Services
             this.basePhotosUri = basePhotosUri;
         }
 
-        public string GetBasePhotoUri() { return this.basePhotosUri; }
+        public string GetBasePhotoUri()
+        { 
+            return this.basePhotosUri; 
+        }
 
         public async Task<User> LogInAsync(string email, string pass) //התחברות למשתמש
         {
