@@ -27,9 +27,12 @@ namespace ZofimPortalApp.ViewModels
             LogInCommand = new Command(LogIn);
             ToSignUpCommand = new Command(ToSignUp);
             BackToHomePageCommand = new Command(BackToHomePage);
-            //IsEmailError = false;
-            //IsPassError = false;
             proxy = ZofimPortalAPIProxy.CreateProxy();
+            #region למחוק לפני הגשה
+            email = "aaa@gmail.com";
+            pass = "aaa";
+            LogIn();
+            #endregion
         }
 
         #region INotifyPropertyChanged
