@@ -30,13 +30,15 @@ namespace ZofimPortalApp.ViewModels
         {
             HeaderMessage = "עריכת משתמשים";
             proxy = ZofimPortalAPIProxy.CreateProxy();
+            IsUserSelected = false;
+            IsWorkerSelected = true;
             SetLists();
         }
 
         public async void SetLists()
         {
             UsersList = await proxy.GetAllUsersAsync();
-            //WorkersList = new ObservableCollection<Worker>(await proxy.GetAllWorkersAsync());
+            WorkersList = await proxy.GetAllWorkersAsync();
             //ParentsList = new ObservableCollection<Parent>(await proxy.GetAllParentsAsync());
             //CadetsList = new ObservableCollection<Cadet>(await proxy.GetAllCadetsAsync());
         }
@@ -64,8 +66,8 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private ObservableCollection<Worker> workersList;
-        public ObservableCollection<Worker> WorkersList
+        private ObservableCollection<WorkerToShow> workersList;
+        public ObservableCollection<WorkerToShow> WorkersList
         {
             get => workersList;
             set

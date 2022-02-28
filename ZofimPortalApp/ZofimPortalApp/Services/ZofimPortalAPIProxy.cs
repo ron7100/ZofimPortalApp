@@ -285,6 +285,34 @@ namespace ZofimPortalApp.Services
             }
         }
 
+        public async Task<ObservableCollection<WorkerToShow>> GetAllWorkersAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllWorkers");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    ObservableCollection<WorkerToShow> workers = JsonSerializer.Deserialize<ObservableCollection<WorkerToShow>>(content, options);
+                    return workers;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         //Upload file to server (only images!)
         public async Task<bool> UploadImage(Models.FileInfo fileInfo, string targetFileName)
         {

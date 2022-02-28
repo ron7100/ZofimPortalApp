@@ -11,10 +11,10 @@
                 <Label Text="הצג: " FontSize="Large" Grid.Column="0"/>
                 <Picker ItemsSource="{Binding UserTypes}"/>
             </Grid>
-            <ListView ItemsSource="{Binding UsersList}" Header="{Binding}" IsEnabled="{Binding IsUserSelected}" SelectionMode="Single" ItemSelected="UsersList_ItemSelected" BackgroundColor="CadetBlue">
+            <ListView ItemsSource="{Binding UsersList}" Header="{Binding}" IsVisible="{Binding IsUserSelected}" SelectionMode="Single" BackgroundColor="CadetBlue">
                 <ListView.HeaderTemplate>
                     <DataTemplate>
-                        <Grid Padding="5" FlowDirection="RightToLeft">
+                        <Grid Padding="5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="100"/>
                             </Grid.RowDefinitions>
@@ -36,6 +36,40 @@
                                 <Label Text="{Binding FirstName}" FontSize="Medium" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
                                 <Label Text="{Binding LastName}" FontSize="Medium" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
                                 <Label Text="{Binding PersonalId}" FontSize="Medium" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ListView ItemsSource="{Binding WorkersList}" Header="{Binding}" IsVisible="{Binding IsWorkerSelected}" SelectionMode="Single" BackgroundColor="CadetBlue">
+                <ListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid Padding="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="כתובת מייל" FontSize="Header" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                            <Label Text="שם פרטי" FontSize="Header" FontAttributes="Bold" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                            <Label Text="שם משפחה" FontSize="Header" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                            <Label Text="תעודת זהות" FontSize="Header" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                            <Label Text="תפקיד" FontSize="Header" FontAttributes="Bold"  Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                            <Label Text="שבט" FontSize="Header" FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                            <Label Text="הנהגה" FontSize="Header" FontAttributes="Bold" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.HeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding Email}" FontSize="Medium" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding FirstName}" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding LastName}" FontSize="Medium" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding PersonalId}" FontSize="Medium" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding Role}" FontSize="Medium" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
