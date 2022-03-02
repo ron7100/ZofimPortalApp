@@ -30,8 +30,6 @@ namespace ZofimPortalApp.ViewModels
         {
             HeaderMessage = "עריכת משתמשים";
             proxy = ZofimPortalAPIProxy.CreateProxy();
-            IsUserSelected = false;
-            IsWorkerSelected = true;
             SetLists();
         }
 
@@ -39,7 +37,7 @@ namespace ZofimPortalApp.ViewModels
         {
             UsersList = await proxy.GetAllUsersAsync();
             WorkersList = await proxy.GetAllWorkersAsync();
-            //ParentsList = new ObservableCollection<Parent>(await proxy.GetAllParentsAsync());
+            ParentsList = await proxy.GetAllParentsAsync();
             //CadetsList = new ObservableCollection<Cadet>(await proxy.GetAllCadetsAsync());
         }
 
@@ -88,8 +86,8 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private ObservableCollection<Parent> parentsList;
-        public ObservableCollection<Parent> ParentsList
+        private ObservableCollection<ParentToShow> parentsList;
+        public ObservableCollection<ParentToShow> ParentsList
         {
             get => parentsList;
             set
@@ -132,14 +130,15 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private ObservableCollection<Object> toShow;
-        public ObservableCollection<Object> ToShow
+        private int selectedType;
+        public int SelectedType
         {
-            get => toShow;
+            get => selectedType;
             set
             {
-                toShow = value;
-                OnPropertyChanged("ToShow");
+                selectedType = value;
+                UpdateSelection();
+                OnPropertyChanged("SelectedType");
             }
         }
 
@@ -154,6 +153,29 @@ namespace ZofimPortalApp.ViewModels
             }
         }
         #endregion
+
+        public void UpdateSelection()
+        {
+            IsUserSelected = false;
+            IsWorkerSelected = false;
+            IsParentSelected = false;
+            IsCadetSelected = false;
+            switch(selectedType)
+            {
+                case 0:
+                    IsUserSelected = true;
+                    break;
+                case 1:
+                    IsWorkerSelected = true;
+                    break;
+                case 2:
+                    IsParentSelected = true;
+                    break;
+                case 3:
+                    IsCadetSelected = true;
+                    break;
+            }
+        }
 
         private async void BackToHomePage()
         {
