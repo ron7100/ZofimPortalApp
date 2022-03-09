@@ -10,6 +10,7 @@ using ZofimPortalApp.Models;
 using Xamarin.Essentials;
 using System.Linq;
 using System.Collections.ObjectModel;
+using ZofimPortalApp.Views;
 
 namespace ZofimPortalApp.ViewModels
 {
@@ -38,8 +39,30 @@ namespace ZofimPortalApp.ViewModels
             UsersList = await proxy.GetAllUsersAsync();
             WorkersList = await proxy.GetAllWorkersAsync();
             ParentsList = await proxy.GetAllParentsAsync();
-            //CadetsList = new ObservableCollection<Cadet>(await proxy.GetAllCadetsAsync());
-        }
+            CadetsList = await proxy.GetAllCadetsAsync();
+            AvailableToShow = new List<string>();
+            int permissionLevel = await proxy.GetPermissionLevelAsync(HomePage.ConnectedUser.Id);
+            switch(permissionLevel)
+            { 
+                case 0:
+                    break;
+                case 1:
+                    AvailableToShow.Add("משתמשים");
+                    AvailableToShow.Add("עובדים");
+                    AvailableToShow.Add("הורים");
+                    AvailableToShow.Add("חניכים");
+                    break;
+                case 2:
+                    AvailableToShow.Add("משתמשים");
+                    AvailableToShow.Add("עובדים");
+                    AvailableToShow.Add("הורים");
+                    AvailableToShow.Add("חניכים");
+                    AvailableHanhaga
+                    break;
+                case 3:
+                    AvailableToShow.Add("הורים");
+                    AvailableToShow.Add("חניכים");
+            }
 
         #region Properties
         private ObservableCollection<User> usersList;
@@ -108,8 +131,8 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private ObservableCollection<Cadet> cadetsList;
-        public ObservableCollection<Cadet> CadetsList
+        private ObservableCollection<CadetToShow> cadetsList;
+        public ObservableCollection<CadetToShow> CadetsList
         {
             get => cadetsList;
             set
@@ -150,6 +173,39 @@ namespace ZofimPortalApp.ViewModels
             {
                 headerMessage = value;
                 OnPropertyChanged("HeaderMessage");
+            }
+        }
+
+        private List<string> availableToShow;
+        public List<string> AvailableToShow
+        {
+            get => availableToShow;
+            set
+            {
+                availableToShow = value;
+                OnPropertyChanged("AvailableToShow");
+            }
+        }
+
+        private string availableHanhaga;
+        public string AvailableHanhaga
+        {
+            get => availableHanhaga;
+            set
+            {
+                availableHanhaga = value;
+                OnPropertyChanged("AvailableHanhaga");
+            }
+        }
+
+        private string availableShevet;
+        public string AvailableShevet
+        {
+            get => availableShevet;
+            set
+            {
+                availableShevet = value;
+                OnPropertyChanged("AvailableShevet");
             }
         }
         #endregion

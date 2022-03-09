@@ -173,6 +173,7 @@ namespace ZofimPortalApp.Services
             }
         }
 
+        #region get ID
         public async Task<int> GetLastUserIDAsync()
         {
             try
@@ -256,7 +257,9 @@ namespace ZofimPortalApp.Services
                 return 0;
             }
         }
+        #endregion
 
+        #region get lists
         public async Task<ObservableCollection<User>> GetAllUsersAsync()
         {
             try
@@ -326,8 +329,8 @@ namespace ZofimPortalApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    ObservableCollection<WorkerToShow> workers = JsonSerializer.Deserialize<ObservableCollection<WorkerToShow>>(content, options);
-                    return workers;
+                    ObservableCollection<ParentToShow> parents = JsonSerializer.Deserialize<ObservableCollection<ParentToShow>>(content, options);
+                    return parents;
                 }
                 else
                 {
@@ -338,6 +341,63 @@ namespace ZofimPortalApp.Services
             {
                 Console.WriteLine(e.Message);
                 return null;
+            }
+        }
+
+        public async Task<ObservableCollection<CadetToShow>> GetAllCadetsAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllCadets");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    ObservableCollection<CadetToShow> cadets = JsonSerializer.Deserialize<ObservableCollection<CadetToShow>>(content, options);
+                    return cadets;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
+
+        public async Task<int> GetPermissionLevelAsync(int id)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetPermissionLevel?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    int permissionLevel = JsonSerializer.Deserialize<int>(content, options);
+                    return permissionLevel;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
             }
         }
 
