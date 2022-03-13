@@ -13,7 +13,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Text="הצג: " FontSize="Large" Grid.Column="0"/>
-                <Picker SelectedIndex="{Binding SelectedType}" FontSize="Medium" HeightRequest="100" Grid.Column="1" ItemsSource="{Binding AvailableToShow}"/>
+                <Picker SelectedIndex="{Binding SelectedType}" FontSize="Medium" HeightRequest="50" Grid.Column="1" ItemsSource="{Binding AvailableToShow}"/>
             </Grid>
             <ListView FlowDirection="RightToLeft" ItemsSource="{Binding UsersList}" Header="{Binding}" IsVisible="{Binding IsUserSelected}" SelectionMode="Single" BackgroundColor="CadetBlue">
                 <ListView.HeaderTemplate>

@@ -32,39 +32,44 @@ namespace ZofimPortalApp.ViewModels
             HeaderMessage = "עריכת משתמשים";
             proxy = ZofimPortalAPIProxy.CreateProxy();
             SetLists();
+            SelectedType = 0;
         }
 
         public async void SetLists()
         {
-            UsersList = await proxy.GetAllUsersAsync();
-            WorkersList = await proxy.GetAllWorkersAsync();
-            ParentsList = await proxy.GetAllParentsAsync();
-            CadetsList = await proxy.GetAllCadetsAsync();
-            AvailableToShow = new List<string>();
+            List<string> toShow = new List<string>();
             int permissionLevel = await proxy.GetPermissionLevelAsync(HomePage.ConnectedUser.Id);
             switch (permissionLevel)
             {
                 case 0:
                     break;
                 case 1:
-                    AvailableToShow.Add("משתמשים");
-                    AvailableToShow.Add("עובדים");
-                    AvailableToShow.Add("הורים");
-                    AvailableToShow.Add("חניכים");
+                    toShow.Add("משתמשים");
+                    toShow.Add("עובדים");
+                    toShow.Add("הורים");
+                    toShow.Add("חניכים");
                     break;
                 case 2:
-                    AvailableToShow.Add("משתמשים");
-                    AvailableToShow.Add("עובדים");
-                    AvailableToShow.Add("הורים");
-                    AvailableToShow.Add("חניכים");
+                    toShow.Add("משתמשים");
+                    toShow.Add("עובדים");
+                    toShow.Add("הורים");
+                    toShow.Add("חניכים");
                     AvailableHanhaga = await proxy.GetHanhagaAsync(HomePage.ConnectedUser.Id);
                     break;
                 case 3:
-                    AvailableToShow.Add("הורים");
-                    AvailableToShow.Add("חניכים");
+                    toShow.Add("הורים");
+                    toShow.Add("חניכים");
                     AvailableShevet = await proxy.GetShevetAsync(HomePage.ConnectedUser.Id);
                     break;
             }
+            AvailableToShow = toShow;
+
+            UsersList = await proxy.GetAllUsersAsync();
+            WorkersList = await proxy.GetAllWorkersAsync();
+            ParentsList = await proxy.GetAllParentsAsync();
+            CadetsList = await proxy.GetAllCadetsAsync();
+            //להוסיף כאן שזה מוציא רק את מה שרלוונטי למשתמש (לא בעיה, עם פעולות בשרת שמוציאות הכל לפי שבט/הנהגה)
+            //צריך להוסיף חיפוש בעמוד הזה לפי שלוש עמודות (להוסיף פיקר עם העמודות ולהוריד את מה שכבר נבחר, לחפש ברשימה עם foreach
         }
 
         #region Properties

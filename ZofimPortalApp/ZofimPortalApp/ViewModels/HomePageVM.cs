@@ -91,9 +91,9 @@ namespace ZofimPortalApp.ViewModels
         {
             IsConnected = true;
             NotConnected = false;
-            if (await proxy.GetPermissionLevelAsync(HomePage.ConnectedUser.Id) != 0)
-                IsAdmin = true;
-            else
+            IsAdmin = true;
+            int permissionLevel = await proxy.GetPermissionLevelAsync(HomePage.ConnectedUser.Id);
+            if (permissionLevel == 0)
                 IsAdmin = false;
         }
 
