@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Windows.Input;
+﻿using System.ComponentModel;
 using Xamarin.Forms;
-using ZofimPortalApp.Services;
 using ZofimPortalApp.Models;
+using ZofimPortalApp.Services;
 using ZofimPortalApp.Views;
-using Xamarin.Essentials;
-using System.Linq;
 
 namespace ZofimPortalApp.ViewModels
 {
@@ -19,6 +12,7 @@ namespace ZofimPortalApp.ViewModels
         public Command ToSignUpCommand { get; }
         public Command ToManageUsersCommand { get; }
         public Command SignOutCommand { get; }
+        private ZofimPortalAPIProxy proxy;
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -79,6 +73,7 @@ namespace ZofimPortalApp.ViewModels
             ToLogInCommand = new Command(ToLogIn);
             ToSignUpCommand = new Command(ToSignUp);
             SignOutCommand = new Command(SignOut);
+            proxy = ZofimPortalAPIProxy.CreateProxy();
             ToManageUsersCommand = new Command(ToManageUsers);
             if (u != null)
             {
@@ -92,17 +87,14 @@ namespace ZofimPortalApp.ViewModels
                 IsAdmin = false;
             }
         }
-        public void SignedIn()
+        public async void SignedIn()
         {
             IsConnected = true;
             NotConnected = false;
-            if (HomePage.ConnectedUser.Id == 1)
+            if (await proxy.GetPermissionLevelAsync(HomePage.ConnectedUser.Id) != 0)
                 IsAdmin = true;
             else
-            {
-                Worker worker = HomePage.ConnectedUser.Workers.Where(w => w.Role == "admin").FirstOrDefault();
-                IsAdmin = worker != null;
-            }
+                IsAdmin = false;
         }
 
         public async void SignOut()

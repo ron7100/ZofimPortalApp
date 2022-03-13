@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Windows.Input;
-using Xamarin.Forms;
-using ZofimPortalApp.Services;
-using ZofimPortalApp.Models;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Text.RegularExpressions;
-using Xamarin.Essentials;
+using Xamarin.Forms;
+using ZofimPortalApp.Models;
+using ZofimPortalApp.Services;
 using ZofimPortalApp.Views;
 
 namespace ZofimPortalApp.ViewModels
@@ -29,8 +21,8 @@ namespace ZofimPortalApp.ViewModels
             BackToHomePageCommand = new Command(BackToHomePage);
             proxy = ZofimPortalAPIProxy.CreateProxy();
             #region למחוק לפני הגשה
-            email = "aaa@gmail.com";
-            pass = "aaa";
+            email = "bbb@gmail.com";
+            pass = "bbb";
             LogIn();
             #endregion
         }

@@ -42,8 +42,8 @@ namespace ZofimPortalApp.ViewModels
             CadetsList = await proxy.GetAllCadetsAsync();
             AvailableToShow = new List<string>();
             int permissionLevel = await proxy.GetPermissionLevelAsync(HomePage.ConnectedUser.Id);
-            switch(permissionLevel)
-            { 
+            switch (permissionLevel)
+            {
                 case 0:
                     break;
                 case 1:
@@ -57,14 +57,18 @@ namespace ZofimPortalApp.ViewModels
                     AvailableToShow.Add("עובדים");
                     AvailableToShow.Add("הורים");
                     AvailableToShow.Add("חניכים");
-                    AvailableHanhaga
+                    AvailableHanhaga = await proxy.GetHanhagaAsync(HomePage.ConnectedUser.Id);
                     break;
                 case 3:
                     AvailableToShow.Add("הורים");
                     AvailableToShow.Add("חניכים");
+                    AvailableShevet = await proxy.GetShevetAsync(HomePage.ConnectedUser.Id);
+                    break;
             }
+        }
 
         #region Properties
+            #region Lists
         private ObservableCollection<User> usersList;
         public ObservableCollection<User> UsersList
         {
@@ -73,17 +77,6 @@ namespace ZofimPortalApp.ViewModels
             {
                 usersList = value;
                 OnPropertyChanged("UsersList");
-            }
-        }
-
-        private bool isUserSelected;
-        public bool IsUserSelected
-        {
-            get => isUserSelected;
-            set
-            {
-                isUserSelected = value;
-                OnPropertyChanged("IsUserSelected");
             }
         }
 
@@ -98,17 +91,6 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private bool isWorkerSelected;
-        public bool IsWorkerSelected
-        {
-            get => isWorkerSelected;
-            set
-            {
-                isWorkerSelected = value;
-                OnPropertyChanged("IsWorkerSelected");
-            }
-        }
-
         private ObservableCollection<ParentToShow> parentsList;
         public ObservableCollection<ParentToShow> ParentsList
         {
@@ -120,17 +102,6 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private bool isParentSelected;
-        public bool IsParentSelected
-        {
-            get => isParentSelected;
-            set
-            {
-                isParentSelected = value;
-                OnPropertyChanged("IsParentSelected");
-            }
-        }
-
         private ObservableCollection<CadetToShow> cadetsList;
         public ObservableCollection<CadetToShow> CadetsList
         {
@@ -139,6 +110,41 @@ namespace ZofimPortalApp.ViewModels
             {
                 cadetsList = value;
                 OnPropertyChanged("CadetsList");
+            }
+        }
+        #endregion
+
+            #region Is selected
+        private bool isUserSelected;
+        public bool IsUserSelected
+        {
+            get => isUserSelected;
+            set
+            {
+                isUserSelected = value;
+                OnPropertyChanged("IsUserSelected");
+            }
+        }
+
+        private bool isWorkerSelected;
+        public bool IsWorkerSelected
+        {
+            get => isWorkerSelected;
+            set
+            {
+                isWorkerSelected = value;
+                OnPropertyChanged("IsWorkerSelected");
+            }
+        }
+
+        private bool isParentSelected;
+        public bool IsParentSelected
+        {
+            get => isParentSelected;
+            set
+            {
+                isParentSelected = value;
+                OnPropertyChanged("IsParentSelected");
             }
         }
 
@@ -164,18 +170,9 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("SelectedType");
             }
         }
+        #endregion
 
-        private string headerMessage;
-        public string HeaderMessage
-        {
-            get => headerMessage;
-            set
-            {
-                headerMessage = value;
-                OnPropertyChanged("HeaderMessage");
-            }
-        }
-
+            #region Availables
         private List<string> availableToShow;
         public List<string> AvailableToShow
         {
@@ -206,6 +203,18 @@ namespace ZofimPortalApp.ViewModels
             {
                 availableShevet = value;
                 OnPropertyChanged("AvailableShevet");
+            }
+        }
+            #endregion
+
+        private string headerMessage;
+        public string HeaderMessage
+        {
+            get => headerMessage;
+            set
+            {
+                headerMessage = value;
+                OnPropertyChanged("HeaderMessage");
             }
         }
         #endregion
