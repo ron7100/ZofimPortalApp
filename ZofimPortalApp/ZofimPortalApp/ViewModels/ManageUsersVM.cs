@@ -32,7 +32,6 @@ namespace ZofimPortalApp.ViewModels
             HeaderMessage = "עריכת משתמשים";
             proxy = ZofimPortalAPIProxy.CreateProxy();
             SetLists();
-            SelectedType = 0;
         }
 
         public async void SetLists()
@@ -60,16 +59,31 @@ namespace ZofimPortalApp.ViewModels
                     toShow.Add("הורים");
                     toShow.Add("חניכים");
                     AvailableShevet = await proxy.GetShevetAsync(HomePage.ConnectedUser.Id);
+                    UpdateSelection();
                     break;
             }
             AvailableToShow = toShow;
+
+            SelectedType = 0;
+            SelectedTypeItem = AvailableToShow[0];
 
             UsersList = await proxy.GetAllUsersAsync();
             WorkersList = await proxy.GetAllWorkersAsync();
             ParentsList = await proxy.GetAllParentsAsync();
             CadetsList = await proxy.GetAllCadetsAsync();
-            //להוסיף כאן שזה מוציא רק את מה שרלוונטי למשתמש (לא בעיה, עם פעולות בשרת שמוציאות הכל לפי שבט/הנהגה)
-            //צריך להוסיף חיפוש בעמוד הזה לפי שלוש עמודות (להוסיף פיקר עם העמודות ולהוריד את מה שכבר נבחר, לחפש ברשימה עם foreach
+            if(AvailableHanhaga!=null)
+            {
+                SetRelevantUsersList();
+                SetRelevantWorkersList();
+                SetRelevantParentsList("Hanhaga");
+                SetRelevantCadetsList("Hanhaga");
+            }
+            if(AvailableShevet!=null)
+            {
+                SetRelevantParentsList("Shevet");
+                SetRelevantCadetsList("Shevet");
+            }
+            //צריך להוסיף חיפוש בעמוד הזה לפי שלוש עמודות (להוסיף פיקר עם העמודות ולהוריד את מה שכבר נבחר), לחפש ברשימה עם foreach
         }
 
         #region Properties
@@ -175,6 +189,18 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("SelectedType");
             }
         }
+
+        private string selectedTypeItem;
+        public string SelectedTypeItem
+        {
+            get => selectedTypeItem;
+            set
+            {
+                selectedTypeItem = value;
+                UpdateSelection();
+                OnPropertyChanged("SelectedTypeItem");
+            }
+        }
         #endregion
 
             #region Availables
@@ -224,26 +250,105 @@ namespace ZofimPortalApp.ViewModels
         }
         #endregion
 
+        #region set relevant lists
+        public async void SetRelevantUsersList()
+        {
+            ObservableCollection<User> relevantUsers = new ObservableCollection<User>();
+            foreach(User u in UsersList)
+            {
+                if (await proxy.GetHanhagaAsync(u.Id) == AvailableHanhaga)
+                    relevantUsers.Add(u);
+            }
+            UsersList = relevantUsers;
+        }
+
+        public void SetRelevantWorkersList()
+        {
+            ObservableCollection<WorkerToShow> relevantWorkers = new ObservableCollection<WorkerToShow>();
+            foreach (WorkerToShow w in WorkersList)
+            {
+                if (w.Hanhaga == AvailableHanhaga)
+                    relevantWorkers.Add(w);
+            }
+            WorkersList = relevantWorkers;
+        }
+
+        public async void SetRelevantParentsList(string option)
+        {
+            ObservableCollection<ParentToShow> relevantParents = new ObservableCollection<ParentToShow>();
+            foreach(ParentToShow p in ParentsList)
+            {
+                int Id = UsersList.Where(u => u.PersonalId == p.PersonalID).FirstOrDefault().Id;
+                if (option == "Hanhaga")
+                {
+                    if (await proxy.GetHanhagaAsync(Id) == AvailableHanhaga)
+                        relevantParents.Add(p);
+                }
+                else
+                {
+                    if (await proxy.GetShevetAsync(Id) == AvailableShevet)
+                        relevantParents.Add(p);
+                }
+            }
+            ParentsList = relevantParents;
+        }
+
+        public void SetRelevantCadetsList(string option)
+        {
+            ObservableCollection<CadetToShow> relevantCadets = new ObservableCollection<CadetToShow>();
+            foreach (CadetToShow c in CadetsList)
+            {
+                if (option == "Hanhaga")
+                {
+                    if (c.Hanhaga == AvailableHanhaga)
+                        relevantCadets.Add(c);
+                }
+                else
+                {
+                    if (c.Shevet == AvailableShevet)
+                        relevantCadets.Add(c);
+                }
+            }
+            CadetsList = relevantCadets;
+        }
+
+        #endregion
+
         public void UpdateSelection()
         {
             IsUserSelected = false;
             IsWorkerSelected = false;
             IsParentSelected = false;
             IsCadetSelected = false;
-            switch(selectedType)
+            if (AvailableShevet == null)
             {
-                case 0:
-                    IsUserSelected = true;
-                    break;
-                case 1:
-                    IsWorkerSelected = true;
-                    break;
-                case 2:
-                    IsParentSelected = true;
-                    break;
-                case 3:
-                    IsCadetSelected = true;
-                    break;
+                switch (selectedType)
+                {
+                    case 0:
+                        IsUserSelected = true;
+                        break;
+                    case 1:
+                        IsWorkerSelected = true;
+                        break;
+                    case 2:
+                        IsParentSelected = true;
+                        break;
+                    case 3:
+                        IsCadetSelected = true;
+                        break;
+                }
+            }
+            else
+            {
+                switch (selectedType)
+                {
+                    case 0:
+                        IsParentSelected = true;
+                        break;
+                    case 1:
+                        IsCadetSelected = true;
+                        break;
+                }
             }
         }
 

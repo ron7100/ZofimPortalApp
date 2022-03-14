@@ -414,8 +414,7 @@ namespace ZofimPortalApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    string hanhaga = JsonSerializer.Deserialize<string>(content, options);
-                    return hanhaga;
+                    return content;
                 }
                 else
                 {
@@ -442,8 +441,7 @@ namespace ZofimPortalApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    string shevet = JsonSerializer.Deserialize<string>(content, options);
-                    return shevet;
+                    return content;
                 }
                 else
                 {
