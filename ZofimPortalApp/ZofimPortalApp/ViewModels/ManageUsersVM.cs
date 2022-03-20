@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
-using ZofimPortalApp.Services;
 using ZofimPortalApp.Models;
-using Xamarin.Essentials;
-using System.Linq;
-using System.Collections.ObjectModel;
+using ZofimPortalApp.Services;
 using ZofimPortalApp.Views;
 
 namespace ZofimPortalApp.ViewModels
@@ -86,7 +82,6 @@ namespace ZofimPortalApp.ViewModels
                 SetRelevantParentsList("Shevet");
                 SetRelevantCadetsList("Shevet");
             }
-            //צריך להוסיף חיפוש בעמוד הזה לפי שלוש עמודות (להוסיף פיקר עם העמודות ולהוריד את מה שכבר נבחר), לחפש ברשימה עם foreach
         }
 
         #region Properties
@@ -298,8 +293,22 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 firstField = value;
+                IsSecondFieldEnabled();
                 Search();
+                //if(!CheckedFirstField)
+                //    ChangedFirstFieldSelection();
                 OnPropertyChanged("FirstField");
+            }
+        }
+
+        private int firstFieldIndex;
+        public int FirstFieldIndex
+        {
+            get => firstFieldIndex;
+            set
+            {
+                firstFieldIndex = value;
+                OnPropertyChanged("FirstFieldValue");
             }
         }
 
@@ -310,7 +319,6 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 firstFieldPlaceHolder = value;
-                Search();
                 OnPropertyChanged("FirstFieldPlaceHolder");
             }
         }
@@ -322,6 +330,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 firstFieldValue = value;
+                IsSecondFieldEnabled();
                 Search();
                 OnPropertyChanged("FirstFieldValue");
             }
@@ -337,6 +346,7 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("AvailableOptionsFirstField");
             }
         }
+        public bool CheckedFirstField { get; set; }
 
         private string secondField;
         public string SecondField
@@ -345,7 +355,21 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 secondField = value;
+                Search();
+                //if(!CheckedSecondField)
+                //    ChangedSecondFieldSelection();
                 OnPropertyChanged("SecondField");
+            }
+        }
+
+        private int secondFieldIndex;
+        public int SecondFieldIndex
+        {
+            get => secondFieldIndex;
+            set
+            {
+                secondFieldIndex = value;
+                OnPropertyChanged("SecondFieldValue");
             }
         }
 
@@ -367,7 +391,19 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 secondFieldValue = value;
+                Search();
                 OnPropertyChanged("SecondFieldValue");
+            }
+        }
+
+        private bool secondFieldEnabled;
+        public bool SecondFieldEnabled
+        {
+            get => secondFieldEnabled;
+            set
+            {
+                secondFieldEnabled = value;
+                OnPropertyChanged("SecondFieldEnabled");
             }
         }
 
@@ -381,6 +417,7 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("AvailableOptionsSecondField");
             }
         }
+        public bool CheckedSecondField { get; set; }
 
         private bool searchEnabled;
         public bool SearchEnabled
@@ -530,23 +567,573 @@ namespace ZofimPortalApp.ViewModels
                         break;
                 }
             }
-            if(IsUserSelected)
+            AvailableOptionsFirstField = GetAvailableFieldsOptions();
+            AvailableOptionsSecondField = GetAvailableFieldsOptions();
+        }
+
+        private List<string> GetAvailableFieldsOptions()
+        {
+            List<string> availableFields = new List<string>();
+            if (IsUserSelected)
             {
-                List<string> availableFields = new List<string>();
-                //availableFields.Add()
-                //AvailableOptionsFirstField
+                availableFields.Add("כתובת מייל");
+                availableFields.Add("שם פרטי");
+                availableFields.Add("שם משפחה");
+                availableFields.Add("תעודת זהות");
             }
+            else if (IsWorkerSelected)
+            {
+                availableFields.Add("כתובת מייל");
+                availableFields.Add("שם פרטי");
+                availableFields.Add("שם משפחה");
+                availableFields.Add("תעודת זהות");
+                availableFields.Add("תפקיד");
+                availableFields.Add("שבט");
+                availableFields.Add("הנהגה");
+            }
+            else if (IsParentSelected)
+            {
+                availableFields.Add("כתובת מייל");
+                availableFields.Add("שם פרטי");
+                availableFields.Add("שם משפחה");
+                availableFields.Add("תעודת זהות");
+                availableFields.Add("שבט");
+            }
+            else if (IsCadetSelected)
+            {
+                availableFields.Add("שם פרטי");
+                availableFields.Add("שם משפחה");
+                availableFields.Add("תעודת זהות");
+                availableFields.Add("שבט");
+                availableFields.Add("הנהגה");
+                availableFields.Add("תפקיד");
+            }
+            return availableFields;
+        }
+
+        //להוריד/לבצע התאמות עם החיפוש
+        private void ChangedFirstFieldSelection()
+        {
+            
+            List<string> availableOptionsHolder = GetAvailableFieldsOptions();
+            string chosenOptionHolder = SecondField;
+            secondField = null;
+            List<string> availableFields = new List<string>();
+            foreach (string s in availableOptionsHolder)
+            {
+                if (s != FirstField)
+                    availableFields.Add(s);
+            }
+            CheckedSecondField = true;
+            CheckedFirstField = false;
+            AvailableOptionsSecondField = availableFields;
+            secondField = chosenOptionHolder;
+        }
+
+        private void ChangedSecondFieldSelection()
+        {
+            List<string> availableOptionsHolder = GetAvailableFieldsOptions();
+            string chosenOptionHolder = FirstField;
+            firstField = null;
+            List<string> availableFields = new List<string>();
+            foreach (string s in availableOptionsHolder)
+            {
+                if (s != SecondField)
+                    availableFields.Add(s);
+            }
+            CheckedFirstField = true;
+            CheckedSecondField = false;
+            AvailableOptionsFirstField = availableFields;
+            firstField = chosenOptionHolder;
+        }
+
+        private void IsSecondFieldEnabled()
+        {
+            SecondFieldEnabled = FirstField != null && FirstFieldValue != null;
         }
 
         private void Search()
         {
-            //להוסיף כאן את העריכה של הרשימות to show
-            //בודקים לפי המשתנה הראשון, אחרי זה לפי השני ממה שנשאר
+            if (SelectedTypeItem == "משתמשים")
+            {
+                UsersListToShow = UsersList;
+                if (FirstFieldValue != null)
+                {
+                    switch (FirstFieldIndex)
+                    {
+                        case 0:
+                            ObservableCollection<User> dummy = new ObservableCollection<User>();
+                            foreach (User u in UsersList)
+                            {
+                                if (u.Email == FirstFieldValue)
+                                    dummy.Add(u);
+                            }
+                            UsersListToShow = dummy;
+                            break;
+                        case 1:
+                            dummy = new ObservableCollection<User>();
+                            foreach (User u in UsersList)
+                            {
+                                if (u.FirstName == FirstFieldValue)
+                                    dummy.Add(u);
+                            }
+                            UsersListToShow = dummy;
+                            break;
+                        case 2:
+                            dummy = new ObservableCollection<User>();
+                            foreach (User u in UsersList)
+                            {
+                                if (u.LastName == FirstFieldValue)
+                                    dummy.Add(u);
+                            }
+                            UsersListToShow = dummy;
+                            break;
+                        case 3:
+                            dummy = new ObservableCollection<User>();
+                            foreach (User u in UsersList)
+                            {
+                                if (u.PersonalId == FirstFieldValue)
+                                    dummy.Add(u);
+                            }
+                            UsersListToShow = dummy;
+                            break;
+                    }
+                    if(SecondFieldValue != null)
+                    {
+                        switch (secondFieldIndex)
+                        {
+                            case 0:
+                                ObservableCollection<User> dummy = new ObservableCollection<User>();
+                                foreach (User u in UsersListToShow)
+                                {
+                                    if (u.Email == FirstFieldValue)
+                                        dummy.Add(u);
+                                }
+                                UsersListToShow = dummy;
+                                break;
+                            case 1:
+                                dummy = new ObservableCollection<User>();
+                                foreach (User u in UsersListToShow)
+                                {
+                                    if (u.FirstName == FirstFieldValue)
+                                        dummy.Add(u);
+                                }
+                                UsersListToShow = dummy;
+                                break;
+                            case 2:
+                                dummy = new ObservableCollection<User>();
+                                foreach (User u in UsersListToShow)
+                                {
+                                    if (u.LastName == FirstFieldValue)
+                                        dummy.Add(u);
+                                }
+                                UsersListToShow = dummy;
+                                break;
+                            case 3:
+                                dummy = new ObservableCollection<User>();
+                                foreach (User u in UsersListToShow)
+                                {
+                                    if (u.PersonalId == FirstFieldValue)
+                                        dummy.Add(u);
+                                }
+                                UsersListToShow = dummy;
+                                break;
+                        }
+                    }
+                }
+            }
+            if (SelectedTypeItem == "עובדים")
+            {
+                WorkersListToShow = WorkersList;
+                if (FirstFieldValue != null)
+                {
+                    switch (FirstFieldIndex)
+                    {
+                        case 0:
+                            ObservableCollection<WorkerToShow> dummy = new ObservableCollection<WorkerToShow>();
+                            foreach (WorkerToShow w in WorkersList)
+                            {
+                                if (w.Email == FirstFieldValue)
+                                    dummy.Add(w);
+                            }
+                            WorkersListToShow = dummy;
+                            break;
+                        case 1:
+                            dummy = new ObservableCollection<WorkerToShow>();
+                            foreach (WorkerToShow w in WorkersList)
+                            {
+                                if (w.FirstName == FirstFieldValue)
+                                    dummy.Add(w);
+                            }
+                            WorkersListToShow = dummy;
+                            break;
+                        case 2:
+                            dummy = new ObservableCollection<WorkerToShow>();
+                            foreach (WorkerToShow w in WorkersList)
+                            {
+                                if (w.LastName == FirstFieldValue)
+                                    dummy.Add(w);
+                            }
+                            WorkersListToShow = dummy;
+                            break;
+                        case 3:
+                            dummy = new ObservableCollection<WorkerToShow>();
+                            foreach (WorkerToShow w in WorkersList)
+                            {
+                                if (w.PersonalID == FirstFieldValue)
+                                    dummy.Add(w);
+                            }
+                            WorkersListToShow = dummy;
+                            break;
+                        case 4:
+                            dummy = new ObservableCollection<WorkerToShow>();
+                            foreach (WorkerToShow w in WorkersList)
+                            {
+                                if (w.Role == FirstFieldValue)
+                                    dummy.Add(w);
+                            }
+                            WorkersListToShow = dummy;
+                            break;
+                        case 5:
+                            dummy = new ObservableCollection<WorkerToShow>();
+                            foreach (WorkerToShow w in WorkersList)
+                            {
+                                if(w.Shevet!=null)
+                                    if (w.Shevet == FirstFieldValue)
+                                        dummy.Add(w);
+                            }
+                            WorkersListToShow = dummy;
+                            break;
+                        case 6:
+                            dummy = new ObservableCollection<WorkerToShow>();
+                            foreach (WorkerToShow w in WorkersList)
+                            {
+                                if (w.Hanhaga != null)
+                                    if (w.Hanhaga == FirstFieldValue)
+                                        dummy.Add(w);
+                            }
+                            WorkersListToShow = dummy;
+                            break;
+                    }
+                    if (SecondFieldValue != null)
+                    {
+                        switch (SecondFieldIndex)
+                        {
+                            case 0:
+                                ObservableCollection<WorkerToShow> dummy = new ObservableCollection<WorkerToShow>();
+                                foreach (WorkerToShow w in WorkersListToShow)
+                                {
+                                    if (w.Email == FirstFieldValue)
+                                        dummy.Add(w);
+                                }
+                                WorkersListToShow = dummy;
+                                break;
+                            case 1:
+                                dummy = new ObservableCollection<WorkerToShow>();
+                                foreach (WorkerToShow w in WorkersListToShow)
+                                {
+                                    if (w.FirstName == FirstFieldValue)
+                                        dummy.Add(w);
+                                }
+                                WorkersListToShow = dummy;
+                                break;
+                            case 2:
+                                dummy = new ObservableCollection<WorkerToShow>();
+                                foreach (WorkerToShow w in WorkersListToShow)
+                                {
+                                    if (w.LastName == FirstFieldValue)
+                                        dummy.Add(w);
+                                }
+                                WorkersListToShow = dummy;
+                                break;
+                            case 3:
+                                dummy = new ObservableCollection<WorkerToShow>();
+                                foreach (WorkerToShow w in WorkersListToShow)
+                                {
+                                    if (w.PersonalID == FirstFieldValue)
+                                        dummy.Add(w);
+                                }
+                                WorkersListToShow = dummy;
+                                break;
+                            case 4:
+                                dummy = new ObservableCollection<WorkerToShow>();
+                                foreach (WorkerToShow w in WorkersListToShow)
+                                {
+                                    if (w.Role == FirstFieldValue)
+                                        dummy.Add(w);
+                                }
+                                WorkersListToShow = dummy;
+                                break;
+                            case 5:
+                                dummy = new ObservableCollection<WorkerToShow>();
+                                foreach (WorkerToShow w in WorkersListToShow)
+                                {
+                                    if (w.Shevet != null)
+                                        if (w.Shevet == FirstFieldValue)
+                                            dummy.Add(w);
+                                }
+                                WorkersListToShow = dummy;
+                                break;
+                            case 6:
+                                dummy = new ObservableCollection<WorkerToShow>();
+                                foreach (WorkerToShow w in WorkersListToShow)
+                                {
+                                    if (w.Hanhaga != null)
+                                        if (w.Hanhaga == FirstFieldValue)
+                                            dummy.Add(w);
+                                }
+                                WorkersListToShow = dummy;
+                                break;
+                        }
+                    }
+                }
+            }
+            if (SelectedTypeItem == "הורים")
+            {
+                ParentsListToShow = ParentsList;
+                if (FirstFieldValue != null)
+                {
+                    switch (FirstFieldIndex)
+                    {
+                        case 0:
+                            ObservableCollection<ParentToShow> dummy = new ObservableCollection<ParentToShow>();
+                            foreach (ParentToShow p in ParentsList)
+                            {
+                                if (p.Email == FirstFieldValue)
+                                    dummy.Add(p);
+                            }
+                            ParentsListToShow = dummy;
+                            break;
+                        case 1:
+                            dummy = new ObservableCollection<ParentToShow>();
+                            foreach (ParentToShow p in ParentsList)
+                            {
+                                if (p.FirstName == FirstFieldValue)
+                                    dummy.Add(p);
+                            }
+                            ParentsListToShow = dummy;
+                            break;
+                        case 2:
+                            dummy = new ObservableCollection<ParentToShow>();
+                            foreach (ParentToShow p in ParentsList)
+                            {
+                                if (p.LastName == FirstFieldValue)
+                                    dummy.Add(p);
+                            }
+                            ParentsListToShow = dummy;
+                            break;
+                        case 3:
+                            dummy = new ObservableCollection<ParentToShow>();
+                            foreach (ParentToShow p in ParentsList)
+                            {
+                                if (p.PersonalID == FirstFieldValue)
+                                    dummy.Add(p);
+                            }
+                            ParentsListToShow = dummy;
+                            break;
+                        case 4:
+                            dummy = new ObservableCollection<ParentToShow>();
+                            foreach (ParentToShow p in ParentsList)
+                            {
+                                if (p.Shevet == FirstFieldValue)
+                                    dummy.Add(p);
+                            }
+                            ParentsListToShow = dummy;
+                            break;
+                    }
+                    if (SecondFieldValue != null)
+                    {
+                        switch (secondFieldIndex)
+                        {
+                            case 0:
+                                ObservableCollection<ParentToShow> dummy = new ObservableCollection<ParentToShow>();
+                                foreach (ParentToShow p in ParentsListToShow)
+                                {
+                                    if (p.Email == FirstFieldValue)
+                                        dummy.Add(p);
+                                }
+                                ParentsListToShow = dummy;
+                                break;
+                            case 1:
+                                dummy = new ObservableCollection<ParentToShow>();
+                                foreach (ParentToShow p in ParentsListToShow)
+                                {
+                                    if (p.FirstName == FirstFieldValue)
+                                        dummy.Add(p);
+                                }
+                                ParentsListToShow = dummy;
+                                break;
+                            case 2:
+                                dummy = new ObservableCollection<ParentToShow>();
+                                foreach (ParentToShow p in ParentsListToShow)
+                                {
+                                    if (p.LastName == FirstFieldValue)
+                                        dummy.Add(p);
+                                }
+                                ParentsListToShow = dummy;
+                                break;
+                            case 3:
+                                dummy = new ObservableCollection<ParentToShow>();
+                                foreach (ParentToShow p in ParentsListToShow)
+                                {
+                                    if (p.PersonalID == FirstFieldValue)
+                                        dummy.Add(p);
+                                }
+                                ParentsListToShow = dummy;
+                                break;
+                            case 4:
+                                dummy = new ObservableCollection<ParentToShow>();
+                                foreach (ParentToShow p in ParentsListToShow)
+                                {
+                                    if (p.Shevet == FirstFieldValue)
+                                        dummy.Add(p);
+                                }
+                                ParentsListToShow = dummy;
+                                break;
+                        }
+                    }
+                }
+            }
+            if (SelectedTypeItem == "חניכים")
+            {
+                CadetsListToShow = CadetsList;
+                if (FirstFieldValue != null)
+                {
+                    switch (FirstFieldIndex)
+                    {
+                        case 0:
+                            ObservableCollection<CadetToShow> dummy = new ObservableCollection<CadetToShow>();
+                            foreach (CadetToShow c in CadetsList)
+                            {
+                                if (c.FirstName == FirstFieldValue)
+                                    dummy.Add(c);
+                            }
+                            CadetsListToShow = dummy;
+                            break;
+                        case 1:
+                            dummy = new ObservableCollection<CadetToShow>();
+                            foreach (CadetToShow c in CadetsList)
+                            {
+                                if (c.LastName == FirstFieldValue)
+                                    dummy.Add(c);
+                            }
+                            CadetsListToShow = dummy;
+                            break;
+                        case 2:
+                            dummy = new ObservableCollection<CadetToShow>();
+                            foreach (CadetToShow c in CadetsList)
+                            {
+                                if (c.PersonalID == FirstFieldValue)
+                                    dummy.Add(c);
+                            }
+                            CadetsListToShow = dummy;
+                            break;
+                        case 3:
+                            dummy = new ObservableCollection<CadetToShow>();
+                            foreach (CadetToShow c in CadetsList)
+                            {
+                                if (c.Shevet == FirstFieldValue)
+                                    dummy.Add(c);
+                            }
+                            CadetsListToShow = dummy;
+                            break;
+                        case 4:
+                            dummy = new ObservableCollection<CadetToShow>();
+                            foreach (CadetToShow c in CadetsList)
+                            {
+                                if (c.Hanhaga == FirstFieldValue)
+                                    dummy.Add(c);
+                            }
+                            CadetsListToShow = dummy;
+                            break;
+                        case 5:
+                            dummy = new ObservableCollection<CadetToShow>();
+                            foreach (CadetToShow c in CadetsList)
+                            {
+                                if (c.Role == FirstFieldValue)
+                                    dummy.Add(c);
+                            }
+                            CadetsListToShow = dummy;
+                            break;
+                    }
+                    if (SecondFieldValue != null)
+                    {
+                        switch (FirstFieldIndex)
+                        {
+                            case 0:
+                                ObservableCollection<CadetToShow> dummy = new ObservableCollection<CadetToShow>();
+                                foreach (CadetToShow c in CadetsListToShow)
+                                {
+                                    if (c.FirstName == FirstFieldValue)
+                                        dummy.Add(c);
+                                }
+                                CadetsListToShow = dummy;
+                                break;
+                            case 1:
+                                dummy = new ObservableCollection<CadetToShow>();
+                                foreach (CadetToShow c in CadetsListToShow)
+                                {
+                                    if (c.LastName == FirstFieldValue)
+                                        dummy.Add(c);
+                                }
+                                CadetsListToShow = dummy;
+                                break;
+                            case 2:
+                                dummy = new ObservableCollection<CadetToShow>();
+                                foreach (CadetToShow c in CadetsListToShow)
+                                {
+                                    if (c.PersonalID == FirstFieldValue)
+                                        dummy.Add(c);
+                                }
+                                CadetsListToShow = dummy;
+                                break;
+                            case 3:
+                                dummy = new ObservableCollection<CadetToShow>();
+                                foreach (CadetToShow c in CadetsList)
+                                {
+                                    if (c.Shevet == FirstFieldValue)
+                                        dummy.Add(c);
+                                }
+                                CadetsListToShow = dummy;
+                                break;
+                            case 4:
+                                dummy = new ObservableCollection<CadetToShow>();
+                                foreach (CadetToShow c in CadetsListToShow)
+                                {
+                                    if (c.Hanhaga == FirstFieldValue)
+                                        dummy.Add(c);
+                                }
+                                CadetsListToShow = dummy;
+                                break;
+                            case 5:
+                                dummy = new ObservableCollection<CadetToShow>();
+                                foreach (CadetToShow c in CadetsListToShow)
+                                {
+                                    if (c.Role == FirstFieldValue)
+                                        dummy.Add(c);
+                                }
+                                CadetsListToShow = dummy;
+                                break;
+                        }
+                    }
+                }
+            }
         }
 
         private void EnableSearch() => SearchEnabled = true;
 
-        private void DisableSearch() => SearchEnabled = false;
+        private void DisableSearch()
+        {
+            SearchEnabled = false;
+            UsersListToShow = UsersList;
+            WorkersListToShow = WorkersList;
+            ParentsListToShow = ParentsList;
+            CadetsListToShow = CadetsList;
+            FirstField = null;
+            FirstFieldValue = null;
+            SecondField = null;
+            SecondFieldValue = null;
+        }
 
         private async void GoToEditUsers()
         {

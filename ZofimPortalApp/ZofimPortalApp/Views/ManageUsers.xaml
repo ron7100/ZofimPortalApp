@@ -14,20 +14,20 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <Button Text="חיפוש" Command="{Binding EnableSearchCommand}" IsVisible="{Binding SearchDisabled}" />
-                <Button Text="סגור חיפוש" Command="{Binding DisableSearchCommand}" IsVisible="{Binding SearchEnabled}" />
-                <Label Text="שדה ראשון: " FontSize="Medium" Grid.Row="1" IsVisible="{Binding SearchEnabled}"/>
-                <Label Text="שדה שני: " FontSize="Medium" Grid.Row="2" IsVisible="{Binding SearchEnabled}"/>
+                <Button Text="חיפוש" Command="{Binding EnableSearchCommand}" FontSize="Medium" IsVisible="{Binding SearchDisabled}" />
+                <Button Text="סגור חיפוש" Command="{Binding DisableSearchCommand}" FontSize="Medium" IsVisible="{Binding SearchEnabled}" />
+                <Label Text="שדה ראשון: " FontSize="Medium" Grid.Row="1" VerticalOptions="CenterAndExpand" IsVisible="{Binding SearchEnabled}"/>
+                <Label Text="שדה שני: " FontSize="Medium" Grid.Row="2" VerticalOptions="CenterAndExpand" IsVisible="{Binding SecondFieldEnabled}"/>
                 <Label Text="הצג: " FontSize="Large" Grid.Row="1" IsVisible="{Binding SearchDisabled}"/>
                 <Picker SelectedItem="{Binding SelectedTypeItem}" IsVisible="{Binding SearchDisabled}" SelectedIndex="{Binding SelectedType}" FontSize="Medium" HeightRequest="50" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding AvailableToShow}"/>
-                <Picker SelectedItem="{Binding FirstField}" IsVisible="{Binding SearchEnabled}" FontSize="Medium" HeightRequest="50" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding AvailableOptionsFirstField}"/>
+                <Picker SelectedItem="{Binding FirstField}" IsVisible="{Binding SearchEnabled}" SelectedIndex="{Binding FirstFieldIndex}" FontSize="Medium" HeightRequest="50" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding AvailableOptionsFirstField}"/>
                 <Entry Placeholder="{Binding FirstFieldPlaceHolder}" Text="{Binding FirstFieldValue}" IsVisible="{Binding SearchEnabled}" Grid.Row="1" Grid.Column="2"/>
-                <Picker SelectedItem="{Binding SecondField}" IsVisible="{Binding SearchEnabled}" FontSize="Medium" HeightRequest="50" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding AvailableOptionsSecondField}"/>
-                <Entry Placeholder="{Binding SecondFieldPlaceHolder}" Text="{Binding SecondFieldValue}" IsVisible="{Binding SearchEnabled}" Grid.Row="2" Grid.Column="2"/>
+                <Picker SelectedItem="{Binding SecondField}" IsVisible="{Binding SecondFieldEnabled}" SelectedIndex="{Binding SecondFieldIndex}" FontSize="Medium" HeightRequest="50" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding AvailableOptionsSecondField}"/>
+                <Entry Placeholder="{Binding SecondFieldPlaceHolder}" Text="{Binding SecondFieldValue}" IsVisible="{Binding SecondFieldEnabled}" Grid.Row="2" Grid.Column="2"/>
             </Grid>
             <Grid Padding="5" BackgroundColor="CadetBlue" IsVisible="{Binding IsUserSelected}">
                 <Grid.RowDefinitions>
