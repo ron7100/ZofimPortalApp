@@ -13,9 +13,9 @@ namespace ZofimPortalApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EditUsersInfo : ContentPage
     {
-        public EditUsersInfo()
+        public EditUsersInfo(object u)
         {
-            EditUsersInfoVM vm = new EditUsersInfoVM();
+            EditUsersInfoVM vm = new EditUsersInfoVM(u);
             this.BindingContext = vm;
             InitializeComponent();
         }

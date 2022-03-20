@@ -21,8 +21,8 @@ namespace ZofimPortalApp.ViewModels
             BackToHomePageCommand = new Command(BackToHomePage);
             proxy = ZofimPortalAPIProxy.CreateProxy();
             #region למחוק לפני הגשה
-            email = "ccc@gmail.com";
-            pass = "ccc";
+            email = "bbb@gmail.com";
+            pass = "bbb";
             LogIn();
             #endregion
         }

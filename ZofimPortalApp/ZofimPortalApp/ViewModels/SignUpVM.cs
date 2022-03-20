@@ -491,7 +491,7 @@ namespace ZofimPortalApp.ViewModels
 
         private void ToggleCheckPassword() => IsCheckPassError = !IsCheckPassword;
 
-        private async void BackToHomePage()=> await App.Current.MainPage.Navigation.PopAsync();
+        private async void BackToHomePage() => await App.Current.MainPage.Navigation.PopAsync();
     }
 }
 

@@ -25,12 +25,15 @@ namespace ZofimPortalApp.ViewModels
         #endregion
 
         public ICommand BackToHomePageCommand => new Command(BackToHomePage);
+        public ICommand EnableSearchCommand => new Command(EnableSearch);
+        public ICommand DisableSearchCommand => new Command(DisableSearch);
 
         private ZofimPortalAPIProxy proxy;
         public ManageUsersVM()
         {
-            HeaderMessage = "עריכת משתמשים";
+            HeaderMessage = "ניהול משתמשים";
             proxy = ZofimPortalAPIProxy.CreateProxy();
+            SearchEnabled = false;
             SetLists();
         }
 
@@ -236,7 +239,103 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("AvailableShevet");
             }
         }
-            #endregion
+        #endregion
+
+            #region Search
+        private string firstField;
+        public string FirstField
+        {
+            get => firstField;
+            set
+            {
+                firstField = value;
+                OnPropertyChanged("FirstField");
+            }
+        }
+
+        private List<string> availableOptionsFirstField;
+        public List<string> AvailableOptionsFirstField
+        {
+            get => availableOptionsFirstField;
+            set
+            {
+                availableOptionsFirstField = value;
+                OnPropertyChanged("AvailableOptionsFirstField");
+            }
+        }
+
+        private string secondField;
+        public string SecondField
+        {
+            get => secondField;
+            set
+            {
+                secondField = value;
+                OnPropertyChanged("SecondField");
+            }
+        }
+
+        private List<string> availableOptionsSecondField;
+        public List<string> AvailableOptionsSecondField
+        {
+            get => availableOptionsSecondField;
+            set
+            {
+                availableOptionsSecondField = value;
+                OnPropertyChanged("AvailableOptionsSecondField");
+            }
+        }
+
+        private bool searchEnabled;
+        public bool SearchEnabled
+        {
+            get => searchEnabled;
+            set
+            {
+                searchEnabled = value;
+                if (searchEnabled)
+                    GridHeight = 130;
+                else
+                    GridHeight = 80;
+                SearchDisabled = !searchEnabled;
+                OnPropertyChanged("SearchEnabled");
+            }
+        }
+
+        private int gridHeight;
+        public int GridHeight
+        {
+            get => gridHeight;
+            set
+            {
+                gridHeight = value;
+                OnPropertyChanged("GridHeight");
+            }
+        }
+
+        private bool searchDisabled;
+        public bool SearchDisabled
+        {
+            get => searchDisabled;
+            set
+            {
+                searchDisabled = value;
+                OnPropertyChanged("SearchDisabled");
+            }
+        }
+        #endregion
+
+        private object selected;
+        public object Selected
+        {
+            get => selected;
+            set
+            {
+                selected = value;
+                GoToEditUsers();
+                OnPropertyChanged("Selected");
+            }
+        }
 
         private string headerMessage;
         public string HeaderMessage
@@ -314,7 +413,7 @@ namespace ZofimPortalApp.ViewModels
 
         #endregion
 
-        public void UpdateSelection()
+        private void UpdateSelection()
         {
             IsUserSelected = false;
             IsWorkerSelected = false;
@@ -350,11 +449,28 @@ namespace ZofimPortalApp.ViewModels
                         break;
                 }
             }
+            if(IsUserSelected)
+            {
+                List<string> availableFields = new List<string>();
+                //availableFields.Add()
+                //AvailableOptionsFirstField
+            }
+        }
+
+        private void EnableSearch() => SearchEnabled = true;
+
+        private void DisableSearch() => SearchEnabled = false;
+
+        private async void GoToEditUsers()
+        {
+            Page p = new Views.EditUsersInfo(Selected);
+            await App.Current.MainPage.Navigation.PushAsync(p);
         }
 
         private async void BackToHomePage()
         {
-            await App.Current.MainPage.Navigation.PopAsync();
+            Page p = new Views.HomePage();
+            await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }
 }
