@@ -7,6 +7,16 @@
         <StackLayout>
             <Button Text="חזור" Command="{Binding BackToManageUsersCommand}" HorizontalOptions="Start" WidthRequest="100"/>
             <Label Text="{Binding HeaderMessage}" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Grid IsVisible="{Binding IsUserEdited}" Padding="5">
+                <Label Text="כתובת מייל" FontSize="Medium" />
+                <Entry Text="{Binding Email}" Grid.Column="1" />
+                <Label Text="שם פרטי"  FontSize="Medium" Grid.Row="1" />
+                <Entry Text="{Binding FirstName}" Grid.Column="1" Grid.Row="1" />
+                <Label Text="שם משפחה"  FontSize="Medium" Grid.Row="2" />
+                <Entry Text="{Binding LastName}" Grid.Column="1" Grid.Row="2" />
+                <Label Text="תעודת זהות"  FontSize="Medium" Grid.Row="3" />
+                <Entry Text="{Binding LastName}" Grid.Column="1" Grid.Row="3" />
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
