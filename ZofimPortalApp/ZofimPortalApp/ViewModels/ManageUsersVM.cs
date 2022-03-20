@@ -91,6 +91,51 @@ namespace ZofimPortalApp.ViewModels
 
         #region Properties
             #region Lists
+        private ObservableCollection<User> usersListToShow;
+        public ObservableCollection<User> UsersListToShow
+        {
+            get => usersListToShow;
+            set
+            {
+                usersListToShow = value;
+                OnPropertyChanged("UsersListToShow");
+            }
+        }
+
+        private ObservableCollection<WorkerToShow> workersListToShow;
+        public ObservableCollection<WorkerToShow> WorkersListToShow
+        {
+            get => workersListToShow;
+            set
+            {
+                workersListToShow = value;
+                OnPropertyChanged("WorkersListToShow");
+            }
+        }
+
+        private ObservableCollection<ParentToShow> parentsListToShow;
+        public ObservableCollection<ParentToShow> ParentsListToShow
+        {
+            get => parentsListToShow;
+            set
+            {
+                parentsListToShow = value;
+                OnPropertyChanged("ParentsListToShow");
+            }
+        }
+
+        private ObservableCollection<CadetToShow> cadetsListToShow;
+        public ObservableCollection<CadetToShow> CadetsListToShow
+        {
+            get => cadetsListToShow;
+            set
+            {
+                cadetsListToShow = value;
+                OnPropertyChanged("CadetsListToShow");
+            }
+        }
+
+
         private ObservableCollection<User> usersList;
         public ObservableCollection<User> UsersList
         {
@@ -98,6 +143,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 usersList = value;
+                UsersListToShow = value;
                 OnPropertyChanged("UsersList");
             }
         }
@@ -109,6 +155,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 workersList = value;
+                WorkersListToShow = value;
                 OnPropertyChanged("WorkersList");
             }
         }
@@ -120,6 +167,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 parentsList = value;
+                ParentsListToShow = value;
                 OnPropertyChanged("ParentsList");
             }
         }
@@ -131,6 +179,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 cadetsList = value;
+                CadetsListToShow = value;
                 OnPropertyChanged("CadetsList");
             }
         }
@@ -249,7 +298,32 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 firstField = value;
+                Search();
                 OnPropertyChanged("FirstField");
+            }
+        }
+
+        private string firstFieldPlaceHolder;
+        public string FirstFieldPlaceHolder
+        {
+            get => firstFieldPlaceHolder;
+            set
+            {
+                firstFieldPlaceHolder = value;
+                Search();
+                OnPropertyChanged("FirstFieldPlaceHolder");
+            }
+        }
+
+        private string firstFieldValue;
+        public string FirstFieldValue
+        {
+            get => firstFieldValue;
+            set
+            {
+                firstFieldValue = value;
+                Search();
+                OnPropertyChanged("FirstFieldValue");
             }
         }
 
@@ -275,6 +349,28 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
+        private string secondFieldPlaceHolder;
+        public string SecondFieldPlaceHolder
+        {
+            get => secondFieldPlaceHolder;
+            set
+            {
+                secondFieldPlaceHolder = value;
+                OnPropertyChanged("SecondFieldPlaceHolder");
+            }
+        }
+
+        private string secondFieldValue;
+        public string SecondFieldValue
+        {
+            get => secondFieldValue;
+            set
+            {
+                secondFieldValue = value;
+                OnPropertyChanged("SecondFieldValue");
+            }
+        }
+
         private List<string> availableOptionsSecondField;
         public List<string> AvailableOptionsSecondField
         {
@@ -293,23 +389,8 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 searchEnabled = value;
-                if (searchEnabled)
-                    GridHeight = 130;
-                else
-                    GridHeight = 80;
                 SearchDisabled = !searchEnabled;
                 OnPropertyChanged("SearchEnabled");
-            }
-        }
-
-        private int gridHeight;
-        public int GridHeight
-        {
-            get => gridHeight;
-            set
-            {
-                gridHeight = value;
-                OnPropertyChanged("GridHeight");
             }
         }
 
@@ -455,6 +536,12 @@ namespace ZofimPortalApp.ViewModels
                 //availableFields.Add()
                 //AvailableOptionsFirstField
             }
+        }
+
+        private void Search()
+        {
+            //להוסיף כאן את העריכה של הרשימות to show
+            //בודקים לפי המשתנה הראשון, אחרי זה לפי השני ממה שנשאר
         }
 
         private void EnableSearch() => SearchEnabled = true;

@@ -7,10 +7,11 @@
         <StackLayout>
             <Button Text="חזור" Command="{Binding BackToHomePageCommand}" HorizontalOptions="Start" WidthRequest="100"/>
             <Label Text="{Binding HeaderMessage}" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-            <Grid HeightRequest="{Binding GridHeight}" Padding="10">
+            <Grid Padding="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="130"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
@@ -19,27 +20,25 @@
                 </Grid.RowDefinitions>
                 <Button Text="חיפוש" Command="{Binding EnableSearchCommand}" IsVisible="{Binding SearchDisabled}" />
                 <Button Text="סגור חיפוש" Command="{Binding DisableSearchCommand}" IsVisible="{Binding SearchEnabled}" />
-                <Label Text="שדה ראשון: " FontSize="Large" Grid.Row="1" IsVisible="{Binding SearchEnabled}"/>
-                <Label Text="שדה שני: " FontSize="Large" Grid.Row="2" IsVisible="{Binding SearchEnabled}"/>
+                <Label Text="שדה ראשון: " FontSize="Medium" Grid.Row="1" IsVisible="{Binding SearchEnabled}"/>
+                <Label Text="שדה שני: " FontSize="Medium" Grid.Row="2" IsVisible="{Binding SearchEnabled}"/>
                 <Label Text="הצג: " FontSize="Large" Grid.Row="1" IsVisible="{Binding SearchDisabled}"/>
                 <Picker SelectedItem="{Binding SelectedTypeItem}" IsVisible="{Binding SearchDisabled}" SelectedIndex="{Binding SelectedType}" FontSize="Medium" HeightRequest="50" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding AvailableToShow}"/>
                 <Picker SelectedItem="{Binding FirstField}" IsVisible="{Binding SearchEnabled}" FontSize="Medium" HeightRequest="50" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding AvailableOptionsFirstField}"/>
+                <Entry Placeholder="{Binding FirstFieldPlaceHolder}" Text="{Binding FirstFieldValue}" IsVisible="{Binding SearchEnabled}" Grid.Row="1" Grid.Column="2"/>
                 <Picker SelectedItem="{Binding SecondField}" IsVisible="{Binding SearchEnabled}" FontSize="Medium" HeightRequest="50" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding AvailableOptionsSecondField}"/>
+                <Entry Placeholder="{Binding SecondFieldPlaceHolder}" Text="{Binding SecondFieldValue}" IsVisible="{Binding SearchEnabled}" Grid.Row="2" Grid.Column="2"/>
             </Grid>
-            <ListView FlowDirection="RightToLeft" ItemsSource="{Binding UsersList}" Header="{Binding}" IsVisible="{Binding IsUserSelected}" SelectionMode="Single" SelectedItem="{Binding Selected}" BackgroundColor="CadetBlue" >
-                <ListView.HeaderTemplate>
-                    <DataTemplate>
-                        <Grid Padding="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="100"/>
-                            </Grid.RowDefinitions>
-                            <Label Text="כתובת מייל" FontSize="Header" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                            <Label Text="שם פרטי" FontSize="Header" FontAttributes="Bold" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
-                            <Label Text="שם משפחה" FontSize="Header" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
-                            <Label Text="תעודת זהות" FontSize="Header" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.HeaderTemplate>
+            <Grid Padding="5" BackgroundColor="CadetBlue" IsVisible="{Binding IsUserSelected}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Label Text="כתובת מייל" FontSize="Header" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="שם פרטי" FontSize="Header" FontAttributes="Bold" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                <Label Text="שם משפחה" FontSize="Header" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                <Label Text="תעודת זהות" FontSize="Header" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+            </Grid>
+            <ListView FlowDirection="RightToLeft" ItemsSource="{Binding UsersListToShow}" IsVisible="{Binding IsUserSelected}" SelectionMode="Single" SelectedItem="{Binding Selected}" BackgroundColor="CadetBlue" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -56,23 +55,19 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ListView FlowDirection="RightToLeft" ItemsSource="{Binding WorkersList}" Header="{Binding}" IsVisible="{Binding IsWorkerSelected}" SelectionMode="Single" SelectedItem="{Binding Selected}" BackgroundColor="CadetBlue">
-                <ListView.HeaderTemplate>
-                    <DataTemplate>
-                        <Grid Padding="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="100"/>
-                            </Grid.RowDefinitions>
-                            <Label Text="כתובת מייל" FontSize="Large" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                            <Label Text="שם פרטי" FontSize="Large" FontAttributes="Bold" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
-                            <Label Text="שם משפחה" FontSize="Large" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
-                            <Label Text="תעודת זהות" FontSize="Large" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                            <Label Text="תפקיד" FontSize="Large" FontAttributes="Bold"  Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                            <Label Text="שבט" FontSize="Large" FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                            <Label Text="הנהגה" FontSize="Large" FontAttributes="Bold" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.HeaderTemplate>
+            <Grid Padding="5" BackgroundColor="CadetBlue" IsVisible="{Binding IsWorkerSelected}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Label Text="כתובת מייל" FontSize="Large" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="שם פרטי" FontSize="Large" FontAttributes="Bold" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                <Label Text="שם משפחה" FontSize="Large" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                <Label Text="תעודת זהות" FontSize="Large" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="תפקיד" FontSize="Large" FontAttributes="Bold"  Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="שבט" FontSize="Large" FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="הנהגה" FontSize="Large" FontAttributes="Bold" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+            </Grid>
+            <ListView FlowDirection="RightToLeft" ItemsSource="{Binding WorkersListToShow}" IsVisible="{Binding IsWorkerSelected}" SelectionMode="Single" SelectedItem="{Binding Selected}" BackgroundColor="CadetBlue">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -92,22 +87,18 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ListView FlowDirection="RightToLeft" ItemsSource="{Binding ParentsList}" Header="{Binding}" IsVisible="{Binding IsParentSelected}" SelectionMode="Single" SelectedItem="{Binding Selected}" BackgroundColor="CadetBlue">
-                <ListView.HeaderTemplate>
-                    <DataTemplate>
-                        <Grid Padding="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="100"/>
-                            </Grid.RowDefinitions>
-                            <Label Text="כתובת מייל" FontSize="Large" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                            <Label Text="שם פרטי" FontSize="Large" FontAttributes="Bold" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
-                            <Label Text="שם משפחה" FontSize="Large" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
-                            <Label Text="תעודת זהות" FontSize="Large" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                            <Label Text="שבט" FontSize="Large" FontAttributes="Bold" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                            <Label Text="מספר חניכים" FontSize="Large" FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.HeaderTemplate>
+            <Grid Padding="5" BackgroundColor="CadetBlue" IsVisible="{Binding IsParentSelected}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Label Text="כתובת מייל" FontSize="Large" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="שם פרטי" FontSize="Large" FontAttributes="Bold" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                <Label Text="שם משפחה" FontSize="Large" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                <Label Text="תעודת זהות" FontSize="Large" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="שבט" FontSize="Large" FontAttributes="Bold" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="מספר חניכים" FontSize="Large" FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+            </Grid>
+            <ListView FlowDirection="RightToLeft" ItemsSource="{Binding ParentsListToShow}" IsVisible="{Binding IsParentSelected}" SelectionMode="Single" SelectedItem="{Binding Selected}" BackgroundColor="CadetBlue">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -126,22 +117,18 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ListView FlowDirection="RightToLeft" ItemsSource="{Binding CadetsList}" Header="{Binding}" IsVisible="{Binding IsCadetSelected}" SelectionMode="Single" SelectedItem="{Binding Selected}" BackgroundColor="CadetBlue">
-                <ListView.HeaderTemplate>
-                    <DataTemplate>
-                        <Grid Padding="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="100"/>
-                            </Grid.RowDefinitions>
-                            <Label Text="שם פרטי" FontSize="Large" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
-                            <Label Text="שם משפחה" FontSize="Large" FontAttributes="Bold" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
-                            <Label Text="תעודת זהות" FontSize="Large" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                            <Label Text="שבט" FontSize="Large" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                            <Label Text="הנהגה" FontSize="Large" FontAttributes="Bold" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                            <Label Text="תפקיד" FontSize="Large" FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.HeaderTemplate>
+            <Grid Padding="5" BackgroundColor="CadetBlue" IsVisible="{Binding IsCadetSelected}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Label Text="שם פרטי" FontSize="Large" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                <Label Text="שם משפחה" FontSize="Large" FontAttributes="Bold" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                <Label Text="תעודת זהות" FontSize="Large" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="שבט" FontSize="Large" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="הנהגה" FontSize="Large" FontAttributes="Bold" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="תפקיד" FontSize="Large" FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+            </Grid>
+            <ListView FlowDirection="RightToLeft" ItemsSource="{Binding CadetsListToShow}" IsVisible="{Binding IsCadetSelected}" SelectionMode="Single" SelectedItem="{Binding Selected}" BackgroundColor="CadetBlue">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
