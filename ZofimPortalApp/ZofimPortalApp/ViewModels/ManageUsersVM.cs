@@ -30,6 +30,7 @@ namespace ZofimPortalApp.ViewModels
             HeaderMessage = "ניהול משתמשים";
             proxy = ZofimPortalAPIProxy.CreateProxy();
             SearchEnabled = false;
+            IsSecondFieldEnabled();
             SetLists();
         }
 
@@ -402,8 +403,11 @@ namespace ZofimPortalApp.ViewModels
             get => secondFieldEnabled;
             set
             {
-                secondFieldEnabled = value;
-                OnPropertyChanged("SecondFieldEnabled");
+                if (secondFieldEnabled != value)
+                {
+                    secondFieldEnabled = value;
+                    OnPropertyChanged("SecondFieldEnabled");
+                }
             }
         }
 
@@ -417,6 +421,7 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("AvailableOptionsSecondField");
             }
         }
+       
         public bool CheckedSecondField { get; set; }
 
         private bool searchEnabled;
@@ -649,7 +654,7 @@ namespace ZofimPortalApp.ViewModels
 
         private void IsSecondFieldEnabled()
         {
-            SecondFieldEnabled = FirstField != null && FirstFieldValue != null;
+            SecondFieldEnabled = FirstField != null && FirstFieldValue != null && SearchEnabled;
         }
 
         private void Search()

@@ -8,14 +8,20 @@
             <Button Text="חזור" Command="{Binding BackToManageUsersCommand}" HorizontalOptions="Start" WidthRequest="100"/>
             <Label Text="{Binding HeaderMessage}" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
             <Grid IsVisible="{Binding IsUserEdited}" Padding="5">
-                <Label Text="כתובת מייל" FontSize="Medium" />
-                <Entry Text="{Binding Email}" Grid.Column="1" />
-                <Label Text="שם פרטי"  FontSize="Medium" Grid.Row="1" />
+                <Label Text="כתובת מייל" IsVisible="{Binding ShowEmail}" FontSize="Medium" />
+                <Entry Text="{Binding Email}" IsVisible="{Binding ShowEmail}" Grid.Column="1" />
+                <Label Text="שם פרטי" FontSize="Medium" Grid.Row="1" />
                 <Entry Text="{Binding FirstName}" Grid.Column="1" Grid.Row="1" />
-                <Label Text="שם משפחה"  FontSize="Medium" Grid.Row="2" />
+                <Label Text="שם משפחה" FontSize="Medium" Grid.Row="2" />
                 <Entry Text="{Binding LastName}" Grid.Column="1" Grid.Row="2" />
-                <Label Text="תעודת זהות"  FontSize="Medium" Grid.Row="3" />
-                <Entry Text="{Binding LastName}" Grid.Column="1" Grid.Row="3" />
+                <Label Text="תעודת זהות" FontSize="Medium" Grid.Row="3" />
+                <Entry Text="{Binding PersonalID}" Grid.Column="1" Grid.Row="3" />
+                <Label Text="תפקיד" IsVisible="{Binding ShowRole}" FontSize="Medium" Grid.Row="4"/>
+                <Entry Text="{Binding Role}" Grid.Column="1" Grid.Row="4"/>
+                <Label Text="הנהגה" IsVisible="{Binding ShowHanhaga}" FontSize="Medium" Grid.Row="6"/>
+                <Picker SelectedItem="{Binding Hanhaga}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" Grid.Row="5"/>
+                <Label Text="שבט" IsVisible="{Binding ShowShevet}" FontSize="Medium" Grid.Row="5"/>
+                <Picker SelectedItem="{Binding Shevet}" IsVisible="{Binding ShowShevet}" ItemsSource="{Binding Shevets}" Grid.Column="1" Grid.Row="5"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

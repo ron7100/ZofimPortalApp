@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using ZofimPortalApp.Services;
 using ZofimPortalApp.Models;
+using System.Collections.Generic;
 
 namespace ZofimPortalApp.ViewModels
 {
@@ -12,16 +13,64 @@ namespace ZofimPortalApp.ViewModels
         private ZofimPortalAPIProxy proxy;
         public EditUsersInfoVM(object u)
         {
+            ShowEmail = false;
+            ShowRole = false;
+            ShowShevet = false;
+            ShowHanhaga = false;
             proxy = ZofimPortalAPIProxy.CreateProxy();
             EditedUser = u;
             if (u is User)
+            {
+                User dummy = (User)u;
                 HeaderMessage = "עריכת משתמש";
+                Email = dummy.Email;
+                ShowEmail = true;
+                FirstName = dummy.FirstName;
+                LastName = dummy.LastName;
+                PersonalID = dummy.PersonalId;
+            }
             if (u is WorkerToShow)
+            {
+                WorkerToShow dummy = (WorkerToShow)u;
                 HeaderMessage = "עריכת עובד";
+                Email = dummy.Email;
+                ShowEmail = true;
+                FirstName = dummy.FirstName;
+                LastName = dummy.LastName;
+                PersonalID = dummy.PersonalID;
+                Role = dummy.Role;
+                ShowRole = true;
+                Shevet = dummy.Shevet;
+                ShowShevet = true;
+                Hanhaga = dummy.Hanhaga;
+                ShowHanhaga = true;
+            }
             if (u is ParentToShow)
+            {
+                ParentToShow dummy = (ParentToShow)u;
                 HeaderMessage = "עריכת הורה";
+                Email = dummy.Email;
+                ShowEmail = true;
+                FirstName = dummy.FirstName;
+                LastName = dummy.LastName;
+                PersonalID = dummy.PersonalID;
+                Shevet = dummy.Shevet;
+                ShowShevet = true;
+            }
             if (u is CadetToShow)
+            {
+                CadetToShow dummy = (CadetToShow)u;
                 HeaderMessage = "עריכת חניך";
+                FirstName = dummy.FirstName;
+                LastName = dummy.LastName;
+                PersonalID = dummy.PersonalID;
+                Role = dummy.Role;
+                ShowRole = true;
+                Shevet = dummy.Shevet;
+                ShowShevet = true;
+                Hanhaga = dummy.Hanhaga;
+                ShowHanhaga = true;
+            }
         }
 
         #region INotifyPropertyChanged
@@ -33,7 +82,7 @@ namespace ZofimPortalApp.ViewModels
         #endregion
 
         #region Properties
-        #region שדות
+            #region שדות
         private string email;
         public string Email
         {
@@ -42,6 +91,17 @@ namespace ZofimPortalApp.ViewModels
             {
                 email = value;
                 OnPropertyChanged("Email");
+            }
+        }
+
+        private bool showEmail;
+        public bool ShowEmail
+        {
+            get => showEmail;
+            set
+            {
+                showEmail = value;
+                OnPropertyChanged("ShowEmail");
             }
         }
 
@@ -89,6 +149,17 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
+        private bool showRole;
+        public bool ShowRole
+        {
+            get => showRole;
+            set
+            {
+                showRole = value;
+                OnPropertyChanged("ShowRole");
+            }
+        }
+
         private string shevet;
         public string Shevet
         {
@@ -97,6 +168,17 @@ namespace ZofimPortalApp.ViewModels
             {
                 shevet = value;
                 OnPropertyChanged("Shevet");
+            }
+        }
+
+        private bool showShevet;
+        public bool ShowShevet
+        {
+            get => showShevet;
+            set
+            {
+                showShevet = value;
+                OnPropertyChanged("ShowShevet");
             }
         }
 
@@ -110,7 +192,40 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("Hanhaga");
             }
         }
+
+        private bool showHanhaga;
+        public bool ShowHanhaga
+        {
+            get => showHanhaga;
+            set
+            {
+                showHanhaga = value;
+                OnPropertyChanged("ShowHanhaga");
+            }
+        }
         #endregion
+
+        private List<string> shevets;
+        public List<string> Shevets
+        {
+            get => shevets;
+            set
+            {
+                shevets = value;
+                OnPropertyChanged("Shevets");
+            }
+        }
+
+        private List<string> hanhagas;
+        public List<string> Hanhagas
+        {
+            get => hanhagas;
+            set
+            {
+                hanhagas = value;
+                OnPropertyChanged("Hanhagas");
+            }
+        }
 
         private object editedUser;
         public object EditedUser
