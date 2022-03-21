@@ -33,6 +33,85 @@ namespace ZofimPortalApp.ViewModels
         #endregion
 
         #region Properties
+        #region שדות
+        private string email;
+        public string Email
+        {
+            get => email;
+            set
+            {
+                email = value;
+                OnPropertyChanged("Email");
+            }
+        }
+
+        private string firstName;
+        public string FirstName
+        {
+            get => firstName;
+            set
+            {
+                firstName = value;
+                OnPropertyChanged("FirstName");
+            }
+        }
+
+        private string lastName;
+        public string LastName
+        {
+            get => lastName;
+            set
+            {
+                lastName = value;
+                OnPropertyChanged("LastName");
+            }
+        }
+
+        private string personalID;
+        public string PersonalID
+        {
+            get => personalID;
+            set
+            {
+                personalID = value;
+                OnPropertyChanged("PersonalID");
+            }
+        }
+
+        private string role;
+        public string Role
+        {
+            get => role;
+            set
+            {
+                role = value;
+                OnPropertyChanged("Role");
+            }
+        }
+
+        private string shevet;
+        public string Shevet
+        {
+            get => shevet;
+            set
+            {
+                shevet = value;
+                OnPropertyChanged("Shevet");
+            }
+        }
+
+        private string hanhaga;
+        public string Hanhaga
+        {
+            get => hanhaga;
+            set
+            {
+                shevet = value;
+                OnPropertyChanged("Hanhaga");
+            }
+        }
+        #endregion
+
         private object editedUser;
         public object EditedUser
         {
