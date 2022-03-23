@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using ZofimPortalApp.Services;
 using ZofimPortalApp.Models;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace ZofimPortalApp.ViewModels
 {
@@ -71,6 +72,11 @@ namespace ZofimPortalApp.ViewModels
                 Hanhaga = dummy.Hanhaga;
                 ShowHanhaga = true;
             }
+            EmailError = false;
+            FirstNameError = false;
+            LastNameError = false;
+            PersonalIDError = false;
+            
         }
 
         #region INotifyPropertyChanged
@@ -205,6 +211,95 @@ namespace ZofimPortalApp.ViewModels
         }
         #endregion
 
+            #region שגיאות
+        private bool emailError;
+        public bool EmailError
+        {
+            get => emailError;
+            set
+            {
+                emailError = value;
+                OnPropertyChanged("EmailError");
+            }
+        }
+
+        private string emailErrorMessage;
+        public string EmailErrorMessage
+        {
+            get => emailErrorMessage;
+            set
+            {
+                emailErrorMessage = value;
+                OnPropertyChanged("EmailErrorMessage");
+            }
+        }
+
+        private bool firstNameError;
+        public bool FirstNameError
+        {
+            get => firstNameError;
+            set
+            {
+                firstNameError = value;
+                OnPropertyChanged("FirstNameError");
+            }
+        }
+
+        private string firstNameErrorMessage;
+        public string FirstNameErrorMessage
+        {
+            get => firstNameErrorMessage;
+            set
+            {
+                firstNameErrorMessage = value;
+                OnPropertyChanged("FirstNameErrorMessage");
+            }
+        }
+
+        private bool lastNameError;
+        public bool LastNameError
+        {
+            get => lastNameError;
+            set
+            {
+                lastNameError = value;
+                OnPropertyChanged("LastNameError");
+            }
+        }
+
+        private string lastNameErrorMessage;
+        public string LastNameErrorMessage
+        {
+            get => lastNameErrorMessage;
+            set
+            {
+                lastNameErrorMessage = value;
+                OnPropertyChanged("LastNameErrorMessage");
+            }
+        }
+
+        private bool personalIDError;
+        public bool PersonalIDError
+        {
+            get => personalIDError;
+            set
+            {
+                personalIDError = value;
+                OnPropertyChanged("PersonalIDError");
+            }
+        }
+
+        private string personalIDErrorMessage;
+        public string PersonalIDErrorMessage
+        {
+            get => personalIDErrorMessage;
+            set
+            {
+                personalIDErrorMessage = value;
+                OnPropertyChanged("PersonalIDErrorMessage");
+            }
+        }
+        #endregion
         private List<string> shevets;
         public List<string> Shevets
         {
@@ -246,6 +341,75 @@ namespace ZofimPortalApp.ViewModels
             {
                 headerMessage = value;
                 OnPropertyChanged("HeaderMessage");
+            }
+        }
+        #endregion
+
+        #region בדיקת שדות
+        private void CheckEmail()
+        {
+
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(email);
+            EmailError = !match.Success;
+            if (EmailError)
+                EmailErrorMessage = "כתובת מייל לא חוקית";
+        }
+
+        private void CheckFName()
+        {
+            FirstNameError = false;
+            if (FirstName == "")
+            {
+                FirstNameError = true;
+                FirstNameError = "שדה חובה";
+                return;
+            }
+            foreach (char c in FirstName)
+            {
+                if (!char.IsLetter(c))
+                {
+                    FirstNameError = true;
+                    FirstNameErrorMessage = "השם חייב לכלול אותיות בלבד";
+                }
+            }
+        }
+
+        private void CheckLName()
+        {
+            LastNameError = false;
+            if (LastName == "")
+            {
+                LastNameError = true;
+                LastNameErrorMessage = "שדה חובה";
+                return;
+            }
+            foreach (char c in LastName)
+            {
+                if (!char.IsLetter(c))
+                {
+                    LastNameError = true;
+                    LastNameErrorMessage = "השם משפחה חייב לכלול אותיות בלבד";
+                }
+            }
+        }
+
+        private void CheckID()
+        {
+            PersonalIDError = false;
+            if (PersonalID.Length != 9)
+            {
+                PersonalIDError = true;
+                PersonalIDErrorMessage = "תעודת זהות חייבת לכלול 9 ספרות";
+                return;
+            }
+            foreach (char c in PersonalID)
+            {
+                if (!char.IsDigit(c))
+                {
+                    PersonalIDError = true;
+                    PersonalIDErrorMessage = "תעודת זהות חייבת לכלול ספרות בלבד";
+                }
             }
         }
         #endregion

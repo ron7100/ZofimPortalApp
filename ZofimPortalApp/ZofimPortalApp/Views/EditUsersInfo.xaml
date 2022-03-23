@@ -8,20 +8,41 @@
             <Button Text="חזור" Command="{Binding BackToManageUsersCommand}" HorizontalOptions="Start" WidthRequest="100"/>
             <Label Text="{Binding HeaderMessage}" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
             <Grid IsVisible="{Binding IsUserEdited}" Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/><!--0-->
+                    <RowDefinition Height="20"/><!--1-->
+                    <RowDefinition Height="50"/><!--2-->
+                    <RowDefinition Height="20"/><!--3-->
+                    <RowDefinition Height="50"/><!--4-->
+                    <RowDefinition Height="20"/><!--5-->
+                    <RowDefinition Height="50"/><!--6-->
+                    <RowDefinition Height="20"/><!--7-->
+                    <RowDefinition Height="50"/><!--8-->
+                    <RowDefinition Height="50"/><!--9-->
+                    <RowDefinition Height="50"/><!--10-->
+                </Grid.RowDefinitions>
                 <Label Text="כתובת מייל" IsVisible="{Binding ShowEmail}" FontSize="Medium" />
                 <Entry Text="{Binding Email}" IsVisible="{Binding ShowEmail}" Grid.Column="1" />
-                <Label Text="שם פרטי" FontSize="Medium" Grid.Row="1" />
-                <Entry Text="{Binding FirstName}" Grid.Column="1" Grid.Row="1" />
-                <Label Text="שם משפחה" FontSize="Medium" Grid.Row="2" />
-                <Entry Text="{Binding LastName}" Grid.Column="1" Grid.Row="2" />
-                <Label Text="תעודת זהות" FontSize="Medium" Grid.Row="3" />
-                <Entry Text="{Binding PersonalID}" Grid.Column="1" Grid.Row="3" />
-                <Label Text="תפקיד" IsVisible="{Binding ShowRole}" FontSize="Medium" Grid.Row="4"/>
-                <Entry Text="{Binding Role}" Grid.Column="1" Grid.Row="4"/>
-                <Label Text="הנהגה" IsVisible="{Binding ShowHanhaga}" FontSize="Medium" Grid.Row="6"/>
-                <Picker SelectedItem="{Binding Hanhaga}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" Grid.Row="5"/>
-                <Label Text="שבט" IsVisible="{Binding ShowShevet}" FontSize="Medium" Grid.Row="5"/>
-                <Picker SelectedItem="{Binding Shevet}" IsVisible="{Binding ShowShevet}" ItemsSource="{Binding Shevets}" Grid.Column="1" Grid.Row="5"/>
+                <Label Text="{Binding EmailErrorMessage}" IsVisible="{Binding EmailError}" Grid.Column="1" Grid.Row="1"/>
+                <Label Text="שם פרטי" FontSize="Medium" Grid.Row="2" />
+                <Entry Text="{Binding FirstName}" Grid.Column="1" Grid.Row="2" />
+                <Label Text="{Binding FirstNameErrorMessage}" IsVisible="{Binding FirstNameError}" Grid.Column="1" Grid.Row="3"/>
+                <Label Text="שם משפחה" FontSize="Medium" Grid.Row="4" />
+                <Entry Text="{Binding LastName}" Grid.Column="1" Grid.Row="4" />
+                <Label Text="{Binding LastNameErrorMessage}" IsVisible="{Binding LastNameError}" Grid.Column="1" Grid.Row="5"/>
+                <Label Text="תעודת זהות" FontSize="Medium" Grid.Row="6" />
+                <Entry Text="{Binding PersonalID}" Grid.Column="1" Grid.Row="6" />
+                <Label Text="{Binding PersonalIDErrorMessage}" IsVisible="{Binding PersonalIDError}" Grid.Column="1" Grid.Row="7"/>
+                <Label Text="תפקיד" IsVisible="{Binding ShowRole}" FontSize="Medium" Grid.Row="8"/>
+                <Picker SelectedItem="{Binding Role}" IsVisible="{Binding ShowRole}" ItemsSource="{Binding Roles}" Grid.Column="1" Grid.Row="8"/>
+                <Label Text="שבט" IsVisible="{Binding ShowShevet}" FontSize="Medium" Grid.Row="9"/>
+                <Picker SelectedItem="{Binding Shevet}" IsVisible="{Binding ShowShevet}" ItemsSource="{Binding Shevets}" Grid.Column="1" Grid.Row="9"/>
+                <Label Text="הנהגה" IsVisible="{Binding ShowHanhaga}" FontSize="Medium" Grid.Row="10"/>
+                <Picker SelectedItem="{Binding Hanhaga}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" Grid.Row="10"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

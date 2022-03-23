@@ -603,6 +603,7 @@ namespace ZofimPortalApp.ViewModels
                 availableFields.Add("שם משפחה");
                 availableFields.Add("תעודת זהות");
                 availableFields.Add("שבט");
+                availableFields.Add("הנהגה");
             }
             else if (IsCadetSelected)
             {
@@ -654,7 +655,7 @@ namespace ZofimPortalApp.ViewModels
 
         private void IsSecondFieldEnabled()
         {
-            SecondFieldEnabled = FirstField != null && FirstFieldValue != null && SearchEnabled;
+            SecondFieldEnabled = FirstField != null && FirstFieldValue != null && FirstFieldValue != "" && SearchEnabled;
         }
 
         private void Search()
@@ -662,7 +663,7 @@ namespace ZofimPortalApp.ViewModels
             if (SelectedTypeItem == "משתמשים")
             {
                 UsersListToShow = UsersList;
-                if (FirstFieldValue != null)
+                if (FirstFieldValue != null && FirstFieldValue != "")
                 {
                     switch (FirstFieldIndex)
                     {
@@ -703,7 +704,7 @@ namespace ZofimPortalApp.ViewModels
                             UsersListToShow = dummy;
                             break;
                     }
-                    if(SecondFieldValue != null)
+                    if(SecondFieldValue != null && SecondFieldValue != "")
                     {
                         switch (secondFieldIndex)
                         {
@@ -750,7 +751,7 @@ namespace ZofimPortalApp.ViewModels
             if (SelectedTypeItem == "עובדים")
             {
                 WorkersListToShow = WorkersList;
-                if (FirstFieldValue != null)
+                if (FirstFieldValue != null && FirstFieldValue != "")
                 {
                     switch (FirstFieldIndex)
                     {
@@ -820,7 +821,7 @@ namespace ZofimPortalApp.ViewModels
                             WorkersListToShow = dummy;
                             break;
                     }
-                    if (SecondFieldValue != null)
+                    if (SecondFieldValue != null && SecondFieldValue != "")
                     {
                         switch (SecondFieldIndex)
                         {
@@ -896,7 +897,7 @@ namespace ZofimPortalApp.ViewModels
             if (SelectedTypeItem == "הורים")
             {
                 ParentsListToShow = ParentsList;
-                if (FirstFieldValue != null)
+                if (FirstFieldValue != null && FirstFieldValue != "")
                 {
                     switch (FirstFieldIndex)
                     {
@@ -945,8 +946,17 @@ namespace ZofimPortalApp.ViewModels
                             }
                             ParentsListToShow = dummy;
                             break;
+                        case 5:
+                            dummy = new ObservableCollection<ParentToShow>();
+                            foreach (ParentToShow p in ParentsList)
+                            {
+                                if (p.Hanhaga == FirstFieldValue)
+                                    dummy.Add(p);
+                            }
+                            ParentsListToShow = dummy;
+                            break;
                     }
-                    if (SecondFieldValue != null)
+                    if (SecondFieldValue != null && SecondFieldValue != "")
                     {
                         switch (secondFieldIndex)
                         {
@@ -1002,7 +1012,7 @@ namespace ZofimPortalApp.ViewModels
             if (SelectedTypeItem == "חניכים")
             {
                 CadetsListToShow = CadetsList;
-                if (FirstFieldValue != null)
+                if (FirstFieldValue != null && FirstFieldValue != "")
                 {
                     switch (FirstFieldIndex)
                     {
@@ -1061,7 +1071,7 @@ namespace ZofimPortalApp.ViewModels
                             CadetsListToShow = dummy;
                             break;
                     }
-                    if (SecondFieldValue != null)
+                    if (SecondFieldValue != null && SecondFieldValue != "")
                     {
                         switch (FirstFieldIndex)
                         {

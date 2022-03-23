@@ -32,7 +32,7 @@
                     <RowDefinition Height="20"/><!--15-->
                     <RowDefinition Height="50"/><!--16-->
                 </Grid.RowDefinitions>
-                <Entry Placeholder="מייל..." Text="{Binding Email}"  Grid.Row="0" Grid.Column="1"/>
+                <Entry Placeholder="מייל..." Text="{Binding Email}" Grid.Row="0" Grid.Column="1"/>
                 <Label Text="מייל:" Grid.Row="0" Grid.Column="0"/>
                 <Label Text="כתובת מייל לא חוקית" IsVisible="{Binding IsEmailError}" Grid.Row="1" Grid.Column="1"/>
                 <Entry Placeholder="שם פרטי..." Text="{Binding FName}" Grid.Row="2" Grid.Column="1"/>

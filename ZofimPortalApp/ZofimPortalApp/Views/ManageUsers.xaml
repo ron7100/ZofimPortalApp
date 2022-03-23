@@ -107,7 +107,8 @@
                 <Label Text="שם משפחה" FontSize="Large" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
                 <Label Text="תעודת זהות" FontSize="Large" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
                 <Label Text="שבט" FontSize="Large" FontAttributes="Bold" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                <Label Text="מספר חניכים" FontSize="Large" FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="הנהגה" FontSize="Large" FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="מספר חניכים" FontSize="Large" FontAttributes="Bold" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
             </Grid>
             <ListView FlowDirection="RightToLeft" ItemsSource="{Binding ParentsListToShow}" IsVisible="{Binding IsParentSelected}" SelectionMode="Single" SelectedItem="{Binding Selected}" BackgroundColor="CadetBlue">
                 <ListView.ItemTemplate>
@@ -122,7 +123,8 @@
                                 <Label Text="{Binding LastName}" FontSize="20" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
                                 <Label Text="{Binding PersonalID}" FontSize="20" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
                                 <Label Text="{Binding Shevet}" FontSize="20" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
-                                <Label Text="{Binding KidsNumber}" FontSize="20" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding Hanhaga}" FontSize="20" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding KidsNumber}" FontSize="20" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
