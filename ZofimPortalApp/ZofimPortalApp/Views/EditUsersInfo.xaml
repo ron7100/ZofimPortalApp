@@ -23,7 +23,8 @@
                     <RowDefinition Height="20"/><!--7-->
                     <RowDefinition Height="50"/><!--8-->
                     <RowDefinition Height="50"/><!--9-->
-                    <RowDefinition Height="50"/><!--10-->
+                    <RowDefinition Height="20"/><!--10-->
+                    <RowDefinition Height="50"/><!--11-->
                 </Grid.RowDefinitions>
                 <Label Text="כתובת מייל" IsVisible="{Binding ShowEmail}" FontSize="Medium" />
                 <Entry Text="{Binding Email}" IsVisible="{Binding ShowEmail}" Grid.Column="1" />
@@ -41,8 +42,9 @@
                 <Picker SelectedItem="{Binding Role}" IsVisible="{Binding ShowRole}" ItemsSource="{Binding Roles}" Grid.Column="1" Grid.Row="8"/>
                 <Label Text="שבט" IsVisible="{Binding ShowShevet}" FontSize="Medium" Grid.Row="9"/>
                 <Picker SelectedItem="{Binding Shevet}" IsVisible="{Binding ShowShevet}" ItemsSource="{Binding Shevets}" Grid.Column="1" Grid.Row="9"/>
-                <Label Text="הנהגה" IsVisible="{Binding ShowHanhaga}" FontSize="Medium" Grid.Row="10"/>
-                <Picker SelectedItem="{Binding Hanhaga}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" Grid.Row="10"/>
+                <Label Text="{Binding ShevetErrorMessage}" IsVisible="{Binding ShevetError}" Grid.Column="1" Grid.Row="10"/>
+                <Label Text="הנהגה" IsVisible="{Binding ShowHanhaga}" FontSize="Medium" Grid.Row="11"/>
+                <Picker SelectedItem="{Binding Hanhaga}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" Grid.Row="11"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

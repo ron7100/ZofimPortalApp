@@ -372,7 +372,7 @@ namespace ZofimPortalApp.Services
             }
         }
 
-        public async Task<ObservableCollection<Role>> GetAllRolesAsync()
+        public async Task<List<Role>> GetAllRolesAsync()
         {
             try
             {
@@ -385,7 +385,7 @@ namespace ZofimPortalApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    ObservableCollection<Role> roles = JsonSerializer.Deserialize<ObservableCollection<Role>>(content, options);
+                    List<Role> roles = JsonSerializer.Deserialize<List<Role>>(content, options);
                     return roles;
                 }
                 else
@@ -400,7 +400,7 @@ namespace ZofimPortalApp.Services
             }
         }
 
-        public async Task<ObservableCollection<Shevet>> GetAllShevetsAsync()
+        public async Task<List<Shevet>> GetAllShevetsAsync()
         {
             try
             {
@@ -413,7 +413,7 @@ namespace ZofimPortalApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    ObservableCollection<Shevet> shevets = JsonSerializer.Deserialize<ObservableCollection<Shevet>>(content, options);
+                    List<Shevet> shevets = JsonSerializer.Deserialize<List<Shevet>>(content, options);
                     return shevets;
                 }
                 else
@@ -428,7 +428,7 @@ namespace ZofimPortalApp.Services
             }
         }
 
-        public async Task<ObservableCollection<Hanhaga>> GetAllHanhagaAsync()
+        public async Task<List<Hanhaga>> GetAllHanhagasAsync()
         {
             try
             {
@@ -441,7 +441,7 @@ namespace ZofimPortalApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    ObservableCollection<Hanhaga> hanhagas = JsonSerializer.Deserialize<ObservableCollection<Hanhaga>>(content, options);
+                    List<Hanhaga> hanhagas = JsonSerializer.Deserialize<List<Hanhaga>>(content, options);
                     return hanhagas;
                 }
                 else

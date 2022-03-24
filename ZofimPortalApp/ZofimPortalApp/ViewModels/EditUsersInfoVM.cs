@@ -4,6 +4,7 @@ using ZofimPortalApp.Services;
 using ZofimPortalApp.Models;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace ZofimPortalApp.ViewModels
 {
@@ -76,7 +77,7 @@ namespace ZofimPortalApp.ViewModels
             FirstNameError = false;
             LastNameError = false;
             PersonalIDError = false;
-            
+            SetListsForPickers();
         }
 
         #region INotifyPropertyChanged
@@ -96,6 +97,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 email = value;
+                CheckEmail();
                 OnPropertyChanged("Email");
             }
         }
@@ -118,6 +120,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 firstName = value;
+                CheckFName();
                 OnPropertyChanged("FirstName");
             }
         }
@@ -129,6 +132,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 lastName = value;
+                CheckLName();
                 OnPropertyChanged("LastName");
             }
         }
@@ -140,6 +144,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 personalID = value;
+                CheckID();
                 OnPropertyChanged("PersonalID");
             }
         }
@@ -173,6 +178,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 shevet = value;
+                CheckShevet();
                 OnPropertyChanged("Shevet");
             }
         }
@@ -299,7 +305,41 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("PersonalIDErrorMessage");
             }
         }
+
+        private bool shevetError;
+        public bool ShevetError
+        {
+            get => shevetError;
+            set
+            {
+                shevetError = value;
+                OnPropertyChanged("ShevetError");
+            }
+        }
+
+        private string shevetErrorMessage;
+        public string ShevetErrorMessage
+        {
+            get => shevetErrorMessage;
+            set
+            {
+                ShevetErrorMessage = value;
+                OnPropertyChanged("ShevetErrorMessage");
+            }
+        }
         #endregion
+
+            #region רשימות פיקרים
+        private List<string> roles;
+        public List<string> Roles
+        {
+            get => roles;
+            set
+            {
+                roles = value;
+                OnPropertyChanged("Roles");
+            }
+        }
         private List<string> shevets;
         public List<string> Shevets
         {
@@ -318,9 +358,11 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 hanhagas = value;
+                SetShevetsForPicker();
                 OnPropertyChanged("Hanhagas");
             }
         }
+        #endregion
 
         private object editedUser;
         public object EditedUser
@@ -345,6 +387,45 @@ namespace ZofimPortalApp.ViewModels
         }
         #endregion
 
+        private async void SetListsForPickers()
+        {
+            List<Role> rolesList = await proxy.GetAllRolesAsync();
+            foreach (Role r in rolesList)
+            {
+                Roles.Add(r.RoleName);
+            }
+            List<Hanhaga> hanhagasList = await proxy.GetAllHanhagasAsync();
+            foreach (Hanhaga h in hanhagasList)
+            {
+                Hanhagas.Add(h.Name);
+            }
+            SetShevetsForPicker();
+        }
+
+        private async void SetShevetsForPicker()
+        {
+            List<Hanhaga> hanhagasList = await proxy.GetAllHanhagasAsync();
+            List<Shevet> shevetsList = await proxy.GetAllShevetsAsync();
+            if (Hanhaga != null)
+            {
+                foreach (Shevet s in shevetsList)
+                {
+                    Hanhaga hanhagaObject = hanhagasList.Where(h => h.Name == Hanhaga).FirstOrDefault();
+                    if (hanhagaObject.Id == s.HanhagaId)
+                    {
+                        Shevets.Add(s.Name);
+                    }
+                }
+            }
+            else
+            {
+                foreach (Shevet s in shevetsList)
+                {
+                    Shevets.Add(s.Name);
+                }
+            }
+        }
+
         #region בדיקת שדות
         private void CheckEmail()
         {
@@ -362,7 +443,7 @@ namespace ZofimPortalApp.ViewModels
             if (FirstName == "")
             {
                 FirstNameError = true;
-                FirstNameError = "שדה חובה";
+                FirstNameErrorMessage = "שדה חובה";
                 return;
             }
             foreach (char c in FirstName)
@@ -410,6 +491,16 @@ namespace ZofimPortalApp.ViewModels
                     PersonalIDError = true;
                     PersonalIDErrorMessage = "תעודת זהות חייבת לכלול ספרות בלבד";
                 }
+            }
+        }
+
+        private void CheckShevet()
+        {
+            ShevetError = false;
+            if(Shevet==null)
+            {
+                ShevetError = true;
+                ShevetErrorMessage = "זהו שדה חובה";
             }
         }
         #endregion
