@@ -58,6 +58,8 @@ namespace ZofimPortalApp.ViewModels
                 PersonalID = dummy.PersonalID;
                 Shevet = dummy.Shevet;
                 ShowShevet = true;
+                Hanhaga = dummy.Hanhaga;
+                ShowHanhaga = true;
             }
             if (u is CadetToShow)
             {
@@ -77,7 +79,19 @@ namespace ZofimPortalApp.ViewModels
             FirstNameError = false;
             LastNameError = false;
             PersonalIDError = false;
-            SetListsForPickers();
+            Hanhagas = new List<string>();
+            Shevets = new List<string>();
+            Roles = new List<string>();
+            SetListsForPickers();//it needs to wait here but it is constructor
+            if(u is WorkerToShow)
+            {
+                Hanhagas.Add("אין");
+                Shevets.Add("אין");
+            }
+            if (Shevet != null)
+                Shevet = Shevet;
+            if (Hanhaga != null)
+                Hanhaga = Hanhaga;
         }
 
         #region INotifyPropertyChanged
@@ -323,7 +337,7 @@ namespace ZofimPortalApp.ViewModels
             get => shevetErrorMessage;
             set
             {
-                ShevetErrorMessage = value;
+                shevetErrorMessage = value;
                 OnPropertyChanged("ShevetErrorMessage");
             }
         }
@@ -424,6 +438,7 @@ namespace ZofimPortalApp.ViewModels
                     Shevets.Add(s.Name);
                 }
             }
+            
         }
 
         #region בדיקת שדות
