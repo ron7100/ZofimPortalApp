@@ -82,16 +82,12 @@ namespace ZofimPortalApp.ViewModels
             Hanhagas = new List<string>();
             Shevets = new List<string>();
             Roles = new List<string>();
-            SetListsForPickers();//it needs to wait here but it is constructor
-            if(u is WorkerToShow)
+            if (u is WorkerToShow)
             {
                 Hanhagas.Add("אין");
                 Shevets.Add("אין");
             }
-            if (Shevet != null)
-                Shevet = Shevet;
-            if (Hanhaga != null)
-                Hanhaga = Hanhaga;
+            SetListsForPickers();
         }
 
         #region INotifyPropertyChanged
@@ -214,7 +210,7 @@ namespace ZofimPortalApp.ViewModels
             get => hanhaga;
             set
             {
-                shevet = value;
+                hanhaga = value;
                 OnPropertyChanged("Hanhaga");
             }
         }
@@ -354,6 +350,7 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("Roles");
             }
         }
+
         private List<string> shevets;
         public List<string> Shevets
         {
@@ -404,15 +401,19 @@ namespace ZofimPortalApp.ViewModels
         private async void SetListsForPickers()
         {
             List<Role> rolesList = await proxy.GetAllRolesAsync();
+            List<string> availableRoles = new List<string>();
             foreach (Role r in rolesList)
             {
-                Roles.Add(r.RoleName);
+                availableRoles.Add(r.RoleName);
             }
+            Roles = availableRoles;
             List<Hanhaga> hanhagasList = await proxy.GetAllHanhagasAsync();
+            List<string> availableHanhagas = new List<string>();
             foreach (Hanhaga h in hanhagasList)
             {
-                Hanhagas.Add(h.Name);
+                availableHanhagas.Add(h.Name);
             }
+            Hanhagas = availableHanhagas;
             SetShevetsForPicker();
         }
 
@@ -420,6 +421,7 @@ namespace ZofimPortalApp.ViewModels
         {
             List<Hanhaga> hanhagasList = await proxy.GetAllHanhagasAsync();
             List<Shevet> shevetsList = await proxy.GetAllShevetsAsync();
+            List<string> availableShevets = new List<string>();
             if (Hanhaga != null)
             {
                 foreach (Shevet s in shevetsList)
@@ -427,7 +429,7 @@ namespace ZofimPortalApp.ViewModels
                     Hanhaga hanhagaObject = hanhagasList.Where(h => h.Name == Hanhaga).FirstOrDefault();
                     if (hanhagaObject.Id == s.HanhagaId)
                     {
-                        Shevets.Add(s.Name);
+                        availableShevets.Add(s.Name);
                     }
                 }
             }
@@ -435,10 +437,14 @@ namespace ZofimPortalApp.ViewModels
             {
                 foreach (Shevet s in shevetsList)
                 {
-                    Shevets.Add(s.Name);
+                    availableShevets.Add(s.Name);
                 }
             }
-            
+            Shevets = availableShevets;
+            if (Shevet != null)
+                Shevet = Shevet;
+            if (Hanhaga != null)
+                Hanhaga = Hanhaga;
         }
 
         #region בדיקת שדות
