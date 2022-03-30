@@ -211,9 +211,13 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 hanhaga = value;
+                SetShevetsAccordingToHanhaga();
                 OnPropertyChanged("Hanhaga");
             }
         }
+
+        private int hanhagaId;
+        private string hanhagaHolder;
 
         private bool showHanhaga;
         public bool ShowHanhaga
@@ -369,7 +373,6 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 hanhagas = value;
-                SetShevetsForPicker();
                 OnPropertyChanged("Hanhagas");
             }
         }
@@ -400,7 +403,9 @@ namespace ZofimPortalApp.ViewModels
 
         private async void SetListsForPickers()
         {
-            string hanhagaHolder = Hanhaga;
+            hanhagaHolder = Hanhaga;
+            string shevetHolder = Shevet;
+            string roleHolder = Role;
             List<Role> rolesList = await proxy.GetAllRolesAsync();
             List<string> availableRoles = new List<string>();
             foreach (Role r in rolesList)
@@ -408,34 +413,42 @@ namespace ZofimPortalApp.ViewModels
                 availableRoles.Add(r.RoleName);
             }
             Roles = availableRoles;
-            List<Hanhaga> hanhagasList = await proxy.GetAllHanhagasAsync();
-            List<string> availableHanhagas = new List<string>();
-            foreach (Hanhaga h in hanhagasList)
+            Role = roleHolder;
+            if (!(EditedUser is User))
             {
-                availableHanhagas.Add(h.Name);
+                List<Hanhaga> hanhagasList = await proxy.GetAllHanhagasAsync();
+                List<string> availableHanhagas = new List<string>();
+                foreach (Hanhaga h in hanhagasList)
+                {
+                    availableHanhagas.Add(h.Name);
+                }
+                Hanhagas = availableHanhagas;
+                Hanhaga hanhagaObject = hanhagasList.Where(h => h.Name == hanhagaHolder).FirstOrDefault();
+                hanhagaId = hanhagaObject.Id;
+                Hanhaga = hanhagaHolder;
+                Shevet = shevetHolder;
+                SetShevetsForPicker();
             }
-            Hanhagas = availableHanhagas;
-            SetShevetsForPicker();
-            Hanhaga = hanhagaHolder;
         }
 
         private async void SetShevetsForPicker()
         {
-            string hanhagaHolder = Hanhaga;
+            hanhagaHolder = Hanhaga;
             string shevetHolder = Shevet;
             List<Hanhaga> hanhagasList = await proxy.GetAllHanhagasAsync();
             List<Shevet> shevetsList = await proxy.GetAllShevetsAsync();
             List<string> availableShevets = new List<string>();
-            if (hanhagaHolder != null)
+            if (hanhagaHolder != "אין")
             {
+                Hanhaga hanhagaObject = hanhagasList.Where(h => h.Name == hanhagaHolder).FirstOrDefault();
                 foreach (Shevet s in shevetsList)
                 {
-                    Hanhaga hanhagaObject = hanhagasList.Where(h => h.Name == hanhagaHolder).FirstOrDefault();
                     if (hanhagaObject.Id == s.HanhagaId)
                     {
                         availableShevets.Add(s.Name);
                     }
                 }
+                hanhagaId = hanhagaObject.Id;
             }
             else
             {
@@ -443,10 +456,41 @@ namespace ZofimPortalApp.ViewModels
                 {
                     availableShevets.Add(s.Name);
                 }
+                hanhagaId = 16;
             }
             Shevets = availableShevets;
             Hanhaga = hanhagaHolder;
             Shevet = shevetHolder;
+        }
+
+        private async void SetShevetsAccordingToHanhaga()
+        {
+            string shevetHolder = Shevet;
+            List<Hanhaga> hanhagasList = await proxy.GetAllHanhagasAsync();
+            Hanhaga hanhagaObject = hanhagasList.Where(h => h.Name == hanhagaHolder).FirstOrDefault();
+            hanhagaId = hanhagaObject.Id;
+            List<Shevet> shevetsList = await proxy.GetAllShevetsAsync();
+            List<string> availableShevets = new List<string>();
+            if(hanhagaId!=16)
+            {
+                foreach(Shevet s in shevetsList)
+                {
+                    if(hanhagaId == s.HanhagaId)
+                    {
+                        availableShevets.Add(s.Name);
+                    }    
+                }
+                Shevets = availableShevets;
+            }
+            else
+            {
+                foreach(Shevet s in shevetsList)
+                {
+                    availableShevets.Add(s.Name);
+                }
+                Shevets = availableShevets;
+                Shevet = shevetHolder;
+            }
         }
 
         #region בדיקת שדות

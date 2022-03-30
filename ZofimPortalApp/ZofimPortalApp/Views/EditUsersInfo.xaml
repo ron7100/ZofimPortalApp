@@ -7,9 +7,9 @@
         <StackLayout>
             <Button Text="חזור" Command="{Binding BackToManageUsersCommand}" HorizontalOptions="Start" WidthRequest="100"/>
             <Label Text="{Binding HeaderMessage}" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-            <Grid IsVisible="{Binding IsUserEdited}" Padding="5">
+            <Grid Padding="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -26,29 +26,25 @@
                     <RowDefinition Height="20"/><!--10-->
                     <RowDefinition Height="50"/><!--11-->
                 </Grid.RowDefinitions>
-                <StackLayout>
-                    <Label Text="כתובת מייל:" IsVisible="{Binding ShowEmail}" FontSize=""  HeightRequest="50" />
-                    <Label Text="שם פרטי:" HeightRequest="50" />
-                    <Label Text="שם משפחה:" HeightRequest="50" />
-                    <Label Text="תעודת זהות:" HeightRequest="50" />
-                    <Label Text="תפקיד:" IsVisible="{Binding ShowRole}" HeightRequest="50" />
-                    <Label Text="שבט:" IsVisible="{Binding ShowShevet}" HeightRequest="50" />
-                    <Label Text="הנהגה:" IsVisible="{Binding ShowHanhaga}" HeightRequest="50" />
-                </StackLayout>
-                <StackLayout Grid.Column="1">
-                    <Entry Text="{Binding Email}" IsVisible="{Binding ShowEmail}" Grid.Column="1" HeightRequest="50" />
-                    <Label Text="{Binding EmailErrorMessage}" FontSize="Small" IsVisible="{Binding EmailError}" Grid.Column="1" HeightRequest="20" />
-                    <Entry Text="{Binding FirstName}" Grid.Column="1" HeightRequest="50" />
-                    <Label Text="{Binding FirstNameErrorMessage}" FontSize="Small" IsVisible="{Binding FirstNameError}" Grid.Column="1" HeightRequest="20" />
-                    <Entry Text="{Binding LastName}" Grid.Column="1" HeightRequest="50" />
-                    <Label Text="{Binding LastNameErrorMessage}" FontSize="Small" IsVisible="{Binding LastNameError}" Grid.Column="1" HeightRequest="20" />
-                    <Entry Text="{Binding PersonalID}" Grid.Column="1" HeightRequest="50" />
-                    <Label Text="{Binding PersonalIDErrorMessage}" FontSize="Small" IsVisible="{Binding PersonalIDError}" Grid.Column="1" HeightRequest="20" />
-                    <Picker SelectedItem="{Binding Role}" IsVisible="{Binding ShowRole}" ItemsSource="{Binding Roles}" Grid.Column="1" HeightRequest="50" />
-                    <Picker SelectedItem="{Binding Shevet}" IsVisible="{Binding ShowShevet}" ItemsSource="{Binding Shevets}" Grid.Column="1" HeightRequest="50" />
-                    <Label Text="{Binding ShevetErrorMessage}" FontSize="Small" IsVisible="{Binding ShevetError}" Grid.Column="1" HeightRequest="20" />
-                    <Picker SelectedItem="{Binding Hanhaga}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" HeightRequest="50" />
-                </StackLayout>
+                <Label Text="כתובת מייל:" IsVisible="{Binding ShowEmail}" FontSize="Medium" HeightRequest="50" VerticalTextAlignment="Center" />
+                <Label Text="שם פרטי:" FontSize="Medium" HeightRequest="50" Grid.Row="2" VerticalTextAlignment="Center" />
+                <Label Text="שם משפחה:" FontSize="Medium" HeightRequest="50" Grid.Row="4" VerticalTextAlignment="Center" />
+                <Label Text="תעודת זהות:" FontSize="Medium" HeightRequest="50" Grid.Row="6" VerticalTextAlignment="Center" />
+                <Label Text="תפקיד:" IsVisible="{Binding ShowRole}" FontSize="Medium" HeightRequest="50" Grid.Row="8" VerticalTextAlignment="Center" />
+                <Label Text="שבט:" IsVisible="{Binding ShowShevet}" FontSize="Medium" HeightRequest="50" Grid.Row="9" VerticalTextAlignment="Center" />
+                <Label Text="הנהגה:" IsVisible="{Binding ShowHanhaga}" FontSize="Medium" HeightRequest="50" Grid.Row="11" VerticalTextAlignment="Center" />
+                <Entry Text="{Binding Email}" IsVisible="{Binding ShowEmail}" Grid.Column="1" HeightRequest="50" />
+                <Label Text="{Binding EmailErrorMessage}" FontSize="Small" IsVisible="{Binding EmailError}" Grid.Column="1" Grid.Row="1" HeightRequest="20" />
+                <Entry Text="{Binding FirstName}" Grid.Column="1" Grid.Row="2" HeightRequest="50" />
+                <Label Text="{Binding FirstNameErrorMessage}" FontSize="Small" IsVisible="{Binding FirstNameError}" Grid.Column="1" Grid.Row="3" HeightRequest="20" />
+                <Entry Text="{Binding LastName}" Grid.Column="1" Grid.Row="4" HeightRequest="50" />
+                <Label Text="{Binding LastNameErrorMessage}" FontSize="Small" IsVisible="{Binding LastNameError}" Grid.Column="1" Grid.Row="5" HeightRequest="20" />
+                <Entry Text="{Binding PersonalID}" Grid.Column="1" Grid.Row="6" HeightRequest="50" />
+                <Label Text="{Binding PersonalIDErrorMessage}" FontSize="Small" IsVisible="{Binding PersonalIDError}" Grid.Column="1" Grid.Row="7" HeightRequest="20" />
+                <Picker SelectedItem="{Binding Role}" IsVisible="{Binding ShowRole}" ItemsSource="{Binding Roles}" Grid.Column="1" Grid.Row="8" HeightRequest="50" />
+                <Picker SelectedItem="{Binding Shevet}" IsVisible="{Binding ShowShevet}" ItemsSource="{Binding Shevets}" Grid.Column="1" Grid.Row="9" HeightRequest="50" />
+                <Label Text="{Binding ShevetErrorMessage}" FontSize="Small" IsVisible="{Binding ShevetError}" Grid.Column="1" Grid.Row="10" HeightRequest="20" />
+                <Picker SelectedItem="{Binding Hanhaga}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" Grid.Row="11" HeightRequest="50" />
             </Grid>
         </StackLayout>
     </ContentPage.Content>
