@@ -79,13 +79,17 @@ namespace ZofimPortalApp.ViewModels
             FirstNameError = false;
             LastNameError = false;
             PersonalIDError = false;
-            Hanhagas = new List<string>();
-            Shevets = new List<string>();
-            Roles = new List<string>();
+            Hanhagas = new List<Hanhaga>();
+            Shevets = new List<Shevet>();
+            Roles = new List<Role>();
             if (u is WorkerToShow)
             {
-                Hanhagas.Add("אין");
-                Shevets.Add("אין");
+                Hanhaga noHanhaga = new Hanhaga();
+                noHanhaga.Name = "אין";
+                Hanhagas.Add(noHanhaga);
+                Shevet noShevet = new Shevet();
+                noShevet.Name = "אין";
+                Shevets.Add(noShevet);
             }
             SetListsForPickers();
         }
@@ -344,8 +348,8 @@ namespace ZofimPortalApp.ViewModels
         #endregion
 
             #region רשימות פיקרים
-        private List<string> roles;
-        public List<string> Roles
+        private List<Role> roles;
+        public List<Role> Roles
         {
             get => roles;
             set
@@ -355,8 +359,8 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private List<string> shevets;
-        public List<string> Shevets
+        private List<Shevet> shevets;
+        public List<Shevet> Shevets
         {
             get => shevets;
             set
@@ -366,8 +370,8 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private List<string> hanhagas;
-        public List<string> Hanhagas
+        private List<Hanhaga> hanhagas;
+        public List<Hanhaga> Hanhagas
         {
             get => hanhagas;
             set
@@ -473,14 +477,13 @@ namespace ZofimPortalApp.ViewModels
             List<string> availableShevets = new List<string>();
             if(hanhagaId!=16)
             {
-                foreach(Shevet s in shevetsList)
+                foreach (Shevet s in shevetsList)
                 {
-                    if(hanhagaId == s.HanhagaId)
+                    if (hanhagaId == s.HanhagaId)
                     {
                         availableShevets.Add(s.Name);
-                    }    
+                    }
                 }
-                Shevets = availableShevets;
             }
             else
             {
@@ -488,9 +491,9 @@ namespace ZofimPortalApp.ViewModels
                 {
                     availableShevets.Add(s.Name);
                 }
-                Shevets = availableShevets;
-                Shevet = shevetHolder;
             }
+            Shevets = availableShevets;
+            Shevet = shevetHolder;
         }
 
         #region בדיקת שדות
