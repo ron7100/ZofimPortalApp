@@ -271,6 +271,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 hanhaga = value;
+                SetShevetsAccordingToHanhaga();
                 //SetShevetsAccordingToHanhaga();
                 OnPropertyChanged("Hanhaga");
             }
@@ -487,10 +488,33 @@ namespace ZofimPortalApp.ViewModels
             List<Role> availableRoles = await proxy.GetAllRolesAsync();
             Roles = availableRoles;
             PickerRole = Role;
+            int roleIdInPicker = 0;
+            if (Role != null)
+            {
+                foreach (Role r in availableRoles)
+                {
+                    if (r != Role)
+                        roleIdInPicker++;
+                    else
+                        PickerRoleId = roleIdInPicker;
+                }
+            }
             if (!(EditedUser is User))
             {
                 List<Hanhaga> availableHanhagas = await proxy.GetAllHanhagasAsync();
+                Hanhaga hanhagaHolder = Hanhaga;
                 Hanhagas = availableHanhagas;
+                Hanhaga = hanhagaHolder;
+                int hanhagaIdInPicker = 0;
+                foreach (Hanhaga h in availableHanhagas)
+                {
+                    if (h.Id!=Hanhaga.Id)
+                        hanhagaIdInPicker++;
+                    else
+                        PickerHanhagaId = hanhagaIdInPicker;
+                }
+                if (hanhagaIdInPicker == 15)
+                    PickerHanhagaId = hanhagaIdInPicker;
                 PickerHanhaga = Hanhaga;
                 PickerShevet = Shevet;
                 await SetShevetsForPicker();
@@ -499,8 +523,11 @@ namespace ZofimPortalApp.ViewModels
 
         private async Task SetShevetsForPicker()
         {
+            Shevet shevetHolder = Shevet;
             List<Shevet> shevetsList = await proxy.GetAllShevetsAsync();
             List<Shevet> availableShevets = new List<Shevet>();
+            int shevetIdInPicker = 0;
+            int correctShevetIdInPicker = 231;
             if (Hanhaga.Name != "אין")
             {
                 foreach (Shevet s in shevetsList)
@@ -508,7 +535,10 @@ namespace ZofimPortalApp.ViewModels
                     if (Hanhaga.Id == s.HanhagaId)
                     {
                         availableShevets.Add(s);
+                        shevetIdInPicker++;
                     }
+                    if (s.Id == shevetHolder.Id)
+                        correctShevetIdInPicker = shevetIdInPicker - 1;
                 }
             }
             else
@@ -519,6 +549,8 @@ namespace ZofimPortalApp.ViewModels
                 }
             }
             Shevets = availableShevets;
+            Shevet = shevetHolder;
+            PickerShevetId = correctShevetIdInPicker;
             PickerHanhaga = Hanhaga;
             PickerShevet = Shevet;
         }
@@ -527,18 +559,14 @@ namespace ZofimPortalApp.ViewModels
         {
             List<Shevet> shevetsList = await proxy.GetAllShevetsAsync();
             List<Shevet> availableShevets = new List<Shevet>();
-            int shevetIdInPicker = 0;
-            if(Hanhaga.Id!=16)
+            if(Hanhaga.Name!="אין")
             {
                 foreach (Shevet s in shevetsList)
                 {
                     if (Hanhaga.Id == s.HanhagaId)
                     {
                         availableShevets.Add(s);
-                        shevetIdInPicker++;
                     }
-                    if (s == Shevet)
-                        PickerShevetId = shevetIdInPicker - 1;
                 }
             }
             else
@@ -549,8 +577,8 @@ namespace ZofimPortalApp.ViewModels
                 }
             }
             Shevets = availableShevets;
+            PickerShevetId = -1;
             PickerShevet = Shevet;
-            PickerHanhaga = Hanhaga;
         }
 
         #region בדיקת שדות
