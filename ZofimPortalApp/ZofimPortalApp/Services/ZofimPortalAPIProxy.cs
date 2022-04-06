@@ -140,6 +140,34 @@ namespace ZofimPortalApp.Services
             }
         }
 
+        public async Task<bool> IsIdExistAsync(string id)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/IsIdExist?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    bool u = JsonSerializer.Deserialize<bool>(content, options);
+                    return u;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
         public async Task<object> SignUpAsync(User user) //התחברות למשתמש
         {
             try
@@ -173,6 +201,7 @@ namespace ZofimPortalApp.Services
             }
         }
 
+        #region שמירת שינויים
         public async Task SaveUserChangesAsync(User user) //שמירת שינויים במשתמש
         {
             try
@@ -252,6 +281,7 @@ namespace ZofimPortalApp.Services
                 Console.WriteLine(e.Message);
             }
         }
+#endregion
 
         #region get ID
         public async Task<int> GetLastUserIDAsync()

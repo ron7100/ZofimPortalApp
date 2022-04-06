@@ -8,10 +8,12 @@ namespace ZofimPortalApp.ViewModels
 {
     class HomePageVM : INotifyPropertyChanged
     {
-        public Command ToLogInCommand { get; }
-        public Command ToSignUpCommand { get; }
-        public Command ToManageUsersCommand { get; }
-        public Command SignOutCommand { get; }
+        public Command ToLogInCommand => new Command(ToLogIn);
+        public Command ToSignUpCommand => new Command(ToSignUp);
+        public Command ToManageUsersCommand => new Command(ToManageUsers);
+        public Command ToPersonalInfoCommand => new Command(ToPersonalInfo);
+        public Command SignOutCommand => new Command(SignOut);
+
         private ZofimPortalAPIProxy proxy;
 
         #region INotifyPropertyChanged
@@ -70,11 +72,7 @@ namespace ZofimPortalApp.ViewModels
 
         public HomePageVM(User u)
         {
-            ToLogInCommand = new Command(ToLogIn);
-            ToSignUpCommand = new Command(ToSignUp);
-            SignOutCommand = new Command(SignOut);
             proxy = ZofimPortalAPIProxy.CreateProxy();
-            ToManageUsersCommand = new Command(ToManageUsers);
             if (u != null)
             {
                 WelcomeMessage = "מחובר כעת: " + u.FirstName + " " + u.LastName;
@@ -117,6 +115,11 @@ namespace ZofimPortalApp.ViewModels
         public async void ToManageUsers()
         {
             Page p = new Views.ManageUsers();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+        public async void ToPersonalInfo()
+        {
+            Page p = new Views.PersonalInfo();
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }
