@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
+using ZofimPortalApp.Services;
 using ZofimPortalApp.Models;
 using ZofimPortalApp.Views;
 
@@ -10,6 +11,8 @@ namespace ZofimPortalApp.ViewModels
     {
         public Command BackToHomePageCommand => new Command(BackToHomePage);
         public Command SaveChangesCommand => new Command(SaveChanges);
+
+        private ZofimPortalAPIProxy proxy;
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -21,13 +24,26 @@ namespace ZofimPortalApp.ViewModels
 
         public PersonalInfoVM()
         {
-            User u = HomePage.ConnectedUser;
-            Email = u.Email;
-            FirstName = u.FirstName;
-            LastName = u.LastName;
-            PersonalId = u.PersonalId;
+            proxy = ZofimPortalAPIProxy.CreateProxy();
+            User = HomePage.ConnectedUser;
+            Email = User.Email;
+            FirstName = User.FirstName;
+            LastName = User.LastName;
+            PersonalId = User.PersonalId;
         }
+
         #region Properties
+        private User user;
+        public User User
+        {
+            get => user;
+            set
+            {
+                user = value;
+                OnPropertyChanged("User");
+            }
+        }
+
             #region fields
         private string email;
         public string Email
@@ -248,12 +264,16 @@ namespace ZofimPortalApp.ViewModels
         }
         #endregion
 
-        private void SaveChanges()
+        private async void SaveChanges()
         {
             CheckForErrors();
             if (AreThereErrors)
                 return;
-            //לשמור שינויים
+            User.Email = Email;
+            User.FirstName = FirstName;
+            User.LastName = LastName;
+            User.PersonalId = PersonalId;
+            await proxy.SaveUserChangesAsync(User);
         }
 
         private void CheckForErrors()
