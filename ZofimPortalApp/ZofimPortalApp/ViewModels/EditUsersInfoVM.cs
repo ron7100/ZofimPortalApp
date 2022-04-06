@@ -419,6 +419,17 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("ShevetErrorMessage");
             }
         }
+
+        private bool areThereErrors;
+        public bool AreThereErrors
+        {
+            get => areThereErrors;
+            set
+            {
+                areThereErrors = value;
+                OnPropertyChanged("AreThereErrors");
+            }
+        }
         #endregion
 
             #region רשימות פיקרים
@@ -584,6 +595,7 @@ namespace ZofimPortalApp.ViewModels
         private async void SetShevetsAccordingToHanhaga()
         {
             ShowShevet = true;
+            Shevet shevetHolder = Shevet;
             List<Shevet> shevetsList = await proxy.GetAllShevetsAsync();
             List<Shevet> availableShevets = new List<Shevet>();
             if(Hanhaga!=null)
@@ -610,6 +622,27 @@ namespace ZofimPortalApp.ViewModels
             }
             Shevets = availableShevets;
             PickerShevetId = -1;
+            string hanhagaName = "";
+            if (!(EditedUser is User))
+            {
+                if (EditedUser is WorkerToShow)
+                {
+                    hanhagaName = ((WorkerToShow)EditedUser).Hanhaga;
+                }
+                else if (EditedUser is ParentToShow)
+                {
+                    hanhagaName = ((ParentToShow)EditedUser).Hanhaga;
+                }
+                else if (EditedUser is CadetToShow)
+                {
+                    hanhagaName = ((CadetToShow)EditedUser).Hanhaga;
+                }
+                if (hanhagaName == Hanhaga.Name)
+                {
+                    Shevet = shevetHolder;
+                    PickerShevet = Shevet;
+                }
+            }
         }
 
         #region בדיקת שדות
@@ -693,6 +726,9 @@ namespace ZofimPortalApp.ViewModels
 
         private async void SaveChanges()
         {
+            CheckForErrors();
+            if (AreThereErrors)
+                return;
             if (EditedUser is User)
             {
                 User u = (User)EditedUser;
@@ -738,6 +774,11 @@ namespace ZofimPortalApp.ViewModels
                 await proxy.SaveCadetChangesAsync(c);
             }
             ToManageUsers();
+        }
+
+        private void CheckForErrors()
+        {
+            AreThereErrors = EmailError || FirstNameError || LastNameError || PersonalIDError || ShevetError;
         }
 
         private async void BackToManageUsers()
