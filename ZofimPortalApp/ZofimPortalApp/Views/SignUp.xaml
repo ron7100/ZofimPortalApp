@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:ZofimPortalApp.ViewModels" x:DataType="viewmodels:SignUpVM"
              x:Class="ZofimPortalApp.Views.SignUp"
              FlowDirection="RightToLeft">
     <ContentPage.Content>
@@ -34,7 +34,7 @@
                 </Grid.RowDefinitions>
                 <Entry Placeholder="מייל..." Text="{Binding Email}" Grid.Row="0" Grid.Column="1"/>
                 <Label Text="מייל:" Grid.Row="0" Grid.Column="0"/>
-                <Label Text="כתובת מייל לא חוקית" IsVisible="{Binding IsEmailError}" Grid.Row="1" Grid.Column="1"/>
+                <Label Text="{Binding EmailError}" IsVisible="{Binding IsEmailError}" Grid.Row="1" Grid.Column="1"/>
                 <Entry Placeholder="שם פרטי..." Text="{Binding FName}" Grid.Row="2" Grid.Column="1"/>
                 <Label Text="שם פרטי:" Grid.Row="2" Grid.Column="0"/>
                 <Label Text="{Binding FNameError}" IsVisible="{Binding IsFNameError}" Grid.Row="3" Grid.Column="1"/>

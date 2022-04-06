@@ -51,6 +51,7 @@ namespace ZofimPortalApp.ViewModels
         #endregion
 
         #region Properties
+            #region fields
         private string email;
         public string Email
         {
@@ -133,7 +134,9 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("UserType");
             }
         }
+        #endregion
 
+            #region show and hide passwords
         private bool isPassword;
         public bool IsPassword
         {
@@ -155,7 +158,9 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("IsCheckPassword");
             }
         }
+        #endregion
 
+            #region errors
         private bool isEmailError;
         public bool IsEmailError
         {
@@ -298,6 +303,7 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("GeneralError");
             }
         }
+        #endregion
         #endregion
 
         public async void ToLogIn()
