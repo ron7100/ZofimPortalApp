@@ -12,6 +12,7 @@ namespace ZofimPortalApp.ViewModels
     class EditUsersInfoVM : INotifyPropertyChanged
     {
         public Command BackToManageUsersCommand => new Command(BackToManageUsers);
+        public Command SaveChangesCommand => new Command(SaveChanges);
 
         private ZofimPortalAPIProxy proxy;
         public EditUsersInfoVM(object u)
@@ -19,7 +20,9 @@ namespace ZofimPortalApp.ViewModels
             proxy = ZofimPortalAPIProxy.CreateProxy();
             RealConstructorBecauseYouCantPutAsyncInConstructor(u);
         }
-        
+
+        public const int NO_SHEVET_ID = 1000;
+        public const int NO_HANHAGA_ID = 1000;
         public async void RealConstructorBecauseYouCantPutAsyncInConstructor(object u)
         {
             List<Role> rolesList = await proxy.GetAllRolesAsync();
@@ -51,10 +54,10 @@ namespace ZofimPortalApp.ViewModels
                 PersonalID = dummy.PersonalID;
                 Role = rolesList.Where(r => r.RoleName == dummy.Role).FirstOrDefault();
                 ShowRole = true;
-                Shevet = shevetsList.Where(s => s.Name == dummy.Shevet).FirstOrDefault();
-                ShowShevet = true;
-                Hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
+                hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
                 ShowHanhaga = true;
+                Shevet = shevetsList.Where(s => s.Name == dummy.Shevet && s.HanhagaId == hanhaga.Id).FirstOrDefault();
+                ShowShevet = true;
             }
             if (u is ParentToShow)
             {
@@ -65,10 +68,10 @@ namespace ZofimPortalApp.ViewModels
                 FirstName = dummy.FirstName;
                 LastName = dummy.LastName;
                 PersonalID = dummy.PersonalID;
-                Shevet = shevetsList.Where(s => s.Name == dummy.Shevet).FirstOrDefault();
-                ShowShevet = true;
-                Hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
+                hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
                 ShowHanhaga = true;
+                Shevet = shevetsList.Where(s => s.Name == dummy.Shevet && s.HanhagaId == hanhaga.Id).FirstOrDefault();
+                ShowShevet = true;
             }
             if (u is CadetToShow)
             {
@@ -81,7 +84,7 @@ namespace ZofimPortalApp.ViewModels
                 ShowRole = true;
                 Shevet = shevetsList.Where(s => s.Name == dummy.Shevet).FirstOrDefault();
                 ShowShevet = true;
-                Hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
+                hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
                 ShowHanhaga = true;
             }
             EmailError = false;
@@ -89,17 +92,6 @@ namespace ZofimPortalApp.ViewModels
             LastNameError = false;
             PersonalIDError = false;
             await SetListsForPickers();
-            if (u is WorkerToShow)
-            {
-                Hanhaga noHanhaga = new Hanhaga();
-                noHanhaga.Name = "אין";
-                noHanhaga.Id = 16;
-                Hanhagas.Add(noHanhaga);
-                Shevet noShevet = new Shevet();
-                noShevet.Name = "אין";
-                noShevet.Id = 232;
-                Shevets.Add(noShevet);
-            }
         }
 
         #region INotifyPropertyChanged
@@ -260,6 +252,8 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 showShevet = value;
+                if (!showShevet)
+                    ShevetError = showShevet;
                 OnPropertyChanged("ShowShevet");
             }
         }
@@ -409,6 +403,8 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 shevetError = value;
+                if (!showShevet)
+                    shevetError = showShevet;
                 OnPropertyChanged("ShevetError");
             }
         }
@@ -493,7 +489,7 @@ namespace ZofimPortalApp.ViewModels
             {
                 foreach (Role r in availableRoles)
                 {
-                    if (r != Role)
+                    if (r.Id != Role.Id)
                         roleIdInPicker++;
                     else
                         PickerRoleId = roleIdInPicker;
@@ -501,19 +497,31 @@ namespace ZofimPortalApp.ViewModels
             }
             if (!(EditedUser is User))
             {
-                List<Hanhaga> availableHanhagas = await proxy.GetAllHanhagasAsync();
                 Hanhaga hanhagaHolder = Hanhaga;
+                List<Hanhaga> availableHanhagas = await proxy.GetAllHanhagasAsync();
+                if (EditedUser is WorkerToShow)
+                {
+                    Hanhaga noHanhaga = new Hanhaga();
+                    noHanhaga.Name = "אין";
+                    noHanhaga.Id = NO_HANHAGA_ID;
+                    availableHanhagas.Add(noHanhaga);
+                    if(hanhagaHolder==null)
+                        hanhagaHolder = noHanhaga;
+                }
                 Hanhagas = availableHanhagas;
                 Hanhaga = hanhagaHolder;
                 int hanhagaIdInPicker = 0;
-                foreach (Hanhaga h in availableHanhagas)
+                if (Hanhaga != null)
                 {
-                    if (h.Id!=Hanhaga.Id)
-                        hanhagaIdInPicker++;
-                    else
-                        PickerHanhagaId = hanhagaIdInPicker;
+                    foreach (Hanhaga h in availableHanhagas)
+                    {
+                        if (h.Id != Hanhaga.Id)
+                            hanhagaIdInPicker++;
+                        else
+                            PickerHanhagaId = hanhagaIdInPicker;
+                    }
                 }
-                if (hanhagaIdInPicker == 15)
+                if (hanhagaIdInPicker == 16)
                     PickerHanhagaId = hanhagaIdInPicker;
                 PickerHanhaga = Hanhaga;
                 PickerShevet = Shevet;
@@ -528,25 +536,43 @@ namespace ZofimPortalApp.ViewModels
             List<Shevet> availableShevets = new List<Shevet>();
             int shevetIdInPicker = 0;
             int correctShevetIdInPicker = 231;
-            if (Hanhaga.Name != "אין")
+            if (Hanhaga != null)
             {
-                foreach (Shevet s in shevetsList)
+                if (Shevet == null)
                 {
-                    if (Hanhaga.Id == s.HanhagaId)
+                    Shevet noShevet = new Shevet();
+                    noShevet.Name = "אין";
+                    noShevet.Id = NO_SHEVET_ID;
+                    noShevet.HanhagaId = Hanhaga.Id;
+                    shevetsList.Add(noShevet);
+                    shevetHolder = noShevet;
+                    foreach (Shevet s in shevetsList)
                     {
-                        availableShevets.Add(s);
-                        shevetIdInPicker++;
+                        if (Hanhaga.Id == s.HanhagaId)
+                        {
+                            availableShevets.Add(s);
+                            shevetIdInPicker++;
+                        }
                     }
-                    if (s.Id == shevetHolder.Id)
-                        correctShevetIdInPicker = shevetIdInPicker - 1;
+                    correctShevetIdInPicker = shevetIdInPicker;
+                }
+                else
+                {
+                    foreach (Shevet s in shevetsList)
+                    {
+                        if (Hanhaga.Id == s.HanhagaId)
+                        {
+                            availableShevets.Add(s);
+                            shevetIdInPicker++;
+                        }
+                        if (s.Id == shevetHolder.Id)
+                            correctShevetIdInPicker = shevetIdInPicker - 1;
+                    }
                 }
             }
-            else
+            if(Hanhaga.Id == NO_HANHAGA_ID)
             {
-                foreach (Shevet s in shevetsList)
-                {
-                    availableShevets.Add(s);
-                }
+                ShowShevet = false;
             }
             Shevets = availableShevets;
             Shevet = shevetHolder;
@@ -557,9 +583,10 @@ namespace ZofimPortalApp.ViewModels
 
         private async void SetShevetsAccordingToHanhaga()
         {
+            ShowShevet = true;
             List<Shevet> shevetsList = await proxy.GetAllShevetsAsync();
             List<Shevet> availableShevets = new List<Shevet>();
-            if(Hanhaga.Name!="אין")
+            if(Hanhaga!=null)
             {
                 foreach (Shevet s in shevetsList)
                 {
@@ -569,16 +596,20 @@ namespace ZofimPortalApp.ViewModels
                     }
                 }
             }
-            else
+            if(Hanhaga.Id == NO_HANHAGA_ID)
             {
-                foreach(Shevet s in shevetsList)
-                {
-                    availableShevets.Add(s);
-                }
+                ShowShevet = false;
+            }
+            if(EditedUser is WorkerToShow)
+            {
+                Shevet noShevet = new Shevet();
+                noShevet.Name = "אין";
+                noShevet.Id = NO_SHEVET_ID;
+                noShevet.HanhagaId = Hanhaga.Id;
+                availableShevets.Add(noShevet);                
             }
             Shevets = availableShevets;
             PickerShevetId = -1;
-            PickerShevet = Shevet;
         }
 
         #region בדיקת שדות
@@ -660,9 +691,64 @@ namespace ZofimPortalApp.ViewModels
         }
         #endregion
 
+        private async void SaveChanges()
+        {
+            if (EditedUser is User)
+            {
+                User u = (User)EditedUser;
+                u.Email = Email;
+                u.FirstName = FirstName;
+                u.LastName = LastName;
+                u.PersonalId = PersonalID;
+                await proxy.SaveUserChangesAsync(u);
+            }
+            if (EditedUser is WorkerToShow)
+            {
+                WorkerToShow w = (WorkerToShow)EditedUser;
+                w.Email = Email;
+                w.FirstName = FirstName;
+                w.LastName = LastName;
+                w.PersonalID = PersonalID;
+                w.Role = Role.RoleName;
+                if(Shevet!=null)
+                    w.Shevet = Shevet.Name;
+                w.Hanhaga = Hanhaga.Name;
+                await proxy.SaveWorkerChangesAsync(w);
+            }
+            if (EditedUser is ParentToShow)
+            {
+                ParentToShow p = (ParentToShow)EditedUser;
+                p.Email = Email;
+                p.FirstName = FirstName;
+                p.LastName = LastName;
+                p.PersonalID = PersonalID;
+                p.Shevet = Shevet.Name;
+                p.Hanhaga = Hanhaga.Name;
+                await proxy.SaveParentChangesAsync(p);
+            }
+            if (EditedUser is CadetToShow)
+            {
+                CadetToShow c = (CadetToShow)EditedUser;
+                c.FirstName = FirstName;
+                c.LastName = LastName;
+                c.PersonalID = PersonalID;
+                c.Role = Role.RoleName;
+                c.Shevet = Shevet.Name;
+                c.Hanhaga = Hanhaga.Name;
+                await proxy.SaveCadetChangesAsync(c);
+            }
+            ToManageUsers();
+        }
+
         private async void BackToManageUsers()
         {
             await App.Current.MainPage.Navigation.PopAsync();
+        }
+
+        private async void ToManageUsers()
+        {
+            Page p = new Views.ManageUsers();
+            await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }
 }
