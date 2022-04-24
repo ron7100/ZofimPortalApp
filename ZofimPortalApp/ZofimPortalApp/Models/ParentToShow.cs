@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ZofimPortalApp.Models
 {
-    class ParentToShow
+    public class ParentToShow
     {
         public int ID { get; set; }
         public string Email { get; set; }

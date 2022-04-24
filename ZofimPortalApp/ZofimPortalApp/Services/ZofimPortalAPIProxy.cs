@@ -567,6 +567,38 @@ namespace ZofimPortalApp.Services
         }
         #endregion
 
+        public async Task<object> AddCadetAsync(Cadet cadet) //הוספת חניך
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Cadet>(cadet, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AddCadet", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonContent = await response.Content.ReadAsStringAsync();
+                    Cadet c = JsonSerializer.Deserialize<Cadet>(jsonContent, options);
+                    return c;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         public async Task<int> GetPermissionLevelAsync(int id)
         {
             try

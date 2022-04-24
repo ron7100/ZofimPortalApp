@@ -470,7 +470,6 @@ namespace ZofimPortalApp.ViewModels
             if(CheckPass!=null)
                 CheckCheckPassword();
         }
-
         private void CheckCheckPassword()
         {
             IsCheckPassError = false;

@@ -12,6 +12,7 @@ namespace ZofimPortalApp.ViewModels
     class EditUsersInfoVM : INotifyPropertyChanged
     {
         public Command BackToManageUsersCommand => new Command(BackToManageUsers);
+        public Command ToAddCadetCommand => new Command(ToAddCadet);
         public Command SaveChangesCommand => new Command(SaveChanges);
 
         private ZofimPortalAPIProxy proxy;
@@ -72,6 +73,7 @@ namespace ZofimPortalApp.ViewModels
                 ShowHanhaga = true;
                 Shevet = shevetsList.Where(s => s.Name == dummy.Shevet && s.HanhagaId == hanhaga.Id).FirstOrDefault();
                 ShowShevet = true;
+                ShowCadets = true;
             }
             if (u is CadetToShow)
             {
@@ -303,6 +305,17 @@ namespace ZofimPortalApp.ViewModels
             {
                 showHanhaga = value;
                 OnPropertyChanged("ShowHanhaga");
+            }
+        }
+
+        private bool showCadets;
+        public bool ShowCadets
+        {
+            get => showCadets;
+            set
+            {
+                showCadets = value;
+                OnPropertyChanged("ShowCadets");
             }
         }
         #endregion
@@ -785,10 +798,16 @@ namespace ZofimPortalApp.ViewModels
         {
             await App.Current.MainPage.Navigation.PopAsync();
         }
-
+        
         private async void ToManageUsers()
         {
             Page p = new Views.ManageUsers();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+
+        private async void ToAddCadet()
+        {
+            Page p = new Views.AddCadet((ParentToShow)EditedUser);
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }

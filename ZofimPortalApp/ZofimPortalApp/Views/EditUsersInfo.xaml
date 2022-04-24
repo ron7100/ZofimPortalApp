@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Button Text="חזור" Command="{Binding BackToManageUsersCommand}" HorizontalOptions="Start" WidthRequest="100"/>
-            <Label Text="{Binding HeaderMessage}" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Label Text="{Binding HeaderMessage}" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
             <Grid Padding="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
@@ -28,6 +28,7 @@
                     <RowDefinition Height="50"/><!--12-->
                     <RowDefinition Height="50"/><!--13-->
                     <RowDefinition Height="20"/><!--14-->
+                    <RowDefinition Height="50"/><!--15-->
                 </Grid.RowDefinitions>
                 <Label Text="כתובת מייל:" IsVisible="{Binding ShowEmail}" FontSize="Medium" HeightRequest="50" VerticalTextAlignment="Center" />
                 <Entry Text="{Binding Email}" IsVisible="{Binding ShowEmail}" Grid.Column="1" HeightRequest="50" />
@@ -50,6 +51,7 @@
                 <Picker SelectedItem="{Binding PickerHanhaga}" SelectedIndex="{Binding PickerHanhagaId}" ItemDisplayBinding="{Binding Name}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" Grid.Row="12" HeightRequest="50" />
                 <Button Text="שמירת שינויים" Command="{Binding SaveChangesCommand}" Grid.Row="13" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
                 <Label Text="יש שגיאות בטופס" IsVisible="{Binding AreThereErrors}" Grid.Row="14" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Button Text="הוספת חניך" Command="{Binding ToAddCadetCommand}" IsVisible="{Binding ShowCadets}" Grid.Row="15" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

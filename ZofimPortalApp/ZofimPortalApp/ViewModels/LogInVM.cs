@@ -22,8 +22,8 @@ namespace ZofimPortalApp.ViewModels
             proxy = ZofimPortalAPIProxy.CreateProxy();
             #region למחוק לפני הגשה
             email = "bbb@gmail.com";
-            //pass = "bbb";
-            //LogIn();
+            pass = "bbb";
+            LogIn();
             #endregion
         }
 
