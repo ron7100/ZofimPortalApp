@@ -16,21 +16,16 @@ namespace ZofimPortalApp.ViewModels
 {
     class SignUpVM : INotifyPropertyChanged
     {
-        public Command TogglePasswordCommand { get; }
-        public Command ToggleCheckPasswordCommand { get; }
-        public Command SignUpCommand { get; }
-        public Command ToLogInCommand { get; }
-        public Command BackToHomePageCommand { get; }
+        public Command TogglePasswordCommand => new Command(TogglePassword);
+        public Command ToggleCheckPasswordCommand => new Command(ToggleCheckPassword);
+        public Command SignUpCommand => new Command(SignUp);
+        public Command ToLogInCommand => new Command(ToLogIn);
+        public Command BackToHomePageCommand => new Command(BackToHomePage);
 
 
         private ZofimPortalAPIProxy proxy;
         public SignUpVM()
         {
-            TogglePasswordCommand = new Command(TogglePassword);
-            ToggleCheckPasswordCommand = new Command(ToggleCheckPassword);
-            SignUpCommand = new Command(SignUp);
-            ToLogInCommand = new Command(ToLogIn);
-            BackToHomePageCommand = new Command(BackToHomePage);
             IsPassword = true;
             IsCheckPassword = true;
             IsEmailError = false;

@@ -9,7 +9,10 @@ namespace ZofimPortalApp.ViewModels
 {
     class PersonalInfoVM : INotifyPropertyChanged
     {
+        public Command ToChangePasswordCommand => new Command(ToChangePassword);
+        public Command ToEditPersonalInfoCommand => new Command(ToEditPersonalInfo);
         public Command BackToHomePageCommand => new Command(BackToHomePage);
+
 
         private ZofimPortalAPIProxy proxy;
         public PersonalInfoVM()
@@ -133,6 +136,24 @@ namespace ZofimPortalApp.ViewModels
             }
         }
         #endregion
+        
+        private async void ToEditPersonalInfo()
+        {
+            Page p = new EditPersonalInfo();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+            Email = User.Email;
+            FirstName = User.FirstName;
+            LastName = User.LastName;
+            PersonalId = User.PersonalId;
+            FullName = $"{FirstName} {LastName}";
+            WelcomeMessage = $"שלום, {FullName}";
+        }
+
+        private async void ToChangePassword()
+        {
+            Page p = new ChangePassword();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
 
         private async void BackToHomePage()
         {

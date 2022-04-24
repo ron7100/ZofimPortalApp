@@ -308,6 +308,10 @@ namespace ZofimPortalApp.ViewModels
             AreThereErrors = EmailError || FirstNameError || LastNameError || PersonalIdError;
         }
 
-        private async void BackToPersonalInfo() => await App.Current.MainPage.Navigation.PopAsync();
+        private async void BackToPersonalInfo()
+        {
+            Page p = new PersonalInfo();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
     }
 }
