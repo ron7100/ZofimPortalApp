@@ -1155,7 +1155,7 @@ namespace ZofimPortalApp.ViewModels
 
         private async void GoToEditUsers()
         {
-            Page p = new Views.EditUsersInfo(Selected);
+            Page p = new Views.EditUsersInfo(selected);
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
 

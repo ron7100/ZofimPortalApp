@@ -80,8 +80,8 @@ namespace ZofimPortalApp.Services
         }
 
         public string GetBasePhotoUri()
-        { 
-            return this.basePhotosUri; 
+        {
+            return this.basePhotosUri;
         }
 
         public async Task<User> LogInAsync(string email, string pass) //התחברות למשתמש
@@ -93,7 +93,7 @@ namespace ZofimPortalApp.Services
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
                     {
-                        ReferenceHandler = ReferenceHandler.Preserve,  
+                        ReferenceHandler = ReferenceHandler.Preserve,
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
@@ -121,7 +121,7 @@ namespace ZofimPortalApp.Services
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
                     {
-                        ReferenceHandler = ReferenceHandler.Preserve,  
+                        ReferenceHandler = ReferenceHandler.Preserve,
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
@@ -174,7 +174,7 @@ namespace ZofimPortalApp.Services
             {
                 JsonSerializerOptions options = new JsonSerializerOptions
                 {
-                    ReferenceHandler = ReferenceHandler.Preserve,  
+                    ReferenceHandler = ReferenceHandler.Preserve,
                     PropertyNameCaseInsensitive = true
                 };
                 string jsonObject = JsonSerializer.Serialize<User>(user, options);
@@ -281,7 +281,7 @@ namespace ZofimPortalApp.Services
                 Console.WriteLine(e.Message);
             }
         }
-#endregion
+        #endregion
 
         #region get ID
         public async Task<int> GetLastUserIDAsync()
@@ -567,7 +567,7 @@ namespace ZofimPortalApp.Services
         }
         #endregion
 
-        public async Task<object> AddCadetAsync(Cadet cadet) //הוספת חניך
+        public async Task<Cadet> AddCadetAsync(Cadet cadet) //הוספת חניך
         {
             try
             {
@@ -598,6 +598,33 @@ namespace ZofimPortalApp.Services
                 return null;
             }
         }
+
+        public async Task<int> ConnectCadetParent(int cadetID, int parentID)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/ConnectCadetParent?cadetID={cadetID}&parentID={parentID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+            
+        }
+        
 
         public async Task<int> GetPermissionLevelAsync(int id)
         {

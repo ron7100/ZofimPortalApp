@@ -38,6 +38,7 @@
                 <Label Text="זהו שדה חובה" IsVisible="{Binding IsRoleError}" Grid.Row="7" Grid.Column="1"/>
                 <Button Text="הוספת חניך" Command="{Binding AddCadetCommand}" Grid.Row="8" Grid.ColumnSpan="2" HorizontalOptions="Center" WidthRequest="100"/>
                 <Label Text="יש בעיות בטופס" IsVisible="{Binding IsThereError}" Grid.Row="9" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Label Text="הוספת חניך נכשלה, נסה שוב" IsVisible="{Binding AddCadetFailed}" Grid.Row="10" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

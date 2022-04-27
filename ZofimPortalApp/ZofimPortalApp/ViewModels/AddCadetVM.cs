@@ -208,6 +208,17 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("IsThereError");
             }
         }
+
+        private bool addCadetFailed;
+        public bool AddCadetFailed
+        {
+            get => addCadetFailed;
+            set
+            {
+                addCadetFailed = value;
+                OnPropertyChanged("AddCadetFailed");
+            }
+        }
         #endregion
 
         private List<Role> roles;
@@ -289,6 +300,7 @@ namespace ZofimPortalApp.ViewModels
 
         private async void AddCadet()
         {
+            AddCadetFailed = false;
             if(IsFNameError || IsLNameError || IsPersonalIDError || IsRoleError)
             {
                 IsThereError = true;
@@ -300,9 +312,13 @@ namespace ZofimPortalApp.ViewModels
             c.PersonalId = PersonalID;
             c.RoleId = Role.Id;
             c.ShevetId = (int)ShevetID;
-            await proxy.AddCadetAsync(c);
-            //await proxy.ConnectCadetParent()
-            //לחבר חניך להורה
+            Cadet cadet = await proxy.AddCadetAsync(c);
+            int successCode = await proxy.ConnectCadetParent(cadet.Id, ParentID);
+            if(successCode == 0)
+            {
+                AddCadetFailed = true;
+                return;
+            }
             ToManageUsers();
         }
 
