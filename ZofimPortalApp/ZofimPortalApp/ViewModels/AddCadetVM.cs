@@ -313,7 +313,10 @@ namespace ZofimPortalApp.ViewModels
             c.RoleId = Role.Id;
             c.ShevetId = (int)ShevetID;
             Cadet cadet = await proxy.AddCadetAsync(c);
-            int successCode = await proxy.ConnectCadetParent(cadet.Id, ParentID);
+            CadetParent cadetParent = new CadetParent();
+            cadetParent.CadetId = cadet.Id;
+            cadetParent.ParentId = ParentID;
+            int successCode = await proxy.ConnectCadetParent(cadetParent);
             if(successCode == 0)
             {
                 AddCadetFailed = true;

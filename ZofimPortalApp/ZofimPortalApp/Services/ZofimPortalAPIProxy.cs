@@ -599,18 +599,23 @@ namespace ZofimPortalApp.Services
             }
         }
 
-        public async Task<int> ConnectCadetParent(int cadetID, int parentID)
+        public async Task<int> ConnectCadetParent(CadetParent cadetParent)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/ConnectCadetParent?cadetID={cadetID}&parentID={parentID}");
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<CadetParent>(cadetParent, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/ConnectCadetParent", content);
+
                 if (response.IsSuccessStatusCode)
                 {
-                    JsonSerializerOptions options = new JsonSerializerOptions
-                    {
-                        ReferenceHandler = ReferenceHandler.Preserve,
-                        PropertyNameCaseInsensitive = true
-                    };
+                    string jsonContent = await response.Content.ReadAsStringAsync();
                     return 1;
                 }
                 else
