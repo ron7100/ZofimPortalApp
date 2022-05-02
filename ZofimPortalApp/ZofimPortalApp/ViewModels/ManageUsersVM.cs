@@ -27,6 +27,7 @@ namespace ZofimPortalApp.ViewModels
         private ZofimPortalAPIProxy proxy;
         public ManageUsersVM()
         {
+            Selected = null;
             HeaderMessage = "ניהול משתמשים";
             proxy = ZofimPortalAPIProxy.CreateProxy();
             SearchEnabled = false;
@@ -454,11 +455,9 @@ namespace ZofimPortalApp.ViewModels
             get => selected;
             set
             {
-                if (selected != value)
-                {
-                    selected = value;
+                selected = value;
+                if(selected!=null)
                     GoToEditUsers();
-                }
                 OnPropertyChanged("Selected");
             }
         }
@@ -1155,7 +1154,8 @@ namespace ZofimPortalApp.ViewModels
 
         private async void GoToEditUsers()
         {
-            Page p = new Views.EditUsersInfo(selected);
+            Page p = new Views.EditUsersInfo(Selected);
+            //Selected = null;
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
 
