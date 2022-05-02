@@ -27,7 +27,8 @@ namespace ZofimPortalApp.ViewModels
         private ZofimPortalAPIProxy proxy;
         public ManageUsersVM()
         {
-            Selected = null;
+            UsersListSelectionMode = ListViewSelectionMode.None;
+            UsersListSelectionMode = ListViewSelectionMode.Single;
             HeaderMessage = "ניהול משתמשים";
             proxy = ZofimPortalAPIProxy.CreateProxy();
             SearchEnabled = false;
@@ -470,6 +471,17 @@ namespace ZofimPortalApp.ViewModels
             {
                 headerMessage = value;
                 OnPropertyChanged("HeaderMessage");
+            }
+        }
+
+        private ListViewSelectionMode usersListSelectionMode;
+        public ListViewSelectionMode UsersListSelectionMode
+        {
+            get => usersListSelectionMode;
+            set
+            {
+                usersListSelectionMode = value;
+                OnPropertyChanged("UsersListSelectionMode");
             }
         }
         #endregion
@@ -1155,7 +1167,6 @@ namespace ZofimPortalApp.ViewModels
         private async void GoToEditUsers()
         {
             Page p = new Views.EditUsersInfo(Selected);
-            //Selected = null;
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
 

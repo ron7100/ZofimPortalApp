@@ -5,7 +5,7 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="חזור" Command="{Binding BackToManageUsersCommand}" HorizontalOptions="Start" WidthRequest="100"/>
+            <Button Text="חזור" Command="{Binding ToManageUsersCommand}" HorizontalOptions="Start" WidthRequest="100"/>
             <Label Text="{Binding HeaderMessage}" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
             <Grid Padding="5">
                 <Grid.ColumnDefinitions>
