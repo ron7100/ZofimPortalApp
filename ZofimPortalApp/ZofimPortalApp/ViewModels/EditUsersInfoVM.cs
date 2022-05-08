@@ -12,6 +12,7 @@ namespace ZofimPortalApp.ViewModels
     class EditUsersInfoVM : INotifyPropertyChanged
     {
         public Command BackToManageUsersCommand => new Command(BackToManageUsers);
+        public Command ToManageUsersCommand => new Command(ToManageUsers);
         public Command ToAddCadetCommand => new Command(ToAddCadet);
         public Command SaveChangesCommand => new Command(SaveChanges);
 
@@ -525,9 +526,11 @@ namespace ZofimPortalApp.ViewModels
                 List<Hanhaga> availableHanhagas = await proxy.GetAllHanhagasAsync();
                 if (EditedUser is WorkerToShow)
                 {
-                    Hanhaga noHanhaga = new Hanhaga();
-                    noHanhaga.Name = "אין";
-                    noHanhaga.Id = NO_HANHAGA_ID;
+                    Hanhaga noHanhaga = new Hanhaga
+                    {
+                        Name = "אין",
+                        Id = NO_HANHAGA_ID
+                    };
                     availableHanhagas.Add(noHanhaga);
                     if(hanhagaHolder==null)
                         hanhagaHolder = noHanhaga;

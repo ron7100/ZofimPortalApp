@@ -27,12 +27,11 @@ namespace ZofimPortalApp.ViewModels
         private ZofimPortalAPIProxy proxy;
         public ManageUsersVM()
         {
-            UsersListSelectionMode = ListViewSelectionMode.None;
-            UsersListSelectionMode = ListViewSelectionMode.Single;
             HeaderMessage = "ניהול משתמשים";
             proxy = ZofimPortalAPIProxy.CreateProxy();
             SearchEnabled = false;
             IsSecondFieldEnabled();
+            Selected = null;
             SetLists();
         }
 

@@ -310,8 +310,7 @@ namespace ZofimPortalApp.ViewModels
 
         private async void BackToPersonalInfo()
         {
-            Page p = new PersonalInfo();
-            await App.Current.MainPage.Navigation.PushAsync(p);
+            await App.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

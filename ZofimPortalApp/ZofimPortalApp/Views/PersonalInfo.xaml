@@ -20,8 +20,8 @@
                     <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
                 <Label Text="{Binding WelcomeMessage}" FontSize="Large" HorizontalTextAlignment="Center" Grid.Row="0" Grid.Column="1" />
-                <Button Text="לעריכת פרטי משתמש" HorizontalOptions="CenterAndExpand" Command="{Binding ToEditPersonalInfoCommand}" Grid.Row="1" Grid.Column="1" />
-                <Button Text="לשינוי סיסמה" HorizontalOptions="CenterAndExpand" Command="{Binding ToChangePasswordCommand}" Grid.Row="2" Grid.Column="1"/>
+                <Button Text="לעריכת פרטי משתמש" HorizontalOptions="CenterAndExpand" Command="{Binding ToEditPersonalInfoCommand}" Grid.Row="1" Grid.Column="1" WidthRequest="250" />
+                <Button Text="לשינוי סיסמה" HorizontalOptions="CenterAndExpand" Command="{Binding ToChangePasswordCommand}" Grid.Row="2" Grid.Column="1" WidthRequest="250" />
             </Grid>
         </StackLayout>
     </ContentPage.Content>
