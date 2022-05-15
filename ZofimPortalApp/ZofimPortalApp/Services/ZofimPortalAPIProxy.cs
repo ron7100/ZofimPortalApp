@@ -84,6 +84,7 @@ namespace ZofimPortalApp.Services
             return this.basePhotosUri;
         }
 
+        #region SignUp and LogIn
         public async Task<User> LogInAsync(string email, string pass) //התחברות למשתמש
         {
             try
@@ -200,6 +201,7 @@ namespace ZofimPortalApp.Services
                 return null;
             }
         }
+        #endregion
 
         #region שמירת שינויים
         public async Task SaveUserChangesAsync(User user) //שמירת שינויים במשתמש
@@ -510,7 +512,7 @@ namespace ZofimPortalApp.Services
             }
         }
 
-        public async Task<List<Shevet>> GetAllShevetsAsync()
+        public async Task<List<ShevetToShow>> GetAllShevetsAsync()
         {
             try
             {
@@ -523,7 +525,7 @@ namespace ZofimPortalApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    List<Shevet> shevets = JsonSerializer.Deserialize<List<Shevet>>(content, options);
+                    List<ShevetToShow> shevets = JsonSerializer.Deserialize<List<ShevetToShow>>(content, options);
                     return shevets;
                 }
                 else
@@ -532,6 +534,34 @@ namespace ZofimPortalApp.Services
                 }
             }
             catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<List<ShevetToShow>> GetShevetsForHanhaga(int hanhagaID)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetShevetsForHanhaga?hanhagaID={hanhagaID}");
+                if(response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<ShevetToShow> shevets = JsonSerializer.Deserialize<List<ShevetToShow>>(content, options);
+                    return shevets;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch(Exception e)
             {
                 Console.WriteLine(e.Message);
                 return null;
@@ -567,6 +597,7 @@ namespace ZofimPortalApp.Services
         }
         #endregion
 
+        #region הוספת חניכים
         public async Task<Cadet> AddCadetAsync(Cadet cadet) //הוספת חניך
         {
             try
@@ -629,10 +660,13 @@ namespace ZofimPortalApp.Services
             }
             
         }
-        
+        #endregion
 
         public async Task<int> GetPermissionLevelAsync(int id)
         {
+            //1 -> admin, can see all
+            //2 -> can see only from his hanhaga
+            //3 -> can see only parents and cadets from his shevet
             try
             {
                 HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetPermissionLevel?id={id}");
