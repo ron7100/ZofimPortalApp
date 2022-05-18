@@ -512,12 +512,40 @@ namespace ZofimPortalApp.Services
             }
         }
 
-        public async Task<List<ShevetToShow>> GetAllShevetsAsync()
+        public async Task<List<Shevet>> GetAllShevetsAsync()
         {
             try
             {
                 HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllShevets");
                 if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<Shevet> shevets = JsonSerializer.Deserialize<List<Shevet>>(content, options);
+                    return shevets;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<List<ShevetToShow>> GetAllShevetsToShowAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllShevetsToShow");
+                if(response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
                     {
@@ -533,18 +561,18 @@ namespace ZofimPortalApp.Services
                     return null;
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Console.WriteLine(e.Message);
                 return null;
             }
         }
 
-        public async Task<List<ShevetToShow>> GetShevetsForHanhaga(int hanhagaID)
+        public async Task<List<ShevetToShow>> GetShevetsForHanhagaAsync(string hanhaga)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetShevetsForHanhaga?hanhagaID={hanhagaID}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetShevetsForHanhaga?hanhaga={hanhaga}");
                 if(response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions

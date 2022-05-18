@@ -9,6 +9,22 @@
         <StackLayout>
             <Button Text="חזור" Command="{Binding BackToHomePageCommand}" HorizontalOptions="Start" WidthRequest="100"/>
             <Label Text="{Binding HeaderMessage}" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Grid Padding="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Button Text="חיפוש" Command="{Binding EnableSearchCommand}" FontSize="Medium" IsVisible="{Binding SearchDisabled}" />
+                <Button Text="סגור חיפוש" Command="{Binding DisableSearchCommand}" FontSize="Medium" IsVisible="{Binding SearchEnabled}" />
+                <Label Text="חפש לפי: " FontSize="Medium" Grid.Row="1" VerticalOptions="CenterAndExpand" IsVisible="{Binding SearchEnabled}" />
+                <Picker SelectedItem="{Binding SearchField}" IsVisible="{Binding SearchEnabled}" SelectedIndex="{Binding SearchFieldIndex}" FontSize="Medium" HeightRequest="50" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding AvailableOptionsSearchField}"/>
+                <Entry Placeholder="{Binding SearchFieldPlaceHolder}" Text="{Binding SearchValue}" IsVisible="{Binding SearchEnabled}" Grid.Row="1" Grid.Column="2"/>
+            </Grid>
             <Grid Padding="5" BackgroundColor="DodgerBlue" IsVisible="{Binding CantSeeAllShevets}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>

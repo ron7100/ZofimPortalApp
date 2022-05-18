@@ -29,8 +29,8 @@
                 <Button Command="{Binding ToSignUpCommand}" IsVisible="{Binding NotConnected}" Text="להרשמה" Grid.Row="2" Grid.Column="1" HorizontalOptions="StartAndExpand" WidthRequest="150" HeightRequest="150"/>
                 <Button Command="{Binding ToManageUsersCommand}" IsVisible="{Binding IsAdmin}" Text="לרשימת ועריכת משתמשים" Grid.Row="2" Grid.Column="2" WidthRequest="250" />
                 <Button Command="{Binding ToPersonalInfoCommand}" IsVisible="{Binding IsConnected}" Text="לפרטים אישיים" Grid.Row="3" Grid.Column="2" WidthRequest="250" />
+                <Button Command="{Binding ToManageShevetsCommand}" IsVisible="{Binding CanSeeShevets}" Text="לניהול שבטים" Grid.Row="4" Grid.Column="2" WidthRequest="250" />
             </Grid>
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

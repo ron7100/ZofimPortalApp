@@ -12,6 +12,7 @@ namespace ZofimPortalApp.ViewModels
         public Command ToSignUpCommand => new Command(ToSignUp);
         public Command ToManageUsersCommand => new Command(ToManageUsers);
         public Command ToPersonalInfoCommand => new Command(ToPersonalInfo);
+        public Command ToManageShevetsCommand => new Command(ToManageShevets);
         public Command SignOutCommand => new Command(SignOut);
 
         private ZofimPortalAPIProxy proxy;
@@ -68,6 +69,17 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("IsAdmin");
             }
         }
+
+        private bool canSeeShevets;
+        public bool CanSeeShevets
+        {
+            get => canSeeShevets;
+            set
+            {
+                canSeeShevets = value;
+                OnPropertyChanged("CanSeeShevets");
+            }
+        }
         #endregion
 
         public HomePageVM(User u)
@@ -83,16 +95,28 @@ namespace ZofimPortalApp.ViewModels
                 NotConnected = true;
                 IsConnected = false;
                 IsAdmin = false;
+                CanSeeShevets = false;
             }
         }
+
         public async void SignedIn()
         {
             IsConnected = true;
             NotConnected = false;
             IsAdmin = true;
+            CanSeeShevets = true;
+            //1 -> admin, can see all
+            //2 -> can see only from his hanhaga
+            //3 -> can see only parents and cadets from his shevet
             int permissionLevel = await proxy.GetPermissionLevelAsync(HomePage.ConnectedUser.Id);
             if (permissionLevel == 0)
+            {
+                CanSeeShevets = false;
                 IsAdmin = false;
+            }
+            else if (permissionLevel == 3)
+                CanSeeShevets = false;
+            
         }
 
         public async void SignOut()
@@ -107,19 +131,28 @@ namespace ZofimPortalApp.ViewModels
             Page p = new Views.LogIn();
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
+
         public async void ToSignUp()
         {
             Page p = new Views.SignUp();
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
+
         public async void ToManageUsers()
         {
             Page p = new Views.ManageUsers();
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
+
         public async void ToPersonalInfo()
         {
             Page p = new Views.PersonalInfo();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+
+        public async void ToManageShevets()
+        {
+            Page p = new Views.ManageShevet();
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }
