@@ -283,6 +283,46 @@ namespace ZofimPortalApp.Services
                 Console.WriteLine(e.Message);
             }
         }
+
+        public async Task SaveShevetChangesAsync(ShevetToShow shevet) //שמירת שינויים בשבט
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<ShevetToShow>(shevet, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/SaveShevetChanges", content);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public async Task SaveHanhagaChangesAsync(Hanhaga hanhaga) //שמירת שינויים בשבט
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Hanhaga>(hanhaga, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/SaveHanhagaChanges", content);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
         #endregion
 
         #region get ID
@@ -568,6 +608,34 @@ namespace ZofimPortalApp.Services
             }
         }
 
+        public async Task<List<Shevet>> GetShevetsObjectsForHanhagaAsync(string hanhaga)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetShevetsObjectsForHanhaga?hanhaga={hanhaga}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<Shevet> shevets = JsonSerializer.Deserialize<List<Shevet>>(content, options);
+                    return shevets;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         public async Task<List<ShevetToShow>> GetShevetsForHanhagaAsync(string hanhaga)
         {
             try
@@ -625,7 +693,7 @@ namespace ZofimPortalApp.Services
         }
         #endregion
 
-        #region הוספת חניכים
+        #region הוספת נתונים
         public async Task<Cadet> AddCadetAsync(Cadet cadet) //הוספת חניך
         {
             try
@@ -687,6 +755,38 @@ namespace ZofimPortalApp.Services
                 return 0;
             }
             
+        }
+
+        public async Task<Shevet> AddShevetAsync(Shevet shevet)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Shevet>(shevet, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AddShevet", content);
+
+                if(response.IsSuccessStatusCode)
+                {
+                    string jsonContent = await response.Content.ReadAsStringAsync();
+                    Shevet s = JsonSerializer.Deserialize<Shevet>(jsonContent, options);
+                    return s;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
         #endregion
 

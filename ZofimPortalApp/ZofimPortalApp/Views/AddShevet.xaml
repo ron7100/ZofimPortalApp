@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:ZofimPortalApp.ViewModels" x:DataType="viewmodels:AddShevetVM"
+             x:Class="ZofimPortalApp.Views.AddShevet"
+             FlowDirection="RightToLeft">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="חזור" Command="{Binding BackToEditHanhagaInfoCommand}" HorizontalOptions="Start" WidthRequest="100"/>
+            <Label Text="{Binding HeaderMessage}" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/><!--0-->
+                    <RowDefinition Height="20"/><!--1-->
+                    <RowDefinition Height="50"/><!--2-->
+                    <RowDefinition Height="20"/><!--3-->
+                    <RowDefinition Height="20"/><!--4-->
+                </Grid.RowDefinitions>
+                <Entry Placeholder="שם" Text="{Binding Name}" Grid.Row="0" Grid.Column="1"/>
+                <Label Text="שם:" FontSize="Medium" Grid.Row="0" Grid.Column="0"/>
+                <Label Text="{Binding NameErrorMessage}" IsVisible="{Binding NameError}" Grid.Row="1" Grid.Column="1"/>
+                <Button Text="הוספת שבט" Command="{Binding AddShevetCommand}" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Center" WidthRequest="100"/>
+                <Label Text="יש בעיות בטופס" IsVisible="{Binding IsThereError}" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

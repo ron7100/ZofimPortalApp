@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:ZofimPortalApp.ViewModels" x:DataType="viewmodels:EditHanhagaInfoVM"
+             x:Class="ZofimPortalApp.Views.EditHanhagaInfo"
+             FlowDirection="RightToLeft">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="חזור" Command="{Binding ToManageHanhagasCommand}" HorizontalOptions="Start" WidthRequest="100"/>
+            <Label Text="עריכת הנהגה" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Grid Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/><!--0-->
+                    <RowDefinition Height="20"/><!--1-->
+                    <RowDefinition Height="50"/><!--2-->
+                    <RowDefinition Height="20"/><!--3-->
+                    <RowDefinition Height="50"/><!--4-->
+                    <RowDefinition Height="20"/><!--5-->
+                    <RowDefinition Height="50"/><!--6-->
+                </Grid.RowDefinitions>
+                <Label Text="שם:" FontSize="Medium" HeightRequest="50" VerticalTextAlignment="Center" />
+                <Entry Text="{Binding Name}" Grid.Column="1" HeightRequest="50" />
+                <Label Text="{Binding NameErrorMessage}" FontSize="Small" IsVisible="{Binding NameError}" Grid.Column="1" Grid.Row="1" HeightRequest="20" />
+                <Label Text="אזור כללי:" FontSize="Medium" HeightRequest="50" Grid.Row="2" VerticalTextAlignment="Center" />
+                <Entry Text="{Binding GeneralArea}" Grid.Column="1" Grid.Row="2" HeightRequest="50" />
+                <Label Text="{Binding GeneralAreaErrorMessage}" FontSize="Small" IsVisible="{Binding GeneralAreaError}" Grid.Column="1" Grid.Row="3" HeightRequest="20" />
+                <Button Text="שמירת שינויים" Command="{Binding SaveChangesCommand}" Grid.Row="4" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Label Text="יש שגיאות בטופס" IsVisible="{Binding AreThereErrors}" Grid.Row="5" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Button Text="הוספת שבט להנהגה" Command="{Binding ToAddShevetCommand}" Grid.Row="6" Grid.ColumnSpan="2" HorizontalOptions="Center" WidthRequest="200"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

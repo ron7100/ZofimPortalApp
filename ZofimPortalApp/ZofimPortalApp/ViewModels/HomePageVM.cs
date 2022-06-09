@@ -13,6 +13,7 @@ namespace ZofimPortalApp.ViewModels
         public Command ToManageUsersCommand => new Command(ToManageUsers);
         public Command ToPersonalInfoCommand => new Command(ToPersonalInfo);
         public Command ToManageShevetsCommand => new Command(ToManageShevets);
+        public Command ToManageHanhagaCommand => new Command(ToManageHanhaga);
         public Command SignOutCommand => new Command(SignOut);
 
         private ZofimPortalAPIProxy proxy;
@@ -153,6 +154,12 @@ namespace ZofimPortalApp.ViewModels
         public async void ToManageShevets()
         {
             Page p = new Views.ManageShevet();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+
+        public async void ToManageHanhaga()
+        {
+            Page p = new Views.ManageHanhaga();
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }

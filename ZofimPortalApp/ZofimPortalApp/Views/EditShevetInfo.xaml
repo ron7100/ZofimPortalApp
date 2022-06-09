@@ -7,8 +7,8 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="חזור" Command="{Binding ToManageUsersCommand}" HorizontalOptions="Start" WidthRequest="100"/>
-            <Label Text="{Binding HeaderMessage}" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Button Text="חזור" Command="{Binding ToManageShevetsCommand}" HorizontalOptions="Start" WidthRequest="100"/>
+            <Label Text="עריכת שבט" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
             <Grid Padding="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
@@ -20,29 +20,20 @@
                     <RowDefinition Height="50"/><!--2-->
                     <RowDefinition Height="20"/><!--3-->
                     <RowDefinition Height="50"/><!--4-->
-                    <RowDefinition Height="20"/><!--5-->
-                    <RowDefinition Height="50"/><!--6-->
-                    <RowDefinition Height="20"/><!--7-->
-                    <RowDefinition Height="50"/><!--8-->
-                    <RowDefinition Height="20"/><!--9-->
-                    <RowDefinition Height="50"/><!--10-->
-                    <RowDefinition Height="20"/><!--11-->
-                    <RowDefinition Height="50"/><!--12-->
-                    <RowDefinition Height="50"/><!--13-->
-                    <RowDefinition Height="20"/><!--14-->
-                    <RowDefinition Height="50"/><!--15-->
+                    <RowDefinition Height="50"/><!--5-->
+                    <RowDefinition Height="20"/><!--6-->
+                    <RowDefinition Height="50"/><!--7-->
                 </Grid.RowDefinitions>
-                <Label Text="שם:" IsVisible="{Binding ShowEmail}" FontSize="Medium" HeightRequest="50" VerticalTextAlignment="Center" />
-                <Entry Text="{Binding Name}" IsVisible="{Binding ShowName}" Grid.Column="1" HeightRequest="50" />
-                <Label Text="{Binding NameErrorMessage}" FontSize="Small" IsVisible="{Binding EmailError}" Grid.Column="1" Grid.Row="1" HeightRequest="20" />
+                <Label Text="שם:" FontSize="Medium" HeightRequest="50" VerticalTextAlignment="Center" />
+                <Entry Text="{Binding Name}" Grid.Column="1" HeightRequest="50" />
+                <Label Text="{Binding NameErrorMessage}" FontSize="Small" IsVisible="{Binding NameError}" Grid.Column="1" Grid.Row="1" HeightRequest="20" />
                 <Label Text="מספר חניכים" FontSize="Medium" HeightRequest="50" Grid.Row="2" VerticalTextAlignment="Center" />
                 <Entry Text="{Binding MembersAmount}" Grid.Column="1" Grid.Row="2" HeightRequest="50" />
                 <Label Text="{Binding MembersAmountErrorMessage}" FontSize="Small" IsVisible="{Binding MembersAmountError}" Grid.Column="1" Grid.Row="3" HeightRequest="20" />
-                <Label Text="הנהגה:" IsVisible="{Binding ShowHanhaga}" FontSize="Medium" HeightRequest="50" Grid.Row="12" VerticalTextAlignment="Center" />
-                <Picker SelectedItem="{Binding PickerHanhaga}" SelectedIndex="{Binding PickerHanhagaId}" ItemDisplayBinding="{Binding Name}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" Grid.Row="12" HeightRequest="50" />
-                <Button Text="שמירת שינויים" Command="{Binding SaveChangesCommand}" Grid.Row="13" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
-                <Label Text="יש שגיאות בטופס" IsVisible="{Binding AreThereErrors}" Grid.Row="14" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
-                <Button Text="הוספת חניך" Command="{Binding ToAddCadetCommand}" IsVisible="{Binding ShowCadets}" Grid.Row="15" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Label Text="הנהגה:" IsVisible="{Binding ShowHanhaga}" FontSize="Medium" HeightRequest="50" Grid.Row="4" VerticalTextAlignment="Center" />
+                <Picker SelectedItem="{Binding PickerHanhaga}" SelectedIndex="{Binding PickerHanhagaId}" ItemDisplayBinding="{Binding Name}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" Grid.Row="4" HeightRequest="50" />
+                <Button Text="שמירת שינויים" Command="{Binding SaveChangesCommand}" Grid.Row="5" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Label Text="יש שגיאות בטופס" IsVisible="{Binding AreThereErrors}" Grid.Row="6" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

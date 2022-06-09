@@ -10,8 +10,11 @@ using ZofimPortalApp.Views;
 
 namespace ZofimPortalApp.ViewModels
 {
-    class EditShevetInfoVM
+    class EditShevetInfoVM : INotifyPropertyChanged
     {
+        public Command ToManageShevetsCommand => new Command(ToManageShevet);
+        public Command SaveChangesCommand => new Command(SaveChanges);
+
         private ZofimPortalAPIProxy proxy;
 
         public EditShevetInfoVM(ShevetToShow shevet)
@@ -21,12 +24,24 @@ namespace ZofimPortalApp.ViewModels
             SetProperties();
         }
 
-        public void SetProperties()
+        public async void SetProperties()
         {
+            int permissionLevel = await proxy.GetPermissionLevelAsync(HomePage.ConnectedUser.Id);
             Name = Shevet.Name;
             MembersAmount = Shevet.MembersAmount.ToString();
-            string hanhagaName = Shevet.Hanhaga;
-            //HanhagaPicker = 
+            if (permissionLevel == 1)//admin, can edit all info
+            {
+                ShowHanhaga = true;
+                List<Hanhaga> HanhagasHolder = await proxy.GetAllHanhagasAsync();
+                Hanhaga PickerHanhagaHolder = new Hanhaga();
+                foreach (Hanhaga h in HanhagasHolder)
+                {
+                    if (h.Name == Shevet.Hanhaga)
+                        PickerHanhagaHolder = h;
+                }
+                Hanhagas = HanhagasHolder;
+                PickerHanhaga = PickerHanhagaHolder;
+            }
         }
 
         #region INotifyPropertyChanged
@@ -47,6 +62,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 name = value;
+                CheckName();
                 OnPropertyChanged("Name");
             }
         }
@@ -65,7 +81,7 @@ namespace ZofimPortalApp.ViewModels
         private string nameErrorMessage;
         public string NameErrorMessage
         {
-            get => NameErrorMessage;
+            get => nameErrorMessage;
             set
             {
                 nameErrorMessage = value;
@@ -80,6 +96,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 membersAmount = value;
+                CheckMembersAmount();
                 OnPropertyChanged("MembersAmount");
             }
         }
@@ -152,8 +169,8 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        private List<string> hanhagas;
-        public List<string> Hanhagas
+        private List<Hanhaga> hanhagas;
+        public List<Hanhaga> Hanhagas
         {
             get => hanhagas;
             set
@@ -162,6 +179,81 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("Hanhagas");
             }
         }
+
+        private bool areThereErrors;
+        public bool AreThereErrors
+        {
+            get => areThereErrors;
+            set
+            {
+                areThereErrors = value;
+                OnPropertyChanged("AreThereErrors");
+            }
+        }
         #endregion
+
+        public async void SaveChanges()
+        {
+            CheckForErrors();
+            if (AreThereErrors)
+                return;
+            ShevetToShow shevetToSave = Shevet;
+            shevetToSave.Name = Name;
+            shevetToSave.MembersAmount = int.Parse(MembersAmount);
+            shevetToSave.Hanhaga = Hanhaga.Name;
+            await proxy.SaveShevetChangesAsync(shevetToSave);
+            ToManageShevet();
+        }
+
+        public void CheckName()
+        {
+            NameError = false;
+            if (Name == "")
+            {
+                NameError = true;
+                NameErrorMessage = "שדה חובה";
+                return;
+            }
+            int location = 0;
+            string nameHolder = Name;
+            foreach (char c in Name)
+            {
+                if (!char.IsLetter(c))
+                    nameHolder = nameHolder.Remove(location, 1);
+                location++;
+            }
+            Name = nameHolder;
+        }
+
+        public void CheckMembersAmount()
+        {
+            MembersAmountError = false;
+            if(MembersAmount == "")
+            {
+                MembersAmountError = true;
+                MembersAmountErrorMessage = "שדה חובה";
+                return;
+            }
+            int location = 0;
+            string membersAmountHolder = MembersAmount;
+            foreach (char c in membersAmountHolder)
+            {
+                if (char.IsLetter(c))
+                    membersAmountHolder = membersAmountHolder.Remove(location, 1);
+                location++;
+            }
+            membersAmount = membersAmountHolder;
+        }
+
+        public bool CheckForErrors()
+        {
+            return NameError || MembersAmountError;
+        }
+
+        private async void ToManageShevet()
+        {
+            Page p = new Views.ManageShevet();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
     }
 }
