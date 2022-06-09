@@ -6,8 +6,9 @@ namespace ZofimPortalApp.Models
     public class ActivitiesHistory
     {
         public int CadetId { get; set; }
-        public string Activity { get; set; }
+        public int ActivityId { get; set; }
 
+        public virtual Activity Activity { get; set; }
         public virtual Cadet Cadet { get; set; }
     }
 }
