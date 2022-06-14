@@ -20,12 +20,12 @@ namespace ZofimPortalApp.ViewModels
         public EditUsersInfoVM(object u)
         {
             proxy = ZofimPortalAPIProxy.CreateProxy();
-            RealConstructorBecauseYouCantPutAsyncInConstructor(u);
+            SetProperties(u);
         }
 
         public const int NO_SHEVET_ID = 1000;
         public const int NO_HANHAGA_ID = 1000;
-        public async void RealConstructorBecauseYouCantPutAsyncInConstructor(object u)
+        public async void SetProperties(object u)
         {
             List<Role> rolesList = await proxy.GetAllRolesAsync();
             List<Shevet> shevetsList = await proxy.GetAllShevetsAsync();
@@ -56,7 +56,7 @@ namespace ZofimPortalApp.ViewModels
                 PersonalID = dummy.PersonalID;
                 Role = rolesList.Where(r => r.RoleName == dummy.Role).FirstOrDefault();
                 ShowRole = true;
-                hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
+                Hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
                 ShowHanhaga = true;
                 Shevet = shevetsList.Where(s => s.Name == dummy.Shevet && s.HanhagaId == hanhaga.Id).FirstOrDefault();
                 ShowShevet = true;
@@ -70,7 +70,7 @@ namespace ZofimPortalApp.ViewModels
                 FirstName = dummy.FirstName;
                 LastName = dummy.LastName;
                 PersonalID = dummy.PersonalID;
-                hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
+                Hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
                 ShowHanhaga = true;
                 Shevet = shevetsList.Where(s => s.Name == dummy.Shevet && s.HanhagaId == hanhaga.Id).FirstOrDefault();
                 ShowShevet = true;
@@ -87,7 +87,7 @@ namespace ZofimPortalApp.ViewModels
                 ShowRole = true;
                 Shevet = shevetsList.Where(s => s.Name == dummy.Shevet).FirstOrDefault();
                 ShowShevet = true;
-                hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
+                Hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
                 ShowHanhaga = true;
             }
             EmailError = false;

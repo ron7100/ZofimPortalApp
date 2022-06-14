@@ -14,6 +14,7 @@ namespace ZofimPortalApp.ViewModels
 {
     class EditActivitiesVM : INotifyPropertyChanged
     {
+
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
@@ -21,5 +22,11 @@ namespace ZofimPortalApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        private ZofimPortalAPIProxy proxy;
+        public EditActivitiesVM(ActivityToShow a)
+        {
+            proxy = ZofimPortalAPIProxy.CreateProxy();
+        }
     }
 }

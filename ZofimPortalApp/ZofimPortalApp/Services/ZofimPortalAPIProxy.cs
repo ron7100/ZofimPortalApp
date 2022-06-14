@@ -323,6 +323,26 @@ namespace ZofimPortalApp.Services
                 Console.WriteLine(e.Message);
             }
         }
+
+        public async Task SaveActivityChangesAsync(ActivityToShow activity)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<ActivityToShow>(activity, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/SaveActivityChanges", content);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
         #endregion
 
         #region get ID
@@ -679,6 +699,90 @@ namespace ZofimPortalApp.Services
                     string content = await response.Content.ReadAsStringAsync();
                     List<Hanhaga> hanhagas = JsonSerializer.Deserialize<List<Hanhaga>>(content, options);
                     return hanhagas;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<List<ActivityToShow>> GetAllActivitiesAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllActivities");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<ActivityToShow> activities = JsonSerializer.Deserialize<List<ActivityToShow>>(content, options);
+                    return activities;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<List<ActivityToShow>> GetActivitiesForHanhagaAsync(string hanhaga)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActivitiesForHanhaga?hanhaga={hanhaga}");
+                if(response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<ActivityToShow> activities = JsonSerializer.Deserialize<List<ActivityToShow>>(content, options);
+                    return activities;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<List<ActivityToShow>> GetActivitiesForShevetAsync(string shevet, string hanhaga)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActivitiesForShevet?shevet={shevet}&hanhaga={hanhaga}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<ActivityToShow> activities = JsonSerializer.Deserialize<List<ActivityToShow>>(content, options);
+                    return activities;
                 }
                 else
                 {

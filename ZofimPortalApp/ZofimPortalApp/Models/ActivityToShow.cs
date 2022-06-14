@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace ZofimPortalApp.Models
 {
-    public partial class Activity
+    public class ActivityToShow
     {
-        public Activity()
-        {
-            ActivitiesHistories = new HashSet<ActivitiesHistory>();
-        }
-
         public string Name { get; set; }
-        //מיסי חבר - הרשמה לשבט
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int RelevantClass { get; set; }
@@ -25,17 +20,12 @@ namespace ZofimPortalApp.Models
         public int CadetsAmount { get; set; }
         public int Price { get; set; }
         public int? DiscountPercent { get; set; }
-        public int IsOpen { get; set; }
-        //1 - yes
-        //0 - no
-        public int ShevetId { get; set; }
-        public int HanhagaId { get; set; }
-        public int Id { get; set; }
-
-        public virtual Hanhaga Hanhaga { get; set; }
-
-        public virtual Shevet Shevet { get; set; }
-
-        public virtual ICollection<ActivitiesHistory> ActivitiesHistories { get; set; }
+        public string IsOpen { get; set; }
+        //Green - yes
+        //Red - no
+        public int ShevetID { get; set; }
+        public string Shevet { get; set; }
+        public string Hanhaga { get; set; }
+        public int ID { get; set; }
     }
 }

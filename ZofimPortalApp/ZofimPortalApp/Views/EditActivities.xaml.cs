@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ZofimPortalApp.Models;
 using ZofimPortalApp.ViewModels;
 
 namespace ZofimPortalApp.Views
@@ -13,9 +14,9 @@ namespace ZofimPortalApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EditActivities : ContentPage
     {
-        public EditActivities()
+        public EditActivities(ActivityToShow a)
         {
-            EditActivitiesVM vm = new EditActivitiesVM();
+            EditActivitiesVM vm = new EditActivitiesVM(a);
             this.BindingContext = vm;
             InitializeComponent();
         }
