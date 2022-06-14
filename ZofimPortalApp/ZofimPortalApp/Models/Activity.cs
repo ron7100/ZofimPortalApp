@@ -21,6 +21,7 @@ namespace ZofimPortalApp.Models
         2 - 6th, 7th, 8th grade
         3 - 10th, 11th, 12th grade
         4-12 - grade according to number
+        13 - פעילים
         */
         public int CadetsAmount { get; set; }
         public int Price { get; set; }

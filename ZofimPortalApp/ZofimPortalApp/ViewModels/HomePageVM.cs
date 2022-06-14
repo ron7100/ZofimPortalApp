@@ -14,6 +14,7 @@ namespace ZofimPortalApp.ViewModels
         public Command ToPersonalInfoCommand => new Command(ToPersonalInfo);
         public Command ToManageShevetsCommand => new Command(ToManageShevets);
         public Command ToManageHanhagaCommand => new Command(ToManageHanhaga);
+        public Command ToManageActivitiesCommand => new Command(ToManageActivites);
         public Command SignOutCommand => new Command(SignOut);
 
         private ZofimPortalAPIProxy proxy;
@@ -81,6 +82,17 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("CanSeeShevets");
             }
         }
+
+        private bool canGoToActivities;
+        public bool CanGoToActivities
+        {
+            get => canGoToActivities;
+            set
+            {
+                canGoToActivities = value;
+                OnPropertyChanged("CanGoToActivities");
+            }
+        }
         #endregion
 
         public HomePageVM(User u)
@@ -106,18 +118,24 @@ namespace ZofimPortalApp.ViewModels
             NotConnected = false;
             IsAdmin = true;
             CanSeeShevets = true;
+            CanGoToActivities = true;
             //1 -> admin, can see all
             //2 -> can see only from his hanhaga
             //3 -> can see only parents and cadets from his shevet
             int permissionLevel = await proxy.GetPermissionLevelAsync(HomePage.ConnectedUser.Id);
-            if (permissionLevel == 0)
+            switch (permissionLevel)
             {
-                CanSeeShevets = false;
-                IsAdmin = false;
-            }
-            else if (permissionLevel == 3)
-                CanSeeShevets = false;
-            
+                case 0: CanSeeShevets = false;
+                    IsAdmin = false;
+                    CanGoToActivities = false;
+                    break;
+                case 1: break;
+                case 2: IsAdmin = false;
+                    break;
+                case 3: CanSeeShevets = false;
+                    IsAdmin = false;
+                    break;
+            }            
         }
 
         public async void SignOut()
@@ -160,6 +178,12 @@ namespace ZofimPortalApp.ViewModels
         public async void ToManageHanhaga()
         {
             Page p = new Views.ManageHanhaga();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+
+        public async void ToManageActivites()
+        {
+            Page p = new Views.ManageActivities();
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }

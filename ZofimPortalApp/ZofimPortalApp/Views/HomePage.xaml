@@ -31,6 +31,7 @@
                 <Button Command="{Binding ToPersonalInfoCommand}" IsVisible="{Binding IsConnected}" Text="לפרטים אישיים" Grid.Row="3" Grid.Column="2" WidthRequest="250" />
                 <Button Command="{Binding ToManageShevetsCommand}" IsVisible="{Binding CanSeeShevets}" Text="לניהול שבטים" Grid.Row="4" Grid.Column="2" WidthRequest="250" />
                 <Button Command="{Binding ToManageHanhagaCommand}" IsVisible="{Binding IsAdmin}" Text="לניהול הנהגות" Grid.Row="5" Grid.Column="2" WidthRequest="250" />
+                <Button Command="{Binding ToManageActivitiesCommand}" IsVisible="{Binding CanGoToActivities}" Text="לניהול מפעלים" Grid.Row="6" Grid.Column="2" WidthRequest="250" />
             </Grid>
         </StackLayout>
     </ContentPage.Content>

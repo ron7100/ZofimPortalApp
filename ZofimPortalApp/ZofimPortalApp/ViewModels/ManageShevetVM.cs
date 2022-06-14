@@ -41,7 +41,6 @@ namespace ZofimPortalApp.ViewModels
             int permissionLevel = await proxy.GetPermissionLevelAsync(HomePage.ConnectedUser.Id);
             //1 -> admin, can see all
             //2 -> can see only from his hanhaga
-            //3 -> can see only parents and cadets from his shevet
             CanSeeAllShevets = permissionLevel == 1;//only an admin can see all shevets
             if (canSeeAllShevets)
             {
