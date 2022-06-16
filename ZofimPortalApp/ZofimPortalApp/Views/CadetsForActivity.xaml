@@ -1,12 +1,115 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ZofimPortalApp.Views.CadetsForActivity">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:ZofimPortalApp.ViewModels" xmlns:models="clr-namespace:ZofimPortalApp.Models" x:DataType="viewmodels:CadetsForActivityVM"
+             x:Class="ZofimPortalApp.Views.CadetsForActivity"
+             FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Button Text="חזור" Command="{Binding BackCommand}" HorizontalOptions="Start" WidthRequest="100"/>
+            <Label Text="{Binding HeaderMessage}" FontSize="Header"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Grid Padding="10" IsVisible="{Binding ShowActivities}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Button Text="חיפוש" Command="{Binding EnableSearchCommand}" FontSize="Medium" IsVisible="{Binding SearchDisabled}" />
+                <Button Text="סגור חיפוש" Command="{Binding DisableSearchCommand}" FontSize="Medium" IsVisible="{Binding SearchEnabled}" />
+                <Label Text="חפש לפי: " FontSize="Medium" Grid.Row="1" VerticalOptions="CenterAndExpand" IsVisible="{Binding SearchEnabled}" />
+                <Picker SelectedItem="{Binding SearchField}" IsVisible="{Binding SearchEnabled}" SelectedIndex="{Binding SearchFieldIndexActivities}" FontSize="Medium" HeightRequest="50" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding AvailableOptionsSearchFieldActivities}"/>
+                <Entry Placeholder="{Binding SearchFieldPlaceHolderActivities}" Text="{Binding SearchValueActivities}" IsVisible="{Binding SearchEnabled}" Grid.Row="1" Grid.Column="2"/>
+            </Grid>
+            <Grid Padding="10" IsVisible="{Binding ShowCadets}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Button Text="חיפוש" Command="{Binding EnableSearchCommand}" FontSize="Medium" IsVisible="{Binding SearchDisabled}" />
+                <Button Text="סגור חיפוש" Command="{Binding DisableSearchCommand}" FontSize="Medium" IsVisible="{Binding SearchEnabled}" />
+                <Label Text="חפש לפי: " FontSize="Medium" Grid.Row="1" VerticalOptions="CenterAndExpand" IsVisible="{Binding SearchEnabled}" />
+                <Picker SelectedItem="{Binding SearchField}" IsVisible="{Binding SearchEnabled}" SelectedIndex="{Binding SearchFieldIndexCadets}" FontSize="Medium" HeightRequest="50" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding AvailableOptionsSearchFieldCadets}"/>
+                <Entry Placeholder="{Binding SearchFieldPlaceHolderCadets}" Text="{Binding SearchValueCadets}" IsVisible="{Binding SearchEnabled}" Grid.Row="1" Grid.Column="2"/>
+            </Grid>
+            <Grid Padding="5" BackgroundColor="DodgerBlue" IsVisible="{Binding ShowActivities}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Label Text="שם" FontSize="Medium" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="תאריך התחלה" FontSize="Medium" FontAttributes="Bold" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                <Label Text="תאריך סיום" FontSize="Medium" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                <Label Text="שכבת גיל" FontSize="Medium" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="מספר רשומים" FontSize="Medium" FontAttributes="Bold" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="מחיר" FontSize="Medium" FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="אחוז הנחה" FontSize="Medium" FontAttributes="Bold" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="שבט" FontSize="Medium" FontAttributes="Bold" Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="הנהגה" FontSize="Medium" FontAttributes="Bold" Grid.Column="8" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="פתוח" FontSize="Medium" FontAttributes="Bold" Grid.Column="9" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+            </Grid>
+            <ListView FlowDirection="RightToLeft" ItemsSource="{Binding ActivitiesForCadet}" IsVisible="{Binding ShowActivities}" BackgroundColor="DodgerBlue" >
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ActivityToShow">
+                        <ViewCell>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding Name}" FontSize="20" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding StartDate}" FontSize="20" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding EndDate}" FontSize="20" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding RelevantClass}" FontSize="20" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding CadetsAmount}" FontSize="20" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding Price}" FontSize="20" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding DiscountPercent}" FontSize="20" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                                <Label Text="{Binding Shevet}" FontSize="20" Grid.Column="7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding Hanhaga}" FontSize="20" Grid.Column="8" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text=" " FontSize="20" Grid.Column="9" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                                <Button Grid.Column="9" HeightRequest="50" WidthRequest="120" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="{Binding IsOpen}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Padding="5" BackgroundColor="DodgerBlue" IsVisible="{Binding ShowCadets}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Label Text="שם פרטי" FontSize="Large" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                <Label Text="שם משפחה" FontSize="Large" FontAttributes="Bold" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                <Label Text="תעודת זהות" FontSize="Large" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="כיתה" FontSize="Large" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="שבט" FontSize="Large" FontAttributes="Bold" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="הנהגה" FontSize="Large" FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                <Label Text="תפקיד" FontSize="Large" FontAttributes="Bold" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+            </Grid>
+            <ListView FlowDirection="RightToLeft" ItemsSource="{Binding CadetsForActivity}" IsVisible="{Binding ShowCadets}" SelectionMode="Single" BackgroundColor="DodgerBlue">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:CadetToShow">
+                        <ViewCell>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding FirstName}" FontSize="20" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding LastName}" FontSize="20" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding PersonalID}" FontSize="20" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding Class}" FontSize="20" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding Shevet}" FontSize="20" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding Hanhaga}" FontSize="20" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                <Label Text="{Binding Role}" FontSize="20" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

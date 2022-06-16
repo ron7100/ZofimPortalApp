@@ -13,6 +13,7 @@ namespace ZofimPortalApp.Models
 
         public string FName { get; set; }
         public string LName { get; set; }
+        public string Class { get; set; }
         public string PersonalId { get; set; }
         public int ShevetId { get; set; }
         public int RoleId { get; set; }

@@ -208,6 +208,12 @@ namespace ZofimPortalApp.ViewModels
         public void CheckName()
         {
             NameError = false;
+            if (Name == "")
+            {
+                NameError = true;
+                NameErrorMessage = "זהו שדה חובה";
+                return;
+            }
             int location = 0;
             string nameHolder = Name;
             foreach (char c in Name)
@@ -228,6 +234,12 @@ namespace ZofimPortalApp.ViewModels
         public void CheckMembersAmount()
         {
             MembersAmountError = false;
+            if (MembersAmount == "")
+            {
+                MembersAmountError = true;
+                MembersAmountErrorMessage = "זהו שדה חובה";
+                return;
+            }
             int location = 0;
             string membersAmountHolder = MembersAmount;
             foreach (char c in membersAmountHolder)

@@ -20,25 +20,29 @@
                     <RowDefinition Height="50"/><!--4-->
                     <RowDefinition Height="20"/><!--5-->
                     <RowDefinition Height="50"/><!--6-->
-                    <RowDefinition Height="20"/><!--7-->
-                    <RowDefinition Height="50"/><!--8-->
-                    <RowDefinition Height="20"/><!--9-->
+                    <RowDefinition Height="50"/><!--7-->
+                    <RowDefinition Height="20"/><!--8-->
+                    <RowDefinition Height="50"/><!--9-->
+                    <RowDefinition Height="20"/><!--10-->
+                    <RowDefinition Height="20"/><!--11-->
                 </Grid.RowDefinitions>
-                <Entry Placeholder="שם פרטי..." Text="{Binding FName}" Grid.Row="0" Grid.Column="1"/>
                 <Label Text="שם פרטי:" Grid.Row="0" Grid.Column="0"/>
+                <Entry Placeholder="שם פרטי..." Text="{Binding FName}" Grid.Row="0" Grid.Column="1"/>
                 <Label Text="{Binding FNameError}" IsVisible="{Binding IsFNameError}" Grid.Row="1" Grid.Column="1"/>
-                <Entry Placeholder="שם משפחה..." Text="{Binding LName}" Grid.Row="2" Grid.Column="1"/>
                 <Label Text="שם משפחה:" Grid.Row="2" Grid.Column="0"/>
+                <Entry Placeholder="שם משפחה..." Text="{Binding LName}" Grid.Row="2" Grid.Column="1"/>
                 <Label Text="{Binding LNameError}" IsVisible="{Binding IsLNameError}" Grid.Row="3" Grid.Column="1"/>
-                <Entry Placeholder="תעודת זהות..." Text="{Binding PersonalID}" Grid.Row="4" Grid.Column="1"/>
                 <Label Text="תעודת זהות:" Grid.Row="4" Grid.Column="0"/>
+                <Entry Placeholder="תעודת זהות..." Text="{Binding PersonalID}" Grid.Row="4" Grid.Column="1"/>
                 <Label Text="{Binding PersonalIDError}" IsVisible="{Binding IsPersonalIDError}" Grid.Row="5" Grid.Column="1"/>
-                <Label Text="תפקיד:" FontSize="Medium" HeightRequest="50" Grid.Row="6" VerticalTextAlignment="Center" />
-                <Picker SelectedItem="{Binding PickerRole}" SelectedIndex="{Binding PickerRoleId}" ItemDisplayBinding="{Binding RoleName}" ItemsSource="{Binding Roles}" Grid.Column="1" Grid.Row="6" HeightRequest="50" />
-                <Label Text="זהו שדה חובה" IsVisible="{Binding IsRoleError}" Grid.Row="7" Grid.Column="1"/>
-                <Button Text="הוספת חניך" Command="{Binding AddCadetCommand}" Grid.Row="8" Grid.ColumnSpan="2" HorizontalOptions="Center" WidthRequest="100"/>
-                <Label Text="יש בעיות בטופס" IsVisible="{Binding IsThereError}" Grid.Row="9" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
-                <Label Text="הוספת חניך נכשלה, נסה שוב" IsVisible="{Binding AddCadetFailed}" Grid.Row="10" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Label Text="כיתה:" Grid.Row="6" Grid.Column="0"/>
+                <Picker SelectedItem="{Binding Class}" ItemsSource="{Binding Classes}" Grid.Row="6" Grid.Column="1" HeightRequest="50"/>
+                <Label Text="תפקיד:" FontSize="Medium" HeightRequest="50" Grid.Row="7" VerticalTextAlignment="Center" />
+                <Picker SelectedItem="{Binding PickerRole}" SelectedIndex="{Binding PickerRoleId}" ItemDisplayBinding="{Binding RoleName}" ItemsSource="{Binding Roles}" Grid.Row="7" Grid.Column="1" HeightRequest="50" />
+                <Label Text="זהו שדה חובה" IsVisible="{Binding IsRoleError}" Grid.Row="8" Grid.Column="1"/>
+                <Button Text="הוספת חניך" Command="{Binding AddCadetCommand}" Grid.Row="9" Grid.ColumnSpan="2" HorizontalOptions="Center" WidthRequest="100"/>
+                <Label Text="יש בעיות בטופס" IsVisible="{Binding IsThereError}" Grid.Row="10" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Label Text="הוספת חניך נכשלה, נסה שוב" IsVisible="{Binding AddCadetFailed}" Grid.Row="11" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

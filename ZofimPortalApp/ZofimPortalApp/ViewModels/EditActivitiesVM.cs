@@ -679,6 +679,12 @@ namespace ZofimPortalApp.ViewModels
         private void CheckPrice()
         {
             priceError = false;
+            if (Price == null || Price == "")
+            {
+                PriceError = true;
+                PriceErrorMessage = "זהו שדה חובה";
+                return;
+            }
             int location = 0;
             string priceHolder = Price;
             foreach (char c in priceHolder)
@@ -699,6 +705,12 @@ namespace ZofimPortalApp.ViewModels
         private void CheckDiscountPercent()
         {
             discountPercentError = false;
+            if (DiscountPercent == null || DiscountPercent == "")
+            {
+                DiscountPercentError = true;
+                DiscountPercentErrorMessage = "זהו שדה חובה";
+                return;
+            }
             int location = 0;
             string discountPercentHolder = DiscountPercent;
             foreach (char c in discountPercentHolder)

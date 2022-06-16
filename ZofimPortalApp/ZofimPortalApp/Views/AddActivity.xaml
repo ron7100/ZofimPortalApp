@@ -1,12 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ZofimPortalApp.Views.AddActivity">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:ZofimPortalApp.ViewModels" x:DataType="viewmodels:AddActivityVM"
+             x:Class="ZofimPortalApp.Views.AddActivity"
+             FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Button Text="חזור" Command="{Binding ToManageActivitiesCommand}" HorizontalOptions="Start" WidthRequest="100"/>
+            <Label Text="{Binding HeaderMessage}" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Grid Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/><!--0-->
+                    <RowDefinition Height="20"/><!--1-->
+                    <RowDefinition Height="50"/><!--2-->
+                    <RowDefinition Height="20"/><!--3-->
+                    <RowDefinition Height="50"/><!--4-->
+                    <RowDefinition Height="20"/><!--5-->
+                    <RowDefinition Height="50"/><!--6-->
+                    <RowDefinition Height="20"/><!--7-->
+                    <RowDefinition Height="50"/><!--8-->
+                    <RowDefinition Height="20"/><!--9-->
+                    <RowDefinition Height="50"/><!--10-->
+                    <RowDefinition Height="20"/><!--11-->
+                    <RowDefinition Height="50"/><!--12-->
+                    <RowDefinition Height="20"/><!--13-->
+                    <RowDefinition Height="50"/><!--14-->
+                    <RowDefinition Height="20"/><!--15-->
+                    <RowDefinition Height="50"/><!--16-->
+                    <RowDefinition Height="20"/><!--17-->
+                    <RowDefinition Height="50"/><!--18-->
+                    <RowDefinition Height="20"/><!--19-->
+                </Grid.RowDefinitions>
+                <Label Text="שם:" FontSize="Medium" HeightRequest="50" VerticalTextAlignment="Center" />
+                <Entry Text="{Binding Name}" Grid.Column="1" HeightRequest="50" />
+                <Label Text="{Binding NameErrorMessage}" FontSize="Small" IsVisible="{Binding NameError}" Grid.Column="1" Grid.Row="1" HeightRequest="20" />
+                <Label Text="תאריך התחלה:" FontSize="Medium" HeightRequest="50" Grid.Row="2" VerticalTextAlignment="Center" />
+                <DatePicker Date="{Binding StartDate}" FontSize="Medium" Grid.Column="1" Grid.Row="2" HeightRequest="50" />
+                <Label Text="{Binding StartDateErrorMessage}" FontSize="Small" IsVisible="{Binding StartDateError}" Grid.Column="1" Grid.Row="3" HeightRequest="20" />
+                <Label Text="תאריך סיום:" FontSize="Medium" HeightRequest="50" Grid.Row="4" VerticalTextAlignment="Center" />
+                <DatePicker Date="{Binding EndDate}" FontSize="Medium" Grid.Column="1" Grid.Row="4" HeightRequest="50" />
+                <Label Text="{Binding EndDateErrorMessage}" FontSize="Small" IsVisible="{Binding EndDateError}" Grid.Column="1" Grid.Row="5" HeightRequest="20" />
+                <Label Text="שכבת גיל:" FontSize="Medium" HeightRequest="50" Grid.Row="6" VerticalTextAlignment="Center" />
+                <Picker SelectedItem="{Binding RelevantClass}" ItemsSource="{Binding RelevantClassOptions}" Grid.Column="1" Grid.Row="6" HeightRequest="50" />
+                <Label Text="{Binding RelevantClassErrorMessage}" FontSize="Small" IsVisible="{Binding RelevantClassError}" Grid.Column="1" Grid.Row="7" HeightRequest="20" />
+                <Label Text="מחיר:" FontSize="Medium" HeightRequest="50" Grid.Row="8" VerticalTextAlignment="Center" />
+                <Entry Text="{Binding Price}" Grid.Column="1" Grid.Row="8" HeightRequest="50" />
+                <Label Text="{Binding PriceErrorMessage}" FontSize="Small" IsVisible="{Binding PriceError}" Grid.Column="1" Grid.Row="9" HeightRequest="20" />
+                <Label Text="הנחת אחים (באחוזים):" FontSize="Medium" HeightRequest="50" Grid.Row="10" VerticalTextAlignment="Center" />
+                <Entry Text="{Binding DiscountPercent}" Grid.Column="1" Grid.Row="10" HeightRequest="50" />
+                <Label Text="{Binding DiscountPercentErrorMessage}" FontSize="Small" IsVisible="{Binding DiscountPercentError}" Grid.Column="1" Grid.Row="11" HeightRequest="20" />
+                <Label Text="האם פתוח?:" FontSize="Medium" HeightRequest="50" Grid.Row="12" VerticalTextAlignment="Center" />
+                <Picker SelectedItem="{Binding IsOpenString}" ItemsSource="{Binding IsOpenPicker}" Grid.Column="1" Grid.Row="12" HeightRequest="50" />
+                <Label Text="{Binding IsOpenErrorMessage}" FontSize="Small" IsVisible="{Binding IsOpenError}" Grid.Column="1" Grid.Row="13" HeightRequest="20" />
+                <Label Text="שבט:" IsVisible="{Binding ShowShevet}" FontSize="Medium" HeightRequest="50" Grid.Row="14" VerticalTextAlignment="Center" />
+                <Picker SelectedItem="{Binding PickerShevet}" SelectedIndex="{Binding PickerShevetId}" ItemDisplayBinding="{Binding Name}" IsVisible="{Binding ShowShevet}" ItemsSource="{Binding Shevets}" Grid.Column="1" Grid.Row="14" HeightRequest="50" />
+                <Label Text="{Binding ShevetErrorMessage}" FontSize="Small" IsVisible="{Binding ShevetError}" Grid.Column="1" Grid.Row="15" HeightRequest="20" />
+                <Label Text="הנהגה:" IsVisible="{Binding ShowHanhaga}" FontSize="Medium" HeightRequest="50" Grid.Row="16" VerticalTextAlignment="Center" />
+                <Picker SelectedItem="{Binding PickerHanhaga}" SelectedIndex="{Binding PickerHanhagaId}" ItemDisplayBinding="{Binding Name}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" Grid.Row="16" HeightRequest="50" />
+                <Label Text="{Binding HanhagaErrorMessage}" FontSize="Small" IsVisible="{Binding HanhagaError}" Grid.Column="1" Grid.Row="17" HeightRequest="20" />
+                <Button Text="הוספת מפעל" Command="{Binding AddActivityCommand}" Grid.Row="18" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Label Text="יש שגיאות בטופס" IsVisible="{Binding AreThereErrors}" Grid.Row="19" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

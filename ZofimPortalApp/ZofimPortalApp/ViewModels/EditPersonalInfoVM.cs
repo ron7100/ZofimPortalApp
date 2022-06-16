@@ -232,6 +232,12 @@ namespace ZofimPortalApp.ViewModels
         private void CheckFirstName()
         {
             FirstNameError = false;
+            if (FirstName == "")
+            {
+                FirstNameError = true;
+                FirstNameErrorMessage = "זהו שדה חובה";
+                return;
+            }
             int location = 0;
             string firstNameHolder = FirstName;
             foreach (char c in FirstName)
@@ -252,6 +258,12 @@ namespace ZofimPortalApp.ViewModels
         private void CheckLastName()
         {
             LastNameError = false;
+            if (LastName == "")
+            {
+                LastNameError = true;
+                LastNameErrorMessage = "זהו שדה חובה";
+                return;
+            }
             int location = 0;
             string lastNameHolder = LastName;
             foreach (char c in LastName)

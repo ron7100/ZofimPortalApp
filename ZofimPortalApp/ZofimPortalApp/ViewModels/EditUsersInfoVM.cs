@@ -14,6 +14,7 @@ namespace ZofimPortalApp.ViewModels
         public Command BackToManageUsersCommand => new Command(BackToManageUsers);
         public Command ToManageUsersCommand => new Command(ToManageUsers);
         public Command ToAddCadetCommand => new Command(ToAddCadet);
+        public Command ToCadetsForActivityCommand => new Command(ToCadetsForActivity);
         public Command SaveChangesCommand => new Command(SaveChanges);
 
         private ZofimPortalAPIProxy proxy;
@@ -31,10 +32,12 @@ namespace ZofimPortalApp.ViewModels
             List<Shevet> shevetsList = await proxy.GetAllShevetsAsync();
             List<Hanhaga> hanhagasList = await proxy.GetAllHanhagasAsync();
             EditedUser = u;
+            ShowClass = false;
             ShowEmail = false;
             ShowRole = false;
             ShowShevet = false;
             ShowHanhaga = false;
+            ShowCadetsForActivity = false;
             if (u is User)
             {
                 User dummy = (User)u;
@@ -81,14 +84,17 @@ namespace ZofimPortalApp.ViewModels
                 CadetToShow dummy = (CadetToShow)u;
                 HeaderMessage = "עריכת חניך";
                 FirstName = dummy.FirstName;
-                LastName = dummy.LastName;
+                LastName = dummy.LastName;                
                 PersonalID = dummy.PersonalID;
+                Class = dummy.Class;
+                ShowClass = true;
                 Role = rolesList.Where(r => r.RoleName == dummy.Role).FirstOrDefault();
                 ShowRole = true;
                 Shevet = shevetsList.Where(s => s.Name == dummy.Shevet).FirstOrDefault();
                 ShowShevet = true;
                 Hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
                 ShowHanhaga = true;
+                ShowCadetsForActivity = true;
             }
             EmailError = false;
             FirstNameError = false;
@@ -163,6 +169,28 @@ namespace ZofimPortalApp.ViewModels
                 personalID = value;
                 CheckID();
                 OnPropertyChanged("PersonalID");
+            }
+        }
+
+        private bool showClass;
+        public bool ShowClass
+        {
+            get => showClass;
+            set
+            {
+                showClass = value;
+                OnPropertyChanged("ShowClass");
+            }
+        }
+
+        private string @class;
+        public string Class
+        {
+            get => @class;
+            set
+            {
+                @class = value;
+                OnPropertyChanged("Class");
             }
         }
 
@@ -319,6 +347,17 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("ShowCadets");
             }
         }
+
+        private bool showCadetsforActivity;
+        public bool ShowCadetsForActivity
+        {
+            get => showCadetsforActivity;
+            set
+            {
+                showCadetsforActivity = value;
+                OnPropertyChanged("ShowCadetsForActivity");
+            }
+        }
         #endregion
 
             #region שגיאות
@@ -447,6 +486,17 @@ namespace ZofimPortalApp.ViewModels
         #endregion
 
             #region רשימות פיקרים
+        private List<string> classes;
+        public List<string> Classes
+        {
+            get => classes;
+            set
+            {
+                classes = value;
+                OnPropertyChanged("Classes");
+            }
+        }
+
         private List<Role> roles;
         public List<Role> Roles
         {
@@ -506,6 +556,24 @@ namespace ZofimPortalApp.ViewModels
 
         private async Task SetListsForPickers()
         {
+            #region classes
+            List<string> classesEzer = new List<string>();
+            classesEzer.Add("ד");
+            classesEzer.Add("ה");
+            classesEzer.Add("ו");
+            classesEzer.Add("ז");
+            classesEzer.Add("ח");
+            classesEzer.Add("ט");
+            classesEzer.Add("י");
+            classesEzer.Add("יא");
+            classesEzer.Add("יב");
+            string classHolder = "";
+            if (Class != null)
+                classHolder = Class;
+            Classes = classesEzer;
+            if (classHolder != "")
+                Class = classHolder;
+            #endregion
             List<Role> availableRoles = await proxy.GetAllRolesAsync();
             Roles = availableRoles;
             PickerRole = Role;
@@ -567,10 +635,12 @@ namespace ZofimPortalApp.ViewModels
             {
                 if (Shevet == null)
                 {
-                    Shevet noShevet = new Shevet();
-                    noShevet.Name = "אין";
-                    noShevet.Id = NO_SHEVET_ID;
-                    noShevet.HanhagaId = Hanhaga.Id;
+                    Shevet noShevet = new Shevet
+                    {
+                        Name = "אין",
+                        Id = NO_SHEVET_ID,
+                        HanhagaId = Hanhaga.Id
+                    };
                     shevetsList.Add(noShevet);
                     shevetHolder = noShevet;
                     foreach (Shevet s in shevetsList)
@@ -679,6 +749,12 @@ namespace ZofimPortalApp.ViewModels
         private void CheckFirstName()
         {
             FirstNameError = false;
+            if (FirstName == "")
+            {
+                FirstNameError = true;
+                FirstNameErrorMessage = "זהו שדה חובה";
+                return;
+            }
             int location = 0;
             string firstNameHolder = FirstName;
             foreach (char c in FirstName)
@@ -699,6 +775,12 @@ namespace ZofimPortalApp.ViewModels
         private void CheckLastName()
         {
             LastNameError = false;
+            if (LastName == "")
+            {
+                LastNameError = true;
+                LastNameErrorMessage = "זהו שדה חובה";
+                return;
+            }
             int location = 0;
             string lastNameHolder = LastName;
             foreach (char c in LastName)
@@ -796,6 +878,7 @@ namespace ZofimPortalApp.ViewModels
                 CadetToShow c = (CadetToShow)EditedUser;
                 c.FirstName = FirstName;
                 c.LastName = LastName;
+                c.Class = Class;
                 c.PersonalID = PersonalID;
                 c.Role = Role.RoleName;
                 c.Shevet = Shevet.Name;
@@ -824,6 +907,12 @@ namespace ZofimPortalApp.ViewModels
         private async void ToAddCadet()
         {
             Page p = new Views.AddCadet((ParentToShow)EditedUser);
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+
+        private async void ToCadetsForActivity()
+        {
+            Page p = new Views.CadetsForActivity((CadetToShow)EditedUser);
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }

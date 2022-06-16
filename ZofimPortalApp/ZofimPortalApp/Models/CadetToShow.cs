@@ -9,6 +9,7 @@ namespace ZofimPortalApp.Models
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Class{ get; set;}
         public string PersonalID { get; set; }
         public string Shevet { get; set; }
         public string Hanhaga { get; set; }

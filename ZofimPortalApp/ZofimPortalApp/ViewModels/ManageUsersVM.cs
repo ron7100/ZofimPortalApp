@@ -623,6 +623,7 @@ namespace ZofimPortalApp.ViewModels
                 availableFields.Add("שם פרטי");
                 availableFields.Add("שם משפחה");
                 availableFields.Add("תעודת זהות");
+                availableFields.Add("כיתה");
                 availableFields.Add("שבט");
                 availableFields.Add("הנהגה");
                 availableFields.Add("תפקיד");
@@ -1058,9 +1059,9 @@ namespace ZofimPortalApp.ViewModels
                             break;
                         case 3:
                             dummy = new ObservableCollection<CadetToShow>();
-                            foreach (CadetToShow c in CadetsList)
+                            foreach(CadetToShow c in CadetsList)
                             {
-                                if (c.Shevet == FirstFieldValue)
+                                if (c.PersonalID == FirstFieldValue)
                                     dummy.Add(c);
                             }
                             CadetsListToShow = dummy;
@@ -1069,12 +1070,21 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<CadetToShow>();
                             foreach (CadetToShow c in CadetsList)
                             {
-                                if (c.Hanhaga == FirstFieldValue)
+                                if (c.Shevet == FirstFieldValue)
                                     dummy.Add(c);
                             }
                             CadetsListToShow = dummy;
                             break;
                         case 5:
+                            dummy = new ObservableCollection<CadetToShow>();
+                            foreach (CadetToShow c in CadetsList)
+                            {
+                                if (c.Hanhaga == FirstFieldValue)
+                                    dummy.Add(c);
+                            }
+                            CadetsListToShow = dummy;
+                            break;
+                        case 6:
                             dummy = new ObservableCollection<CadetToShow>();
                             foreach (CadetToShow c in CadetsList)
                             {
@@ -1119,12 +1129,21 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<CadetToShow>();
                                 foreach (CadetToShow c in CadetsList)
                                 {
-                                    if (c.Shevet == SecondFieldValue)
+                                    if (c.PersonalID == SecondFieldValue)
                                         dummy.Add(c);
                                 }
                                 CadetsListToShow = dummy;
                                 break;
                             case 4:
+                                dummy = new ObservableCollection<CadetToShow>();
+                                foreach (CadetToShow c in CadetsList)
+                                {
+                                    if (c.Shevet == SecondFieldValue)
+                                        dummy.Add(c);
+                                }
+                                CadetsListToShow = dummy;
+                                break;
+                            case 5:
                                 dummy = new ObservableCollection<CadetToShow>();
                                 foreach (CadetToShow c in CadetsListToShow)
                                 {
@@ -1133,7 +1152,7 @@ namespace ZofimPortalApp.ViewModels
                                 }
                                 CadetsListToShow = dummy;
                                 break;
-                            case 5:
+                            case 6:
                                 dummy = new ObservableCollection<CadetToShow>();
                                 foreach (CadetToShow c in CadetsListToShow)
                                 {

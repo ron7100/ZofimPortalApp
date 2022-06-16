@@ -17,8 +17,10 @@ namespace ZofimPortalApp.ViewModels
     class ManageActivitiesVM : INotifyPropertyChanged
     {
         public Command BackToHomePageCommand => new Command(BackToHomePage);
-        public ICommand EnableSearchCommand => new Command(EnableSearch);
-        public ICommand DisableSearchCommand => new Command(DisableSearch);
+        public Command EnableSearchCommand => new Command(EnableSearch);
+        public Command DisableSearchCommand => new Command(DisableSearch);
+        public Command ToggleOpenOnlyCommand => new Command(ToggleOpenOnly);
+        public Command ToAddActivityCommand => new Command(ToAddActivity);
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -33,6 +35,7 @@ namespace ZofimPortalApp.ViewModels
         {
             proxy = ZofimPortalAPIProxy.CreateProxy();
             SearchEnabled = false;
+            ToggleText = "הצג מפעלים פתוחים בלבד";
             SetProperties();
         }
         public async void SetProperties()
@@ -198,7 +201,7 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
-        #region Search
+            #region Search
         private bool searchEnabled;
         public bool SearchEnabled
         {
@@ -278,6 +281,28 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("AvailableOptionsSearchField");
             }
         }
+
+        private bool showsOpenOnly;
+        public bool ShowsOpenOnly
+        {
+            get => showsOpenOnly;
+            set
+            {
+                showsOpenOnly = value;
+                OnPropertyChanged("ShowsOpenOnly");
+            }
+        }
+
+        private string toggleText;
+        public string ToggleText
+        {
+            get => toggleText;
+            set
+            {
+                toggleText = value;
+                OnPropertyChanged("ToggleText");
+            }
+        }
         #endregion
 
         #endregion
@@ -351,6 +376,28 @@ namespace ZofimPortalApp.ViewModels
             SetProperties();
         }
 
+        private void ToggleOpenOnly()
+        {
+            if(!ShowsOpenOnly)
+            {
+                ObservableCollection<ActivityToShow> dummy = new ObservableCollection<ActivityToShow>();
+                foreach (ActivityToShow a in Activities)
+                {
+                    if (a.IsOpen == "Green")
+                        dummy.Add(a);
+                }
+                Activities = dummy;
+                ShowsOpenOnly = !ShowsOpenOnly;
+                ToggleText = "הצג את כל המפעלים";
+            }
+            else
+            {
+                ShowsOpenOnly = !ShowsOpenOnly;
+                ToggleText = "הצג מפעלים פתוחים בלבד";
+                SetProperties();
+            }
+        }
+
         private async void GoToEditActivities()
         {
             Page p = new Views.EditActivities(Selected);
@@ -360,6 +407,12 @@ namespace ZofimPortalApp.ViewModels
         private async void BackToHomePage()
         {
             Page p = new Views.HomePage();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+
+        private async void ToAddActivity()
+        {
+            Page p = new Views.AddActivity();
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }

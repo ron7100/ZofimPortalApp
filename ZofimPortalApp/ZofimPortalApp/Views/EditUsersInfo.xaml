@@ -26,11 +26,13 @@
                     <RowDefinition Height="50"/><!--8-->
                     <RowDefinition Height="20"/><!--9-->
                     <RowDefinition Height="50"/><!--10-->
-                    <RowDefinition Height="20"/><!--11-->
-                    <RowDefinition Height="50"/><!--12-->
+                    <RowDefinition Height="50"/><!--11-->
+                    <RowDefinition Height="20"/><!--12-->
                     <RowDefinition Height="50"/><!--13-->
-                    <RowDefinition Height="20"/><!--14-->
-                    <RowDefinition Height="50"/><!--15-->
+                    <RowDefinition Height="50"/><!--14-->
+                    <RowDefinition Height="20"/><!--15-->
+                    <RowDefinition Height="50"/><!--16-->
+                    <RowDefinition Height="50"/><!--17-->
                 </Grid.RowDefinitions>
                 <Label Text="כתובת מייל:" IsVisible="{Binding ShowEmail}" FontSize="Medium" HeightRequest="50" VerticalTextAlignment="Center" />
                 <Entry Text="{Binding Email}" IsVisible="{Binding ShowEmail}" Grid.Column="1" HeightRequest="50" />
@@ -44,16 +46,19 @@
                 <Label Text="תעודת זהות:" FontSize="Medium" HeightRequest="50" Grid.Row="6" VerticalTextAlignment="Center" />                
                 <Entry Text="{Binding PersonalID}" Grid.Column="1" Grid.Row="6" HeightRequest="50" />
                 <Label Text="{Binding PersonalIDErrorMessage}" FontSize="Small" IsVisible="{Binding PersonalIDError}" Grid.Column="1" Grid.Row="7" HeightRequest="20" />
-                <Label Text="תפקיד:" IsVisible="{Binding ShowRole}" FontSize="Medium" HeightRequest="50" Grid.Row="8" VerticalTextAlignment="Center" />                
-                <Picker SelectedItem="{Binding PickerRole}" SelectedIndex="{Binding PickerRoleId}" ItemDisplayBinding="{Binding RoleName}" IsVisible="{Binding ShowRole}" ItemsSource="{Binding Roles}" Grid.Column="1" Grid.Row="8" HeightRequest="50" />
-                <Label Text="שבט:" IsVisible="{Binding ShowShevet}" FontSize="Medium" HeightRequest="50" Grid.Row="10" VerticalTextAlignment="Center" />                
-                <Picker SelectedItem="{Binding PickerShevet}" SelectedIndex="{Binding PickerShevetId}" ItemDisplayBinding="{Binding Name}" IsVisible="{Binding ShowShevet}" ItemsSource="{Binding Shevets}" Grid.Column="1" Grid.Row="10" HeightRequest="50" />
-                <Label Text="{Binding ShevetErrorMessage}" FontSize="Small" IsVisible="{Binding ShevetError}" Grid.Column="1" Grid.Row="11" HeightRequest="20" />
-                <Label Text="הנהגה:" IsVisible="{Binding ShowHanhaga}" FontSize="Medium" HeightRequest="50" Grid.Row="12" VerticalTextAlignment="Center" />
-                <Picker SelectedItem="{Binding PickerHanhaga}" SelectedIndex="{Binding PickerHanhagaId}" ItemDisplayBinding="{Binding Name}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" Grid.Row="12" HeightRequest="50" />
-                <Button Text="שמירת שינויים" Command="{Binding SaveChangesCommand}" Grid.Row="13" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
-                <Label Text="יש שגיאות בטופס" IsVisible="{Binding AreThereErrors}" Grid.Row="14" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
-                <Button Text="הוספת חניך" Command="{Binding ToAddCadetCommand}" IsVisible="{Binding ShowCadets}" Grid.Row="15" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Label Text="כיתה:" IsVisible="{Binding ShowClass}" FontSize="Medium" HeightRequest="50" Grid.Row="8" VerticalTextAlignment="Center" />
+                <Picker SelectedItem="{Binding Class}" IsVisible="{Binding ShowClass}" ItemsSource="{Binding Classes}" Grid.Column="1" Grid.Row="8" HeightRequest="50" />
+                <Label Text="תפקיד:" IsVisible="{Binding ShowRole}" FontSize="Medium" HeightRequest="50" Grid.Row="10" VerticalTextAlignment="Center" />                
+                <Picker SelectedItem="{Binding PickerRole}" SelectedIndex="{Binding PickerRoleId}" ItemDisplayBinding="{Binding RoleName}" IsVisible="{Binding ShowRole}" ItemsSource="{Binding Roles}" Grid.Column="1" Grid.Row="10" HeightRequest="50" />
+                <Label Text="שבט:" IsVisible="{Binding ShowShevet}" FontSize="Medium" HeightRequest="50" Grid.Row="11" VerticalTextAlignment="Center" />                
+                <Picker SelectedItem="{Binding PickerShevet}" SelectedIndex="{Binding PickerShevetId}" ItemDisplayBinding="{Binding Name}" IsVisible="{Binding ShowShevet}" ItemsSource="{Binding Shevets}" Grid.Column="1" Grid.Row="11" HeightRequest="50" />
+                <Label Text="{Binding ShevetErrorMessage}" FontSize="Small" IsVisible="{Binding ShevetError}" Grid.Column="1" Grid.Row="12" HeightRequest="20" />
+                <Label Text="הנהגה:" IsVisible="{Binding ShowHanhaga}" FontSize="Medium" HeightRequest="50" Grid.Row="13" VerticalTextAlignment="Center" />
+                <Picker SelectedItem="{Binding PickerHanhaga}" SelectedIndex="{Binding PickerHanhagaId}" ItemDisplayBinding="{Binding Name}" IsVisible="{Binding ShowHanhaga}" ItemsSource="{Binding Hanhagas}" Grid.Column="1" Grid.Row="13" HeightRequest="50" />
+                <Button Text="שמירת שינויים" Command="{Binding SaveChangesCommand}" Grid.Row="14" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Label Text="יש שגיאות בטופס" IsVisible="{Binding AreThereErrors}" Grid.Row="15" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Button Text="הוספת חניך" Command="{Binding ToAddCadetCommand}" IsVisible="{Binding ShowCadets}" Grid.Row="16" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                <Button Text="למפעלים קודמים של החניך" Command="{Binding ToCadetsForActivityCommand}" IsVisible="{Binding ShowCadetsForActivity}" Grid.Row="17" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

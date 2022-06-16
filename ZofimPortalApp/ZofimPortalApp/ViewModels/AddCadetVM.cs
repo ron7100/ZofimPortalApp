@@ -29,6 +29,24 @@ namespace ZofimPortalApp.ViewModels
 
         private async void SetRolesListAndShevet(string shevetName)
         {
+            #region classes
+            List<string> classesEzer = new List<string>();
+            classesEzer.Add("ד");
+            classesEzer.Add("ה");
+            classesEzer.Add("ו");
+            classesEzer.Add("ז");
+            classesEzer.Add("ח");
+            classesEzer.Add("ט");
+            classesEzer.Add("י");
+            classesEzer.Add("יא");
+            classesEzer.Add("יב");
+            string classHolder = "";
+            if (Class != null)
+                classHolder = Class;
+            Classes = classesEzer;
+            if (classHolder != "")
+                Class = classHolder;
+            #endregion
             List<Role> availableRoles = await proxy.GetAllRolesAsync();
             Roles = availableRoles;
             List<Shevet> shevets = await proxy.GetAllShevetsAsync();
@@ -81,6 +99,17 @@ namespace ZofimPortalApp.ViewModels
                 personalID = value;
                 CheckID();
                 OnPropertyChanged("PersonalID");
+            }
+        }
+
+        private string @class;
+        public string Class
+        {
+            get => @class;
+            set
+            {
+                @class = value;
+                OnPropertyChanged("Class");
             }
         }
 
@@ -221,6 +250,17 @@ namespace ZofimPortalApp.ViewModels
         }
         #endregion
 
+        private List<string> classes;
+        public List<string> Classes
+        {
+            get => classes;
+            set
+            {
+                classes = value;
+                OnPropertyChanged("Classes");
+            }
+        }
+
         private List<Role> roles;
         public List<Role> Roles
         {
@@ -310,6 +350,7 @@ namespace ZofimPortalApp.ViewModels
             c.FName = FName;
             c.LName = LName;
             c.PersonalId = PersonalID;
+            c.Class = Class;
             c.RoleId = Role.Id;
             c.ShevetId = (int)ShevetID;
             Cadet cadet = await proxy.AddCadetAsync(c);

@@ -795,6 +795,62 @@ namespace ZofimPortalApp.Services
                 return null;
             }
         }
+
+        public async Task<List<CadetToShow>> GetCadetsForActivityAsync(int activityID)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetCadetsForActivity?activityID={activityID}");
+                if(response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<CadetToShow> cadets = JsonSerializer.Deserialize<List<CadetToShow>>(content, options);
+                    return cadets;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<List<ActivityToShow>> GetActivitiesForCadetAsync(int cadetID)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActivitiesForCadet?cadetID={cadetID}");
+                if(response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<ActivityToShow> activities = JsonSerializer.Deserialize<List<ActivityToShow>>(content, options);
+                    return activities;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
         #endregion
 
         #region הוספת נתונים
@@ -887,6 +943,38 @@ namespace ZofimPortalApp.Services
                 }
             }
             catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<Activity> AddActivityAsync(ActivityToShow ats)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<ActivityToShow>(ats, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AddActivity", content);
+
+                if(response.IsSuccessStatusCode)
+                {
+                    string jsonContent = await response.Content.ReadAsStringAsync();
+                    Activity a = JsonSerializer.Deserialize<Activity>(jsonContent, options);
+                    return a;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch(Exception e)
             {
                 Console.WriteLine(e.Message);
                 return null;

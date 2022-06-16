@@ -112,6 +112,11 @@ namespace ZofimPortalApp.ViewModels
                 location++;
             }
             Name = nameHolder;
+            if (Name == "")
+            {
+                NameError = true;
+                NameErrorMessage = "שדה חובה";
+            }
         }
 
         public bool CheckForIllegalChars(string s)
