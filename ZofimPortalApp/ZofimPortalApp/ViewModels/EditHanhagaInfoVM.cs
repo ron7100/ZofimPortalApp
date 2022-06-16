@@ -134,12 +134,6 @@ namespace ZofimPortalApp.ViewModels
         public void CheckName()
         {
             NameError = false;
-            if (Name == "")
-            {
-                NameError = true;
-                NameErrorMessage = "שדה חובה";
-                return;
-            }
             int location = 0;
             string nameHolder = Name;
             foreach (char c in Name)
@@ -150,17 +144,16 @@ namespace ZofimPortalApp.ViewModels
             }
             if(nameHolder!=Name)
                 Name = nameHolder;
+            if (Name == "")
+            {
+                NameError = true;
+                NameErrorMessage = "זהו שדה חובה";
+            }
         }
 
         public void CheckGeneralArea()
         {
             GeneralAreaError = false;
-            if (GeneralArea == "")
-            {
-                GeneralAreaError = true;
-                GeneralAreaErrorMessage = "שדה חובה";
-                return;
-            }
             int location = 0;
             string generalAreaHolder = GeneralArea;
             foreach (char c in Name)
@@ -171,6 +164,11 @@ namespace ZofimPortalApp.ViewModels
             }
             if(generalAreaHolder != GeneralArea)
                 GeneralArea = generalAreaHolder;
+            if (GeneralArea == "")
+            {
+                GeneralAreaError = true;
+                GeneralAreaErrorMessage = "זהו שדה חובה";
+            }
         }
 
         public bool CheckForErrors()

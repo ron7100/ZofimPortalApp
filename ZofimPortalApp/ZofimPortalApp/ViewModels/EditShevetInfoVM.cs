@@ -208,12 +208,6 @@ namespace ZofimPortalApp.ViewModels
         public void CheckName()
         {
             NameError = false;
-            if (Name == "")
-            {
-                NameError = true;
-                NameErrorMessage = "שדה חובה";
-                return;
-            }
             int location = 0;
             string nameHolder = Name;
             foreach (char c in Name)
@@ -222,18 +216,18 @@ namespace ZofimPortalApp.ViewModels
                     nameHolder = nameHolder.Remove(location, 1);
                 location++;
             }
-            Name = nameHolder;
+            if(nameHolder!=Name)
+                Name = nameHolder;
+            if (Name == "")
+            {
+                NameError = true;
+                NameErrorMessage = "זהו שדה חובה";
+            }
         }
 
         public void CheckMembersAmount()
         {
             MembersAmountError = false;
-            if(MembersAmount == "")
-            {
-                MembersAmountError = true;
-                MembersAmountErrorMessage = "שדה חובה";
-                return;
-            }
             int location = 0;
             string membersAmountHolder = MembersAmount;
             foreach (char c in membersAmountHolder)
@@ -242,7 +236,13 @@ namespace ZofimPortalApp.ViewModels
                     membersAmountHolder = membersAmountHolder.Remove(location, 1);
                 location++;
             }
-            membersAmount = membersAmountHolder;
+            if(membersAmountHolder!=MembersAmount)
+                MembersAmount = membersAmountHolder;
+            if (MembersAmount == "")
+            {
+                MembersAmountError = true;
+                MembersAmountErrorMessage = "זהו שדה חובה";
+            }
         }
 
         public bool CheckForErrors()

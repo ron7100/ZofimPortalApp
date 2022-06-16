@@ -222,43 +222,50 @@ namespace ZofimPortalApp.ViewModels
                 EmailError = true;
                 EmailErrorMessage = "כתובת מייל כבר קיימת במערכת";
             }
+            if(Email==null||Email=="")
+            {
+                EmailError = true;
+                EmailErrorMessage = "זהו שדה חובה";
+            }
         }
 
         private void CheckFirstName()
         {
             FirstNameError = false;
-            if (FirstName == "")
-            {
-                FirstNameError = true;
-                FirstNameErrorMessage = "שדה חובה";
-                return;
-            }
+            int location = 0;
+            string firstNameHolder = FirstName;
             foreach (char c in FirstName)
             {
                 if (!char.IsLetter(c))
-                {
-                    FirstNameError = true;
-                    FirstNameErrorMessage = "השם חייב לכלול אותיות בלבד";
-                }
+                    firstNameHolder = firstNameHolder.Remove(location, 1);
+                location++;
+            }
+            if (firstNameHolder != FirstName)
+                FirstName = firstNameHolder;
+            if (FirstName == "")
+            {
+                FirstNameError = true;
+                FirstNameErrorMessage = "זהו שדה חובה";
             }
         }
 
         private void CheckLastName()
         {
             LastNameError = false;
-            if (LastName == "")
-            {
-                LastNameError = true;
-                LastNameErrorMessage = "שדה חובה";
-                return;
-            }
+            int location = 0;
+            string lastNameHolder = LastName;
             foreach (char c in LastName)
             {
                 if (!char.IsLetter(c))
-                {
-                    LastNameError = true;
-                    LastNameErrorMessage = "השם משפחה חייב לכלול אותיות בלבד";
-                }
+                    lastNameHolder = lastNameHolder.Remove(location, 1);
+                location++;
+            }
+            if (lastNameHolder != LastName)
+                LastName = lastNameHolder;
+            if (LastName == "")
+            {
+                LastNameError = true;
+                LastNameErrorMessage = "זהו שדה חובה";
             }
         }
 
@@ -273,19 +280,25 @@ namespace ZofimPortalApp.ViewModels
                 PersonalIdErrorMessage = "תעודת זהות חייבת לכלול 9 ספרות";
                 return;
             }
-            foreach (char c in PersonalId)
+            int location = 0;
+            string personalIdHolder = PersonalId;
+            foreach (char c in personalIdHolder)
             {
-                if (!char.IsDigit(c))
-                {
-                    PersonalIdError = true;
-                    PersonalIdErrorMessage = "תעודת זהות חייבת לכלול ספרות בלבד";
-                    return;
-                }
+                if (char.IsLetter(c))
+                    personalIdHolder = personalIdHolder.Remove(location, 1);
+                location++;
             }
+            if (personalIdHolder != PersonalId)
+                PersonalId = personalIdHolder;
             if (await proxy.IsIdExistAsync(PersonalId))
             {
                 PersonalIdError = true;
                 PersonalIdErrorMessage = "תעודת זהות כבר קיימת במערכת";
+            }
+            if (PersonalId == null || PersonalId == "")
+            {
+                PersonalIdError = true;
+                PersonalIdErrorMessage = "זהו שדה חובה";
             }
         }
         #endregion

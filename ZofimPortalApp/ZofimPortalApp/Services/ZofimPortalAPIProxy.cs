@@ -952,6 +952,34 @@ namespace ZofimPortalApp.Services
             }
         }
 
+        public async Task<int> GetHanhagaIDAsync(int id)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetHanhagaID?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    int hanhagaID = JsonSerializer.Deserialize<int>(content, options);
+                    return hanhagaID;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return -1;
+            }
+        }
+
         public async Task<string> GetShevetAsync(int id)
         {
             try
@@ -976,6 +1004,34 @@ namespace ZofimPortalApp.Services
             {
                 Console.WriteLine(e.Message);
                 return null;
+            }
+        }
+
+        public async Task<int> GetShevetIDAsync(int id)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetShevetID?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    int shevetID = JsonSerializer.Deserialize<int>(content, options);
+                    return shevetID;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return -1;
             }
         }
 

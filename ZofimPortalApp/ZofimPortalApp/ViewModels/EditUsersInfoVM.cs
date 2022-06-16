@@ -137,7 +137,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 firstName = value;
-                CheckFName();
+                CheckFirstName();
                 OnPropertyChanged("FirstName");
             }
         }
@@ -149,7 +149,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 lastName = value;
-                CheckLName();
+                CheckLastName();
                 OnPropertyChanged("LastName");
             }
         }
@@ -664,49 +664,55 @@ namespace ZofimPortalApp.ViewModels
         #region בדיקת שדות
         private void CheckEmail()
         {
-
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             Match match = regex.Match(email);
             EmailError = !match.Success;
             if (EmailError)
                 EmailErrorMessage = "כתובת מייל לא חוקית";
+            if (Email == null || Email == "")
+            {
+                EmailError = true;
+                EmailErrorMessage = "זהו שדה חובה";
+            }
         }
 
-        private void CheckFName()
+        private void CheckFirstName()
         {
             FirstNameError = false;
-            if (FirstName == "")
-            {
-                FirstNameError = true;
-                FirstNameErrorMessage = "שדה חובה";
-                return;
-            }
+            int location = 0;
+            string firstNameHolder = FirstName;
             foreach (char c in FirstName)
             {
                 if (!char.IsLetter(c))
-                {
-                    FirstNameError = true;
-                    FirstNameErrorMessage = "השם חייב לכלול אותיות בלבד";
-                }
+                    firstNameHolder = firstNameHolder.Remove(location, 1);
+                location++;
+            }
+            if (firstNameHolder != FirstName)
+                FirstName = firstNameHolder;
+            if (FirstName == "")
+            {
+                FirstNameError = true;
+                FirstNameErrorMessage = "זהו שדה חובה";
             }
         }
 
-        private void CheckLName()
+        private void CheckLastName()
         {
             LastNameError = false;
-            if (LastName == "")
-            {
-                LastNameError = true;
-                LastNameErrorMessage = "שדה חובה";
-                return;
-            }
+            int location = 0;
+            string lastNameHolder = LastName;
             foreach (char c in LastName)
             {
                 if (!char.IsLetter(c))
-                {
-                    LastNameError = true;
-                    LastNameErrorMessage = "השם משפחה חייב לכלול אותיות בלבד";
-                }
+                    lastNameHolder = lastNameHolder.Remove(location, 1);
+                location++;
+            }
+            if (lastNameHolder != LastName)
+                LastName = lastNameHolder;
+            if (LastName == "")
+            {
+                LastNameError = true;
+                LastNameErrorMessage = "זהו שדה חובה";
             }
         }
 
@@ -719,13 +725,20 @@ namespace ZofimPortalApp.ViewModels
                 PersonalIDErrorMessage = "תעודת זהות חייבת לכלול 9 ספרות";
                 return;
             }
-            foreach (char c in PersonalID)
+            int location = 0;
+            string personalIDHolder = PersonalID;
+            foreach (char c in personalIDHolder)
             {
-                if (!char.IsDigit(c))
-                {
-                    PersonalIDError = true;
-                    PersonalIDErrorMessage = "תעודת זהות חייבת לכלול ספרות בלבד";
-                }
+                if (char.IsLetter(c))
+                    personalIDHolder = personalIDHolder.Remove(location, 1);
+                location++;
+            }
+            if (personalIDHolder != PersonalID)
+                PersonalID = personalIDHolder;
+            if (PersonalID == null || PersonalID == "")
+            {
+                PersonalIDError = true;
+                PersonalIDErrorMessage = "זהו שדה חובה";
             }
         }
 

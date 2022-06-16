@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ZofimPortalApp.Models
 {
-    class CadetToShow
+    public class CadetToShow
     {
         public int ID { get; set; }
         public string FirstName { get; set; }
