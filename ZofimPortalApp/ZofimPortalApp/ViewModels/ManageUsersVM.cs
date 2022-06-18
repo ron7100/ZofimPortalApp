@@ -95,6 +95,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 usersListToShow = value;
+                ChangeAmount();
                 OnPropertyChanged("UsersListToShow");
             }
         }
@@ -106,6 +107,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 workersListToShow = value;
+                ChangeAmount();
                 OnPropertyChanged("WorkersListToShow");
             }
         }
@@ -117,6 +119,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 parentsListToShow = value;
+                ChangeAmount();
                 OnPropertyChanged("ParentsListToShow");
             }
         }
@@ -128,6 +131,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 cadetsListToShow = value;
+                ChangeAmount();
                 OnPropertyChanged("CadetsListToShow");
             }
         }
@@ -235,6 +239,7 @@ namespace ZofimPortalApp.ViewModels
             {
                 selectedType = value;
                 UpdateSelection();
+                ChangeAmount();
                 OnPropertyChanged("SelectedType");
             }
         }
@@ -473,6 +478,17 @@ namespace ZofimPortalApp.ViewModels
             }
         }
 
+        private string listAmount;
+        public string ListAmount
+        {
+            get => listAmount;
+            set
+            {
+                listAmount = value;
+                OnPropertyChanged("ListAmount");
+            }
+        }
+
         private ListViewSelectionMode usersListSelectionMode;
         public ListViewSelectionMode UsersListSelectionMode
         {
@@ -548,6 +564,18 @@ namespace ZofimPortalApp.ViewModels
         }
 
         #endregion
+
+        private void ChangeAmount()
+        {
+            if (IsUserSelected && UsersListToShow != null)
+                ListAmount = $"מספר משתמשים: {UsersListToShow.Count}";
+            if (IsWorkerSelected && WorkersListToShow != null)
+                ListAmount = $"מספר עובדים: {WorkersListToShow.Count}";
+            if (IsParentSelected && ParentsListToShow != null)
+                ListAmount = $"מספר הורים: {ParentsListToShow.Count}";
+            if (IsCadetSelected && CadetsListToShow != null)
+                ListAmount = $"מספר חניכים: {CadetsListToShow.Count}";
+        }
 
         private void UpdateSelection()
         {
@@ -685,8 +713,9 @@ namespace ZofimPortalApp.ViewModels
                             ObservableCollection<User> dummy = new ObservableCollection<User>();
                             foreach (User u in UsersList)
                             {
-                                if (u.Email == FirstFieldValue)
-                                    dummy.Add(u);
+                                string partialString = u.Email.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
+                                    dummy.Add(u);                                
                             }
                             UsersListToShow = dummy;
                             break;
@@ -694,7 +723,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<User>();
                             foreach (User u in UsersList)
                             {
-                                if (u.FirstName == FirstFieldValue)
+                                string partialString = u.FirstName.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(u);
                             }
                             UsersListToShow = dummy;
@@ -703,7 +733,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<User>();
                             foreach (User u in UsersList)
                             {
-                                if (u.LastName == FirstFieldValue)
+                                string partialString = u.LastName.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(u);
                             }
                             UsersListToShow = dummy;
@@ -712,7 +743,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<User>();
                             foreach (User u in UsersList)
                             {
-                                if (u.PersonalId == FirstFieldValue)
+                                string partialString = u.PersonalId.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(u);
                             }
                             UsersListToShow = dummy;
@@ -726,7 +758,8 @@ namespace ZofimPortalApp.ViewModels
                                 ObservableCollection<User> dummy = new ObservableCollection<User>();
                                 foreach (User u in UsersListToShow)
                                 {
-                                    if (u.Email == SecondFieldValue)
+                                    string partialString = u.Email.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(u);
                                 }
                                 UsersListToShow = dummy;
@@ -735,7 +768,8 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<User>();
                                 foreach (User u in UsersListToShow)
                                 {
-                                    if (u.FirstName == SecondFieldValue)
+                                    string partialString = u.FirstName.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(u);
                                 }
                                 UsersListToShow = dummy;
@@ -744,7 +778,8 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<User>();
                                 foreach (User u in UsersListToShow)
                                 {
-                                    if (u.LastName == SecondFieldValue)
+                                    string partialString = u.LastName.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(u);
                                 }
                                 UsersListToShow = dummy;
@@ -753,7 +788,8 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<User>();
                                 foreach (User u in UsersListToShow)
                                 {
-                                    if (u.PersonalId == SecondFieldValue)
+                                    string partialString = u.PersonalId.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(u);
                                 }
                                 UsersListToShow = dummy;
@@ -773,7 +809,8 @@ namespace ZofimPortalApp.ViewModels
                             ObservableCollection<WorkerToShow> dummy = new ObservableCollection<WorkerToShow>();
                             foreach (WorkerToShow w in WorkersList)
                             {
-                                if (w.Email == FirstFieldValue)
+                                string partialString = w.Email.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(w);
                             }
                             WorkersListToShow = dummy;
@@ -782,7 +819,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<WorkerToShow>();
                             foreach (WorkerToShow w in WorkersList)
                             {
-                                if (w.FirstName == FirstFieldValue)
+                                string partialString = w.FirstName.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(w);
                             }
                             WorkersListToShow = dummy;
@@ -791,7 +829,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<WorkerToShow>();
                             foreach (WorkerToShow w in WorkersList)
                             {
-                                if (w.LastName == FirstFieldValue)
+                                string partialString = w.LastName.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(w);
                             }
                             WorkersListToShow = dummy;
@@ -800,7 +839,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<WorkerToShow>();
                             foreach (WorkerToShow w in WorkersList)
                             {
-                                if (w.PersonalID == FirstFieldValue)
+                                string partialString = w.PersonalID.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(w);
                             }
                             WorkersListToShow = dummy;
@@ -809,7 +849,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<WorkerToShow>();
                             foreach (WorkerToShow w in WorkersList)
                             {
-                                if (w.Role == FirstFieldValue)
+                                string partialString = w.Role.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(w);
                             }
                             WorkersListToShow = dummy;
@@ -818,9 +859,12 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<WorkerToShow>();
                             foreach (WorkerToShow w in WorkersList)
                             {
-                                if(w.Shevet!=null)
-                                    if (w.Shevet == FirstFieldValue)
+                                if (w.Shevet != null)
+                                {
+                                    string partialString = w.Shevet.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(w);
+                                }
                             }
                             WorkersListToShow = dummy;
                             break;
@@ -829,8 +873,11 @@ namespace ZofimPortalApp.ViewModels
                             foreach (WorkerToShow w in WorkersList)
                             {
                                 if (w.Hanhaga != null)
-                                    if (w.Hanhaga == FirstFieldValue)
+                                {
+                                    string partialString = w.Hanhaga.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(w);
+                                }
                             }
                             WorkersListToShow = dummy;
                             break;
@@ -843,7 +890,8 @@ namespace ZofimPortalApp.ViewModels
                                 ObservableCollection<WorkerToShow> dummy = new ObservableCollection<WorkerToShow>();
                                 foreach (WorkerToShow w in WorkersListToShow)
                                 {
-                                    if (w.Email == SecondFieldValue)
+                                    string partialString = w.Email.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(w);
                                 }
                                 WorkersListToShow = dummy;
@@ -852,7 +900,8 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<WorkerToShow>();
                                 foreach (WorkerToShow w in WorkersListToShow)
                                 {
-                                    if (w.FirstName == SecondFieldValue)
+                                    string partialString = w.FirstName.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(w);
                                 }
                                 WorkersListToShow = dummy;
@@ -861,7 +910,8 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<WorkerToShow>();
                                 foreach (WorkerToShow w in WorkersListToShow)
                                 {
-                                    if (w.LastName == SecondFieldValue)
+                                    string partialString = w.LastName.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(w);
                                 }
                                 WorkersListToShow = dummy;
@@ -870,7 +920,8 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<WorkerToShow>();
                                 foreach (WorkerToShow w in WorkersListToShow)
                                 {
-                                    if (w.PersonalID == SecondFieldValue)
+                                    string partialString = w.PersonalID.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(w);
                                 }
                                 WorkersListToShow = dummy;
@@ -879,7 +930,8 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<WorkerToShow>();
                                 foreach (WorkerToShow w in WorkersListToShow)
                                 {
-                                    if (w.Role == SecondFieldValue)
+                                    string partialString = w.Role.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(w);
                                 }
                                 WorkersListToShow = dummy;
@@ -889,8 +941,11 @@ namespace ZofimPortalApp.ViewModels
                                 foreach (WorkerToShow w in WorkersListToShow)
                                 {
                                     if (w.Shevet != null)
-                                        if (w.Shevet == SecondFieldValue)
+                                    {
+                                        string partialString = w.Shevet.Substring(0, FirstFieldValue.Length);
+                                        if (partialString == FirstFieldValue)
                                             dummy.Add(w);
+                                    }
                                 }
                                 WorkersListToShow = dummy;
                                 break;
@@ -899,8 +954,11 @@ namespace ZofimPortalApp.ViewModels
                                 foreach (WorkerToShow w in WorkersListToShow)
                                 {
                                     if (w.Hanhaga != null)
-                                        if (w.Hanhaga == SecondFieldValue)
+                                    {
+                                        string partialString = w.Hanhaga.Substring(0, FirstFieldValue.Length);
+                                        if (partialString == FirstFieldValue)
                                             dummy.Add(w);
+                                    }
                                 }
                                 WorkersListToShow = dummy;
                                 break;
@@ -919,7 +977,8 @@ namespace ZofimPortalApp.ViewModels
                             ObservableCollection<ParentToShow> dummy = new ObservableCollection<ParentToShow>();
                             foreach (ParentToShow p in ParentsList)
                             {
-                                if (p.Email == FirstFieldValue)
+                                string partialString = p.Email.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(p);
                             }
                             ParentsListToShow = dummy;
@@ -928,7 +987,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<ParentToShow>();
                             foreach (ParentToShow p in ParentsList)
                             {
-                                if (p.FirstName == FirstFieldValue)
+                                string partialString = p.FirstName.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(p);
                             }
                             ParentsListToShow = dummy;
@@ -937,7 +997,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<ParentToShow>();
                             foreach (ParentToShow p in ParentsList)
                             {
-                                if (p.LastName == FirstFieldValue)
+                                string partialString = p.LastName.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(p);
                             }
                             ParentsListToShow = dummy;
@@ -946,7 +1007,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<ParentToShow>();
                             foreach (ParentToShow p in ParentsList)
                             {
-                                if (p.PersonalID == FirstFieldValue)
+                                string partialString = p.PersonalID.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(p);
                             }
                             ParentsListToShow = dummy;
@@ -955,7 +1017,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<ParentToShow>();
                             foreach (ParentToShow p in ParentsList)
                             {
-                                if (p.Shevet == FirstFieldValue)
+                                string partialString = p.Shevet.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(p);
                             }
                             ParentsListToShow = dummy;
@@ -964,7 +1027,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<ParentToShow>();
                             foreach (ParentToShow p in ParentsList)
                             {
-                                if (p.Hanhaga == FirstFieldValue)
+                                string partialString = p.Hanhaga.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(p);
                             }
                             ParentsListToShow = dummy;
@@ -978,7 +1042,8 @@ namespace ZofimPortalApp.ViewModels
                                 ObservableCollection<ParentToShow> dummy = new ObservableCollection<ParentToShow>();
                                 foreach (ParentToShow p in ParentsListToShow)
                                 {
-                                    if (p.Email == SecondFieldValue)
+                                    string partialString = p.Email.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(p);
                                 }
                                 ParentsListToShow = dummy;
@@ -987,7 +1052,8 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<ParentToShow>();
                                 foreach (ParentToShow p in ParentsListToShow)
                                 {
-                                    if (p.FirstName == SecondFieldValue)
+                                    string partialString = p.FirstName.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(p);
                                 }
                                 ParentsListToShow = dummy;
@@ -996,7 +1062,8 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<ParentToShow>();
                                 foreach (ParentToShow p in ParentsListToShow)
                                 {
-                                    if (p.LastName == SecondFieldValue)
+                                    string partialString = p.LastName.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(p);
                                 }
                                 ParentsListToShow = dummy;
@@ -1005,7 +1072,8 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<ParentToShow>();
                                 foreach (ParentToShow p in ParentsListToShow)
                                 {
-                                    if (p.PersonalID == SecondFieldValue)
+                                    string partialString = p.PersonalID.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(p);
                                 }
                                 ParentsListToShow = dummy;
@@ -1014,7 +1082,18 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<ParentToShow>();
                                 foreach (ParentToShow p in ParentsListToShow)
                                 {
-                                    if (p.Shevet == SecondFieldValue)
+                                    string partialString = p.Shevet.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
+                                        dummy.Add(p);
+                                }
+                                ParentsListToShow = dummy;
+                                break;
+                            case 5:
+                                dummy = new ObservableCollection<ParentToShow>();
+                                foreach(ParentToShow p in ParentsListToShow)
+                                {
+                                    string partialString = p.Hanhaga.Substring(0, FirstFieldValue.Length);
+                                    if (partialString == FirstFieldValue)
                                         dummy.Add(p);
                                 }
                                 ParentsListToShow = dummy;
@@ -1034,7 +1113,8 @@ namespace ZofimPortalApp.ViewModels
                             ObservableCollection<CadetToShow> dummy = new ObservableCollection<CadetToShow>();
                             foreach (CadetToShow c in CadetsList)
                             {
-                                if (c.FirstName == FirstFieldValue)
+                                string partialString = c.FirstName.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(c);
                             }
                             CadetsListToShow = dummy;
@@ -1043,7 +1123,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<CadetToShow>();
                             foreach (CadetToShow c in CadetsList)
                             {
-                                if (c.LastName == FirstFieldValue)
+                                string partialString = c.LastName.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(c);
                             }
                             CadetsListToShow = dummy;
@@ -1052,7 +1133,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<CadetToShow>();
                             foreach (CadetToShow c in CadetsList)
                             {
-                                if (c.PersonalID == FirstFieldValue)
+                                string partialString = c.PersonalID.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(c);
                             }
                             CadetsListToShow = dummy;
@@ -1061,7 +1143,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<CadetToShow>();
                             foreach(CadetToShow c in CadetsList)
                             {
-                                if (c.PersonalID == FirstFieldValue)
+                                string partialString = c.Class.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(c);
                             }
                             CadetsListToShow = dummy;
@@ -1070,7 +1153,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<CadetToShow>();
                             foreach (CadetToShow c in CadetsList)
                             {
-                                if (c.Shevet == FirstFieldValue)
+                                string partialString = c.Shevet.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(c);
                             }
                             CadetsListToShow = dummy;
@@ -1079,7 +1163,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<CadetToShow>();
                             foreach (CadetToShow c in CadetsList)
                             {
-                                if (c.Hanhaga == FirstFieldValue)
+                                string partialString = c.Hanhaga.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(c);
                             }
                             CadetsListToShow = dummy;
@@ -1088,7 +1173,8 @@ namespace ZofimPortalApp.ViewModels
                             dummy = new ObservableCollection<CadetToShow>();
                             foreach (CadetToShow c in CadetsList)
                             {
-                                if (c.Role == FirstFieldValue)
+                                string partialString = c.Role.Substring(0, FirstFieldValue.Length);
+                                if (partialString == FirstFieldValue)
                                     dummy.Add(c);
                             }
                             CadetsListToShow = dummy;
@@ -1100,27 +1186,30 @@ namespace ZofimPortalApp.ViewModels
                         {
                             case 0:
                                 ObservableCollection<CadetToShow> dummy = new ObservableCollection<CadetToShow>();
-                                foreach (CadetToShow c in CadetsListToShow)
+                                foreach (CadetToShow c in CadetsList)
                                 {
-                                    if (c.FirstName == SecondFieldValue)
+                                    string partialString = c.FirstName.Substring(0, SecondFieldValue.Length);
+                                    if (partialString == SecondFieldValue)
                                         dummy.Add(c);
                                 }
                                 CadetsListToShow = dummy;
                                 break;
                             case 1:
                                 dummy = new ObservableCollection<CadetToShow>();
-                                foreach (CadetToShow c in CadetsListToShow)
+                                foreach (CadetToShow c in CadetsList)
                                 {
-                                    if (c.LastName == SecondFieldValue)
+                                    string partialString = c.LastName.Substring(0, SecondFieldValue.Length);
+                                    if (partialString == SecondFieldValue)
                                         dummy.Add(c);
                                 }
                                 CadetsListToShow = dummy;
                                 break;
                             case 2:
                                 dummy = new ObservableCollection<CadetToShow>();
-                                foreach (CadetToShow c in CadetsListToShow)
+                                foreach (CadetToShow c in CadetsList)
                                 {
-                                    if (c.PersonalID == SecondFieldValue)
+                                    string partialString = c.PersonalID.Substring(0, SecondFieldValue.Length);
+                                    if (partialString == SecondFieldValue)
                                         dummy.Add(c);
                                 }
                                 CadetsListToShow = dummy;
@@ -1129,7 +1218,8 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<CadetToShow>();
                                 foreach (CadetToShow c in CadetsList)
                                 {
-                                    if (c.PersonalID == SecondFieldValue)
+                                    string partialString = c.Class.Substring(0, SecondFieldValue.Length);
+                                    if (partialString == SecondFieldValue)
                                         dummy.Add(c);
                                 }
                                 CadetsListToShow = dummy;
@@ -1138,25 +1228,28 @@ namespace ZofimPortalApp.ViewModels
                                 dummy = new ObservableCollection<CadetToShow>();
                                 foreach (CadetToShow c in CadetsList)
                                 {
-                                    if (c.Shevet == SecondFieldValue)
+                                    string partialString = c.Shevet.Substring(0, SecondFieldValue.Length);
+                                    if (partialString == SecondFieldValue)
                                         dummy.Add(c);
                                 }
                                 CadetsListToShow = dummy;
                                 break;
                             case 5:
                                 dummy = new ObservableCollection<CadetToShow>();
-                                foreach (CadetToShow c in CadetsListToShow)
+                                foreach (CadetToShow c in CadetsList)
                                 {
-                                    if (c.Hanhaga == SecondFieldValue)
+                                    string partialString = c.Hanhaga.Substring(0, SecondFieldValue.Length);
+                                    if (partialString == SecondFieldValue)
                                         dummy.Add(c);
                                 }
                                 CadetsListToShow = dummy;
                                 break;
                             case 6:
                                 dummy = new ObservableCollection<CadetToShow>();
-                                foreach (CadetToShow c in CadetsListToShow)
+                                foreach (CadetToShow c in CadetsList)
                                 {
-                                    if (c.Role == SecondFieldValue)
+                                    string partialString = c.Role.Substring(0, SecondFieldValue.Length);
+                                    if (partialString == SecondFieldValue)
                                         dummy.Add(c);
                                 }
                                 CadetsListToShow = dummy;

@@ -1,12 +1,97 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ZofimPortalApp.Views.RegisterToActivities">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:ZofimPortalApp.ViewModels" xmlns:models="clr-namespace:ZofimPortalApp.Models" x:DataType="viewmodels:RegisterToActivitiesVM"
+             x:Class="ZofimPortalApp.Views.RegisterToActivities"
+             FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Button Text="חזור" Command="{Binding BackToHomePageCommand}" HorizontalOptions="Start" WidthRequest="100"/>
+            <Label Text="הרשמה למפעלים" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="110"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <Grid Padding="5" BackgroundColor="DodgerBlue">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <Label Text="החניך" FontSize="Large" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                </Grid>
+                <ListView Grid.Row="1" FlowDirection="RightToLeft" ItemsSource="{Binding RelevantCadets}" BackgroundColor="DodgerBlue">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:CadetToShow">
+                            <ViewCell>
+                                <Grid Padding="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Text="{Binding FirstName}" FontSize="Medium" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Grid Padding="5" Grid.Column="1" BackgroundColor="DodgerBlue">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <Label Text="שם" FontSize="Medium" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                    <Label Text="תאריך התחלה" FontSize="Medium" FontAttributes="Bold" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                    <Label Text="תאריך סיום" FontSize="Medium" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                    <Label Text="שכבת גיל" FontSize="Medium" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                    <Label Text="מספר רשומים" FontSize="Medium" FontAttributes="Bold" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                    <Label Text="מחיר" FontSize="Medium" FontAttributes="Bold" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                    <Label Text="אחוז הנחה לאחים" FontSize="Medium" FontAttributes="Bold" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                </Grid>
+                <ListView Grid.Column="1" Grid.Row="1" FlowDirection="RightToLeft" ItemsSource="{Binding AvailableActivities}" BackgroundColor="DodgerBlue" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:ActivityToShow">
+                            <ViewCell>
+                                <Grid Padding="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Text="{Binding Name}" FontSize="Small" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                    <Label Text="{Binding StartDate}" FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                    <Label Text="{Binding EndDate}" FontSize="Small" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                    <Label Text="{Binding RelevantClass}" FontSize="Small" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                    <Label Text="{Binding CadetsAmount}" FontSize="Small" Grid.Column="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                    <Label Text="{Binding Price}" FontSize="Small" Grid.Column="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                                    <Label Text="{Binding DiscountPercent}" FontSize="Small" Grid.Column="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="white"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Grid Padding="5" Grid.Column="2" BackgroundColor="DodgerBlue">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <Label Text="להוסיף לרשימה" FontSize="Medium" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"/>
+                </Grid>
+                <ListView Grid.Column="2" Grid.Row="1" FlowDirection="RightToLeft" ItemsSource="{Binding Selected}" BackgroundColor="DodgerBlue">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:BooleanEzer">
+                            <ViewCell>
+                                <Grid Padding="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <CheckBox IsChecked="{Binding IsTrue}" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" WidthRequest="50" HeightRequest="50"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Grid.Row="2" Grid.ColumnSpan="3" Text="המשך להרשמה" Command="{Binding ToSignUpToActivityCommand}" HorizontalOptions="Center" WidthRequest="150"/>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

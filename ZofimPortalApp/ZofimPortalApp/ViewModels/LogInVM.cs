@@ -20,11 +20,6 @@ namespace ZofimPortalApp.ViewModels
             ToSignUpCommand = new Command(ToSignUp);
             BackToHomePageCommand = new Command(BackToHomePage);
             proxy = ZofimPortalAPIProxy.CreateProxy();
-            #region למחוק לפני הגשה
-            email = "bbb@gmail.com";
-            pass = "bbb";
-            LogIn();
-            #endregion
         }
 
         #region INotifyPropertyChanged

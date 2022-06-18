@@ -59,6 +59,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 hanhagas = value;
+                ChangeAmount();
                 OnPropertyChanged("Hanhagas");
             }
         }
@@ -95,6 +96,17 @@ namespace ZofimPortalApp.ViewModels
             {
                 headerMessage = value;
                 OnPropertyChanged("HeaderMessage");
+            }
+        }
+
+        private string listAmount;
+        public string ListAmount
+        {
+            get => listAmount;
+            set
+            {
+                listAmount = value;
+                OnPropertyChanged("ListAmount");
             }
         }
 
@@ -182,6 +194,12 @@ namespace ZofimPortalApp.ViewModels
 
         #endregion
 
+        private void ChangeAmount()
+        {
+            if (Hanhagas != null)
+                ListAmount = $"מספר הנהגות: {Hanhagas.Count}";
+        }
+
         public void UpdateSearchField()
         {
             switch (SearchFieldIndex)
@@ -206,7 +224,8 @@ namespace ZofimPortalApp.ViewModels
                         ObservableCollection<Hanhaga> dummy = new ObservableCollection<Hanhaga>();
                         foreach (Hanhaga h in Hanhagas)
                         {
-                            if (h.Name == SearchValue)
+                            string partialString = h.Name.Substring(0, SearchValue.Length);
+                            if (partialString == SearchValue)
                                 dummy.Add(h);
                         }
                         Hanhagas = dummy;
@@ -215,7 +234,8 @@ namespace ZofimPortalApp.ViewModels
                         dummy = new ObservableCollection<Hanhaga>();
                         foreach (Hanhaga h in Hanhagas)
                         {
-                            if (h.GeneralArea == SearchValue)
+                            string partialString = h.GeneralArea.Substring(0, SearchValue.Length);
+                            if (partialString == SearchValue)
                                 dummy.Add(h);
                         }
                         Hanhagas = dummy;

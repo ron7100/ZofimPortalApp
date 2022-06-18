@@ -62,6 +62,7 @@ namespace ZofimPortalApp.ViewModels
                 Shevets = shevetsEzer;
                 ShevetsForHanhaga = shevetsEzer;
                 HeaderMessage = $"נתוני שבטים להנהגת {hanhaga}";
+                CantSeeAllShevets = true;
             }
             //search
             List<string> searchOptions = new List<string>();
@@ -103,6 +104,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 allShevets = value;
+                ChangeAmount();
                 OnPropertyChanged("AllShevets");
             }
         }
@@ -114,6 +116,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 shevetsForHanhaga = value;
+                ChangeAmount();
                 OnPropertyChanged("ShevetsForHanhaga");
             }
         }
@@ -125,6 +128,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 shevets = value;
+                ChangeAmount();
                 OnPropertyChanged("Shevets");
             }
         }
@@ -150,6 +154,17 @@ namespace ZofimPortalApp.ViewModels
             {
                 headerMessage = value;
                 OnPropertyChanged("HeaderMessage");
+            }
+        }
+
+        private string listAmount;
+        public string ListAmount
+        {
+            get => listAmount;
+            set
+            {
+                listAmount = value;
+                OnPropertyChanged("ListAmount");
             }
         }
 
@@ -237,6 +252,14 @@ namespace ZofimPortalApp.ViewModels
 
         #endregion
 
+        private void ChangeAmount()
+        {
+            if (CantSeeAllShevets && ShevetsForHanhaga != null)
+                ListAmount = $"מספר שבטים: {ShevetsForHanhaga.Count}";
+            if (CanSeeAllShevets && Shevets != null)
+                ListAmount = $"מספר שבטים: {Shevets.Count}";
+        }
+
         public void UpdateSearchField()
         {
             switch (SearchFieldIndex)
@@ -264,7 +287,8 @@ namespace ZofimPortalApp.ViewModels
                         ObservableCollection<ShevetToShow> dummy = new ObservableCollection<ShevetToShow>();
                         foreach (ShevetToShow s in Shevets)
                         {
-                            if (s.Name == SearchValue)
+                            string partialString = s.Name.Substring(0, SearchValue.Length);
+                            if (partialString == SearchValue)
                                 dummy.Add(s);
                         }
                         Shevets = dummy;
@@ -273,7 +297,8 @@ namespace ZofimPortalApp.ViewModels
                         dummy = new ObservableCollection<ShevetToShow>();
                         foreach (ShevetToShow s in Shevets)
                         {
-                            if (s.Hanhaga == SearchValue)
+                            string partialString = s.Hanhaga.Substring(0, SearchValue.Length);
+                            if (partialString == SearchValue)
                                 dummy.Add(s);
                         }
                         Shevets = dummy;

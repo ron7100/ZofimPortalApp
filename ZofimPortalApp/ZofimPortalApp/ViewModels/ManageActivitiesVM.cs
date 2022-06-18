@@ -46,7 +46,7 @@ namespace ZofimPortalApp.ViewModels
             //2 -> can see only from his hanhaga
             //3 -> can see only from his shevet
             CanSeeAllShevets = permissionLevel == 1;//only an admin can see all shevets
-            CanSeeAllShevetsInHanhhaga = permissionLevel == 2;
+            CanSeeAllShevetsInHanhaga = permissionLevel == 2;
             CantSeeAllShevets = permissionLevel == 3;
             if (CanSeeAllShevets)
             {
@@ -58,7 +58,7 @@ namespace ZofimPortalApp.ViewModels
                 AllActivities = ActivitiesEzer;
                 HeaderMessage = "נתוני שבטים";
             }
-            else if(CanSeeAllShevetsInHanhhaga)
+            else if(CanSeeAllShevetsInHanhaga)
             { 
                 ObservableCollection<ActivityToShow> activitiesEzer = new ObservableCollection<ActivityToShow>();
                 string hanhaga = await proxy.GetHanhagaAsync(HomePage.ConnectedUser.Id);
@@ -89,13 +89,14 @@ namespace ZofimPortalApp.ViewModels
                 searchOptions.Add("שבט");
                 searchOptions.Add("הנהגה");
             }
-            else if (CanSeeAllShevetsInHanhhaga)
+            else if (CanSeeAllShevetsInHanhaga)
                 searchOptions.Add("שבט");
             AvailableOptionsSearchField = searchOptions;
             SearchFieldIndex = 0;
         }
 
         #region Properties
+
             #region permissions
         private bool canSeeAllShevets;
         public bool CanSeeAllShevets
@@ -109,7 +110,7 @@ namespace ZofimPortalApp.ViewModels
         }
 
         private bool canSeeAllShevetsInHanhaga;
-        public bool CanSeeAllShevetsInHanhhaga
+        public bool CanSeeAllShevetsInHanhaga
         {
             get => canSeeAllShevetsInHanhaga;
             set
@@ -139,6 +140,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 allActivities = value;
+                ChangeAmount();
                 OnPropertyChanged("AllActivities");
             }
         }
@@ -150,6 +152,7 @@ namespace ZofimPortalApp.ViewModels
             set
             {
                 activitiesForHanhaga = value;
+                ChangeAmount();
                 OnPropertyChanged("ActivitiesForHanhaga");
             }
         }
@@ -161,6 +164,7 @@ namespace ZofimPortalApp.ViewModels
             set 
             { 
                 activitiesForShevet = value;
+                ChangeAmount();
                 OnPropertyChanged("ActivitiesForShevet");
             }
         }
@@ -198,6 +202,17 @@ namespace ZofimPortalApp.ViewModels
             {
                 headerMessage = value;
                 OnPropertyChanged("HeaderMessage");
+            }
+        }
+
+        private string listAmount;
+        public string ListAmount
+        {
+            get => listAmount;
+            set
+            {
+                listAmount = value;
+                OnPropertyChanged("ListAmount");
             }
         }
 
@@ -307,6 +322,16 @@ namespace ZofimPortalApp.ViewModels
 
         #endregion
 
+        private void ChangeAmount()
+        {
+            if (CanSeeAllShevets && Activities != null)
+                ListAmount = $"מספר מפעלים: {Activities.Count}";
+            if (CantSeeAllShevets && ActivitiesForShevet != null)
+                ListAmount = $"מספר מפעלים: {ActivitiesForShevet.Count}";
+            if (CanSeeAllShevetsInHanhaga && ActivitiesForHanhaga != null)
+                ListAmount = $"מספר מפעלים: {ActivitiesForHanhaga.Count}";
+        }
+
         public void UpdateSearchField()
         {
             switch (SearchFieldIndex)
@@ -327,7 +352,7 @@ namespace ZofimPortalApp.ViewModels
         {
             if (CanSeeAllShevets)
                 Activities = AllActivities;
-            else if (CanSeeAllShevetsInHanhhaga)
+            else if (CanSeeAllShevetsInHanhaga)
                 Activities = ActivitiesForHanhaga;
             else
                 Activities = ActivitiesForShevet;
@@ -339,7 +364,8 @@ namespace ZofimPortalApp.ViewModels
                         ObservableCollection<ActivityToShow> dummy = new ObservableCollection<ActivityToShow>();
                         foreach (ActivityToShow a in Activities)
                         {
-                            if (a.Name == SearchValue)
+                            string partialString = a.Name.Substring(0, SearchValue.Length);
+                            if (partialString == SearchValue)
                                 dummy.Add(a);
                         }
                         Activities = dummy;
@@ -348,7 +374,8 @@ namespace ZofimPortalApp.ViewModels
                         dummy = new ObservableCollection<ActivityToShow>();
                         foreach (ActivityToShow a in Activities)
                         {
-                            if (a.Shevet == SearchValue)
+                            string partialString = a.Shevet.Substring(0, SearchValue.Length);
+                            if (partialString == SearchValue)
                                 dummy.Add(a);
                         }
                         Activities = dummy;
@@ -357,7 +384,8 @@ namespace ZofimPortalApp.ViewModels
                         dummy = new ObservableCollection<ActivityToShow>();
                         foreach (ActivityToShow a in Activities)
                         {
-                            if (a.Hanhaga == SearchValue)
+                            string partialString = a.Hanhaga.Substring(0, SearchValue.Length);
+                            if (partialString == SearchValue)
                                 dummy.Add(a);
                         }
                         Activities = dummy;

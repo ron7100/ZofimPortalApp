@@ -15,6 +15,7 @@ namespace ZofimPortalApp.ViewModels
         public Command ToManageShevetsCommand => new Command(ToManageShevets);
         public Command ToManageHanhagaCommand => new Command(ToManageHanhaga);
         public Command ToManageActivitiesCommand => new Command(ToManageActivites);
+        public Command ToRegisterToActivitiesCommand => new Command(ToRegisterToActivities);
         public Command SignOutCommand => new Command(SignOut);
 
         private ZofimPortalAPIProxy proxy;
@@ -93,6 +94,28 @@ namespace ZofimPortalApp.ViewModels
                 OnPropertyChanged("CanGoToActivities");
             }
         }
+
+        private bool isParent;
+        public bool IsParent
+        {
+            get => isParent;
+            set
+            {
+                isParent = value;
+                OnPropertyChanged("IsParent");
+            }
+        }
+
+        private bool canEditUsers;
+        public bool CanEditUsers
+        {
+            get => canEditUsers;
+            set
+            {
+                canEditUsers = value;
+                OnPropertyChanged("CanEditUsers");
+            }
+        }
         #endregion
 
         public HomePageVM(User u)
@@ -109,6 +132,9 @@ namespace ZofimPortalApp.ViewModels
                 IsConnected = false;
                 IsAdmin = false;
                 CanSeeShevets = false;
+                CanGoToActivities = false;
+                IsParent = false;
+                CanEditUsers = false;
             }
         }
 
@@ -119,6 +145,8 @@ namespace ZofimPortalApp.ViewModels
             IsAdmin = true;
             CanSeeShevets = true;
             CanGoToActivities = true;
+            IsParent = false;
+            CanEditUsers = true;
             //1 -> admin, can see all
             //2 -> can see only from his hanhaga
             //3 -> can see only parents and cadets from his shevet
@@ -128,6 +156,8 @@ namespace ZofimPortalApp.ViewModels
                 case 0: CanSeeShevets = false;
                     IsAdmin = false;
                     CanGoToActivities = false;
+                    IsParent = true;
+                    CanEditUsers = false;
                     break;
                 case 1: break;
                 case 2: IsAdmin = false;
@@ -135,7 +165,7 @@ namespace ZofimPortalApp.ViewModels
                 case 3: CanSeeShevets = false;
                     IsAdmin = false;
                     break;
-            }            
+            }
         }
 
         public async void SignOut()
@@ -184,6 +214,12 @@ namespace ZofimPortalApp.ViewModels
         public async void ToManageActivites()
         {
             Page p = new Views.ManageActivities();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+
+        public async void ToRegisterToActivities()
+        {
+            Page p = new Views.RegisterToActivities();
             await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }

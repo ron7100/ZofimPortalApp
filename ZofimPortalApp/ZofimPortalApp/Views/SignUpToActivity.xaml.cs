@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ZofimPortalApp.Models;
 using ZofimPortalApp.ViewModels;
 
 namespace ZofimPortalApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ContactUs : ContentPage
+    public partial class SignUpToActivity : ContentPage
     {
-        public ContactUs()
+        public SignUpToActivity(List<ActivitiesHistory> toSignUp)
         {
-            ContactUsVM vm = new ContactUsVM();
+            SignUpToActivityVM vm = new SignUpToActivityVM(toSignUp);
             this.BindingContext = vm;
             InitializeComponent();
         }

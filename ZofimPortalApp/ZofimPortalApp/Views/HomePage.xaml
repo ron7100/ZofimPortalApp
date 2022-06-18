@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:ZofimPortalApp.ViewModels" x:DataType="viewmodels:HomePageVM"
              x:Class="ZofimPortalApp.Views.HomePage"
-             FlowDirection="RightToLeft">
+             FlowDirection="RightToLeft"
+             BackgroundColor="Transparent"
+             BackgroundImageSource="ScoutsSymbol.png">
     <ContentPage.Content>
         <StackLayout>
             <Grid>
@@ -25,13 +27,15 @@
                 <Button Command="{Binding SignOutCommand}" IsVisible="{Binding IsConnected}" Text="התנתק" Grid.Row="0" Grid.Column="4" HorizontalOptions="CenterAndExpand" WidthRequest="150" HeightRequest="50" />
                 <Label Text="{Binding WelcomeMessage}" Grid.Row="0" Grid.Column="0"/>
                 <Label Text="ברוכים הבאים לאתר הצופים!" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"/>
-                <Button Command="{Binding ToLogInCommand}" IsVisible="{Binding NotConnected}" Text="להתחברות" Grid.Row="2" Grid.Column="3" HorizontalOptions="EndAndExpand" WidthRequest="150" HeightRequest="150"/>
-                <Button Command="{Binding ToSignUpCommand}" IsVisible="{Binding NotConnected}" Text="להרשמה" Grid.Row="2" Grid.Column="1" HorizontalOptions="StartAndExpand" WidthRequest="150" HeightRequest="150"/>
-                <Button Command="{Binding ToManageUsersCommand}" IsVisible="{Binding IsAdmin}" Text="לרשימת ועריכת משתמשים" Grid.Row="2" Grid.Column="2" WidthRequest="250" />
-                <Button Command="{Binding ToPersonalInfoCommand}" IsVisible="{Binding IsConnected}" Text="לפרטים אישיים" Grid.Row="3" Grid.Column="2" WidthRequest="250" />
-                <Button Command="{Binding ToManageShevetsCommand}" IsVisible="{Binding CanSeeShevets}" Text="לניהול שבטים" Grid.Row="4" Grid.Column="2" WidthRequest="250" />
-                <Button Command="{Binding ToManageHanhagaCommand}" IsVisible="{Binding IsAdmin}" Text="לניהול הנהגות" Grid.Row="5" Grid.Column="2" WidthRequest="250" />
-                <Button Command="{Binding ToManageActivitiesCommand}" IsVisible="{Binding CanGoToActivities}" Text="לניהול מפעלים" Grid.Row="6" Grid.Column="2" WidthRequest="250" />
+                <Image Source="ScoutsSymbol.png" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="2" Grid.Column="2"/>
+                <Button Command="{Binding ToLogInCommand}" IsVisible="{Binding NotConnected}" Text="להתחברות" Grid.Row="3" Grid.Column="3" HorizontalOptions="EndAndExpand" WidthRequest="150" HeightRequest="150"/>
+                <Button Command="{Binding ToSignUpCommand}" IsVisible="{Binding NotConnected}" Text="להרשמה" Grid.Row="3" Grid.Column="1" HorizontalOptions="StartAndExpand" WidthRequest="150" HeightRequest="150"/>
+                <Button Command="{Binding ToManageUsersCommand}" IsVisible="{Binding CanEditUsers}" Text="לרשימת ועריכת משתמשים" Grid.Row="3" Grid.Column="1" WidthRequest="250" />
+                <Button Command="{Binding ToPersonalInfoCommand}" IsVisible="{Binding IsConnected}" Text="לפרטים אישיים" Grid.Row="4" Grid.Column="2" WidthRequest="250" />
+                <Button Command="{Binding ToManageShevetsCommand}" IsVisible="{Binding CanSeeShevets}" Text="לניהול שבטים" Grid.Row="3" Grid.Column="2" WidthRequest="250" />
+                <Button Command="{Binding ToManageHanhagaCommand}" IsVisible="{Binding IsAdmin}" Text="לניהול הנהגות" Grid.Row="3" Grid.Column="3" WidthRequest="250" />
+                <Button Command="{Binding ToManageActivitiesCommand}" IsVisible="{Binding CanGoToActivities}" Text="לניהול מפעלים" Grid.Row="5" Grid.Column="2" WidthRequest="250" />
+                <Button Command="{Binding ToRegisterToActivitiesCommand}" IsVisible="{Binding IsParent}" Text="להרשמה למפעלים" Grid.Row="5" Grid.Column="2" WidthRequest="250" />
             </Grid>
         </StackLayout>
     </ContentPage.Content>

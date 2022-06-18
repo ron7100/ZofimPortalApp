@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:ZofimPortalApp.ViewModels" x:DataType="viewmodels:SignUpToActivityVM"
+             x:Class="ZofimPortalApp.Views.SignUpToActivity"
+             FlowDirection="RightToLeft">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="חזור" Command="{Binding BackToRegisterToActivitiesCommand}" HorizontalOptions="Start" WidthRequest="100"/>
+            <Label Text="הרשמה למפעלים" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/><!--0-->
+                    <RowDefinition Height="20"/><!--1-->
+                    <RowDefinition Height="50"/><!--2-->
+                    <RowDefinition Height="20"/><!--3-->
+                    <RowDefinition Height="50"/><!--4-->
+                    <RowDefinition Height="20"/><!--5-->
+                    <RowDefinition Height="50"/><!--6-->
+                    <RowDefinition Height="20"/><!--7-->
+                    <RowDefinition Height="50"/><!--8-->
+                    <RowDefinition Height="50"/><!--9-->
+                    <RowDefinition Height="50"/><!--10-->
+                    <RowDefinition Height="50"/><!--11-->
+                    <RowDefinition Height="20"/><!--12-->
+                </Grid.RowDefinitions>
+                <Label Text="מספר כרטיס:" FontSize="Medium" Grid.Row="0" Grid.Column="0" />
+                <Entry Placeholder="מספר כרטיס..." Text="{Binding CardNumber}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" />
+                <Label Text="{Binding CardNumberErrorMessage}" IsVisible="{Binding CardNumberError}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" />
+                <Label Text="תאריך תפוגה: " FontSize="Medium" Grid.Row="2" Grid.Column="0" />
+                <Picker SelectedItem="{Binding ExpirationYear}" ItemsSource="{Binding AvailableYears}" Grid.Row="2" Grid.Column="1" />
+                <Picker SelectedItem="{Binding ExpirationMonth}" ItemsSource="{Binding AvailableMonths}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" />
+                <Label Text="{Binding ExpirationDateErrorMessage}" IsVisible="{Binding ExpirationDateError}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" />
+                <Label Text="CVV:" FontSize="Medium" Grid.Row="4" Grid.Column="0" />
+                <Entry Placeholder="cvv..." Text="{Binding Cvv}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" />
+                <Label Text="{Binding CvvErrorMessage}" IsVisible="{Binding CvvError}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" />
+                <Label Text="תעודת זהות:" FontSize="Medium" Grid.Row="6" Grid.Column="0" />
+                <Entry Placeholder="תעודת זהות..." Text="{Binding PersonalID}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" />
+                <Label Text="{Binding PersonalIDErrorMessage}" IsVisible="{Binding PersonalIDError}" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" />
+                <Label Text="מחיר:" FontSize="Medium" Grid.Row="8" Grid.Column="0" />
+                <Label Text="{Binding Price}" FontSize="Medium" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" />
+                <Label Text="מספר תשלומים:" FontSize="Medium" Grid.Row="9" Grid.Column="0" />
+                <Picker SelectedItem="{Binding PaymentsNumber}" ItemsSource="{Binding AvailableNumberOfPayments}" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="3" />
+                <Label Text="כמות בתשלום ראשון:" FontSize="Medium" Grid.Row="10" Grid.Column="0" />
+                <Label Text="{Binding FirstPaymentAmount}" FontSize="Medium" Grid.Row="10" Grid.Column="1" />
+                <Label Text="כמות בשאר התשלומים:" FontSize="Medium" Grid.Row="10" Grid.Column="2" />
+                <Label Text="{Binding OtherPaymentsAmount}" FontSize="Medium" Grid.Row="10" Grid.Column="3" />
+                <Button Text="לתשלום" Command="{Binding SignUpToActivitiesCommand}" Grid.Row="11" Grid.ColumnSpan="4" HorizontalOptions="Center" WidthRequest="100"/>
+                <Label Text="יש בעיות בטופס" IsVisible="{Binding AreThereErrors}" Grid.Row="12" Grid.ColumnSpan="4" HorizontalOptions="Center"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
