@@ -56,7 +56,7 @@ namespace ZofimPortalApp.ViewModels
                     ActivitiesEzer.Add(a);
                 Activities = ActivitiesEzer;
                 AllActivities = ActivitiesEzer;
-                HeaderMessage = "נתוני שבטים";
+                HeaderMessage = "נתוני מפעלים";
             }
             else if(CanSeeAllShevetsInHanhaga)
             { 

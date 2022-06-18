@@ -168,7 +168,8 @@ namespace ZofimPortalApp.ViewModels
 
         public async void BackToHomePage()
         {
-            await App.Current.MainPage.Navigation.PopAsync();
+            Page p = new HomePage();
+            await App.Current.MainPage.Navigation.PushAsync(p);
         }
 
         public async void ToSignUpToActivity()

@@ -30,9 +30,9 @@
                 <Image Source="ScoutsSymbol.png" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="2" Grid.Column="2"/>
                 <Button Command="{Binding ToLogInCommand}" IsVisible="{Binding NotConnected}" Text="להתחברות" Grid.Row="3" Grid.Column="3" HorizontalOptions="EndAndExpand" WidthRequest="150" HeightRequest="150"/>
                 <Button Command="{Binding ToSignUpCommand}" IsVisible="{Binding NotConnected}" Text="להרשמה" Grid.Row="3" Grid.Column="1" HorizontalOptions="StartAndExpand" WidthRequest="150" HeightRequest="150"/>
-                <Button Command="{Binding ToManageUsersCommand}" IsVisible="{Binding CanEditUsers}" Text="לרשימת ועריכת משתמשים" Grid.Row="3" Grid.Column="1" WidthRequest="250" />
+                <Button Command="{Binding ToManageUsersCommand}" IsVisible="{Binding CanEditUsers}" Text="לרשימת ועריכת משתמשים" Grid.Row="3" Grid.Column="2" WidthRequest="250" />
                 <Button Command="{Binding ToPersonalInfoCommand}" IsVisible="{Binding IsConnected}" Text="לפרטים אישיים" Grid.Row="4" Grid.Column="2" WidthRequest="250" />
-                <Button Command="{Binding ToManageShevetsCommand}" IsVisible="{Binding CanSeeShevets}" Text="לניהול שבטים" Grid.Row="3" Grid.Column="2" WidthRequest="250" />
+                <Button Command="{Binding ToManageShevetsCommand}" IsVisible="{Binding CanSeeShevets}" Text="לניהול שבטים" Grid.Row="3" Grid.Column="1" WidthRequest="250" />
                 <Button Command="{Binding ToManageHanhagaCommand}" IsVisible="{Binding IsAdmin}" Text="לניהול הנהגות" Grid.Row="3" Grid.Column="3" WidthRequest="250" />
                 <Button Command="{Binding ToManageActivitiesCommand}" IsVisible="{Binding CanGoToActivities}" Text="לניהול מפעלים" Grid.Row="5" Grid.Column="2" WidthRequest="250" />
                 <Button Command="{Binding ToRegisterToActivitiesCommand}" IsVisible="{Binding IsParent}" Text="להרשמה למפעלים" Grid.Row="5" Grid.Column="2" WidthRequest="250" />

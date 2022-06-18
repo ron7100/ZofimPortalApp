@@ -22,8 +22,8 @@
                 <Button Text="חיפוש" Command="{Binding EnableSearchCommand}" FontSize="Medium" IsVisible="{Binding SearchDisabled}" />
                 <Label Text="{Binding ListAmount}" FontSize="Medium" Grid.Column="2" HorizontalTextAlignment="End" />
                 <Button Text="סגור חיפוש" Command="{Binding DisableSearchCommand}" FontSize="Medium" IsVisible="{Binding SearchEnabled}" />
-                <Button Text="{Binding ToggleText}" Command="{Binding ToggleOpenOnlyCommand}" Grid.Column="1" FontSize="Small" WidthRequest="130" HorizontalOptions="Center" />
-                <Button Text="להוספת מפעל" Command="{Binding ToAddActivityCommand}" Grid.Column="2" FontSize="Small" WidthRequest="130" HorizontalOptions="Center" />
+                <Button Text="{Binding ToggleText}" Command="{Binding ToggleOpenOnlyCommand}" Grid.Column="1" FontSize="Small" WidthRequest="250" HorizontalOptions="Center" />
+                <Button Text="להוספת מפעל" Command="{Binding ToAddActivityCommand}" Grid.Column="2" FontSize="Small" WidthRequest="160" HorizontalOptions="Center" />
                 <Label Text="חפש לפי: " FontSize="Medium" Grid.Row="1" VerticalOptions="CenterAndExpand" IsVisible="{Binding SearchEnabled}" />
                 <Picker SelectedItem="{Binding SearchField}" IsVisible="{Binding SearchEnabled}" SelectedIndex="{Binding SearchFieldIndex}" FontSize="Medium" HeightRequest="50" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding AvailableOptionsSearchField}"/>
                 <Entry Placeholder="{Binding SearchFieldPlaceHolder}" Text="{Binding SearchValue}" IsVisible="{Binding SearchEnabled}" Grid.Row="1" Grid.Column="2"/>

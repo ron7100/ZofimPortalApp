@@ -59,10 +59,14 @@ namespace ZofimPortalApp.ViewModels
                 PersonalID = dummy.PersonalID;
                 Role = rolesList.Where(r => r.RoleName == dummy.Role).FirstOrDefault();
                 ShowRole = true;
-                Hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
+                hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
                 ShowHanhaga = true;
-                Shevet = shevetsList.Where(s => s.Name == dummy.Shevet && s.HanhagaId == hanhaga.Id).FirstOrDefault();
+                shevet = shevetsList.Where(s => s.Name == dummy.Shevet && s.HanhagaId == hanhaga.Id).FirstOrDefault();
                 ShowShevet = true;
+                if(hanhaga!=null)
+                    Hanhaga = hanhaga;
+                if(shevet!=null)
+                    Shevet = shevet;
             }
             if (u is ParentToShow)
             {
@@ -73,11 +77,13 @@ namespace ZofimPortalApp.ViewModels
                 FirstName = dummy.FirstName;
                 LastName = dummy.LastName;
                 PersonalID = dummy.PersonalID;
-                Hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
+                hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
                 ShowHanhaga = true;
-                Shevet = shevetsList.Where(s => s.Name == dummy.Shevet && s.HanhagaId == hanhaga.Id).FirstOrDefault();
+                shevet = shevetsList.Where(s => s.Name == dummy.Shevet && s.HanhagaId == hanhaga.Id).FirstOrDefault();
                 ShowShevet = true;
                 ShowCadets = true;
+                Hanhaga = hanhaga;
+                Shevet = shevet;
             }
             if (u is CadetToShow)
             {
@@ -90,11 +96,13 @@ namespace ZofimPortalApp.ViewModels
                 ShowClass = true;
                 Role = rolesList.Where(r => r.RoleName == dummy.Role).FirstOrDefault();
                 ShowRole = true;
-                Shevet = shevetsList.Where(s => s.Name == dummy.Shevet).FirstOrDefault();
-                ShowShevet = true;
-                Hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
+                hanhaga = hanhagasList.Where(h => h.Name == dummy.Hanhaga).FirstOrDefault();
                 ShowHanhaga = true;
+                shevet = shevetsList.Where(s => s.Name == dummy.Shevet && s.HanhagaId == Hanhaga.Id).FirstOrDefault();
+                ShowShevet = true;
                 ShowCadetsForActivity = true;
+                Hanhaga = hanhaga;
+                Shevet = shevet;
             }
             EmailError = false;
             FirstNameError = false;
@@ -297,7 +305,6 @@ namespace ZofimPortalApp.ViewModels
             {
                 hanhaga = value;
                 SetShevetsAccordingToHanhaga();
-                //SetShevetsAccordingToHanhaga();
                 OnPropertyChanged("Hanhaga");
             }
         }
@@ -693,17 +700,18 @@ namespace ZofimPortalApp.ViewModels
                         availableShevets.Add(s);
                     }
                 }
-            }
-            if(Hanhaga.Id == NO_HANHAGA_ID)
-            {
-                ShowShevet = false;
+                if (Hanhaga.Id == NO_HANHAGA_ID)
+                {
+                    ShowShevet = false;
+                }
             }
             if(EditedUser is WorkerToShow)
             {
                 Shevet noShevet = new Shevet();
                 noShevet.Name = "אין";
                 noShevet.Id = NO_SHEVET_ID;
-                noShevet.HanhagaId = Hanhaga.Id;
+                if(Hanhaga!=null)
+                    noShevet.HanhagaId = Hanhaga.Id;
                 availableShevets.Add(noShevet);                
             }
             Shevets = availableShevets;
@@ -723,10 +731,13 @@ namespace ZofimPortalApp.ViewModels
                 {
                     hanhagaName = ((CadetToShow)EditedUser).Hanhaga;
                 }
-                if (hanhagaName == Hanhaga.Name)
+                if (Hanhaga != null)
                 {
-                    Shevet = shevetHolder;
-                    PickerShevet = Shevet;
+                    if (hanhagaName == Hanhaga.Name)
+                    {
+                        Shevet = shevetHolder;
+                        PickerShevet = Shevet;
+                    }
                 }
             }
         }
